@@ -18,15 +18,28 @@ header .sub { font-size: 11px; color: #99b4cc; }
 .back-btn:hover { color: #fff; border-color: #58a6ff; background: rgba(88,166,255,.08); }
 
 /* ── Reading tabs ── */
-.reading-tabs { background: #112c4a; border-bottom: 2px solid #1e4a78; padding: 0 28px; display: flex; gap: 0; }
-.tab-btn {
-  background: none; border: none; border-bottom: 3px solid transparent;
-  color: #99b4cc; font-size: 12px; font-family: Georgia, serif;
-  padding: 10px 20px; cursor: pointer; letter-spacing: 0.3px;
-  transition: color .15s, border-color .15s;
+.reading-tabs {
+  background: #0a1e38; border-bottom: 3px solid #1e4a78;
+  padding: 10px 28px; display: flex; gap: 10px; align-items: center;
 }
-.tab-btn:hover { color: #cce0ff; }
-.tab-btn.active { color: #7ec8ff; border-bottom-color: #7ec8ff; font-weight: bold; }
+.tab-btn {
+  background: rgba(255,255,255,.05); border: 1px solid #2a4a6c;
+  border-radius: 8px; color: #7a9abb; font-family: Georgia, serif;
+  padding: 10px 22px; cursor: pointer; text-align: left;
+  transition: background .15s, border-color .15s, color .15s;
+  display: flex; flex-direction: column; gap: 3px; min-width: 200px;
+}
+.tab-btn:hover { background: rgba(126,200,255,.1); border-color: #5580aa; color: #cce0ff; }
+.tab-btn.active {
+  background: rgba(126,200,255,.16); border-color: #7ec8ff;
+  color: #e8f4ff; box-shadow: 0 0 12px rgba(126,200,255,.15);
+}
+.tab-num {
+  font-size: 10px; font-family: monospace; text-transform: uppercase;
+  letter-spacing: 1.2px; opacity: .65; font-weight: bold;
+}
+.tab-btn.active .tab-num { opacity: 1; color: #7ec8ff; }
+.tab-title { font-size: 13px; font-weight: bold; }
 
 /* ── Bilingual layout (Reading 1) ── */
 .lang-bar { display: grid; grid-template-columns: 1fr 1fr; background: #1a3a5c; border-bottom: 2px solid #2a5080; }
@@ -191,7 +204,7 @@ header .sub { font-size: 11px; color: #99b4cc; }
 <header>
   <div>
     <h1>Navigating the Jagged Frontier + Machines of Loving Grace</h1>
-    <div class="sub">Dell'Acqua et al. (2023) + Dario Amodei (2024) &nbsp;|&nbsp; 영한 대조 (Reading 1) + 영문 원본 (Reading 2)</div>
+    <div class="sub">Dell'Acqua et al. (2023) + Dario Amodei (2024) &nbsp;|&nbsp; 영한 대조 &mdash; 상단 탭으로 Reading 전환</div>
   </div>
   <a class="back-btn" href="../">&#8592; Hub</a>
 </header>
@@ -206,8 +219,14 @@ header .sub { font-size: 11px; color: #99b4cc; }
 </div>
 
 <div class="reading-tabs">
-  <button class="tab-btn active" onclick="showReading(1)">Reading 1: Navigating the Jagged Frontier</button>
-  <button class="tab-btn" onclick="showReading(2)">Reading 2: Machines of Loving Grace</button>
+  <button class="tab-btn active" onclick="showReading(1)">
+    <span class="tab-num">Reading 1 &mdash; Dell'Acqua et al. (2023)</span>
+    <span class="tab-title">Navigating the Jagged Technological Frontier</span>
+  </button>
+  <button class="tab-btn" onclick="showReading(2)">
+    <span class="tab-num">Reading 2 &mdash; Dario Amodei (2024)</span>
+    <span class="tab-title">Machines of Loving Grace</span>
+  </button>
 </div>
 
 <!-- =====================================================================
@@ -325,61 +344,116 @@ header .sub { font-size: 11px; color: #99b4cc; }
      ===================================================================== -->
 <div id="reading-2" style="display:none">
 
-<div class="info-bar">한국어 번역 준비 중 &mdash; English only &nbsp;|&nbsp; Korean translation in progress</div>
+<div class="lang-bar">
+  <div>English (Original)</div>
+  <div class="kr">한국어 번역 (Korean)</div>
+</div>
 
-<div class="container-single" style="max-width:860px;margin:0 auto;padding:0 28px;">
+<div class="container">
 
 <!-- Introduction -->
-<div class="section-divider">Introduction</div>
-<div class="mono-section">
-  <h2>Introduction</h2>
-  <p><span class="sent" data-sid="m-i1">I think and talk a lot about the risks of powerful AI. The company I'm the CEO of, Anthropic, does a lot of research on how to reduce these risks.</span> <span class="sent" data-sid="m-i2">Because of this, people sometimes draw the conclusion that I'm a pessimist or 'doomer' who thinks AI will be mostly bad or dangerous. I don't think that at all.</span> <span class="sent" data-sid="m-i3">In fact, one of my main reasons for focusing on risks is that they're the only thing standing between us and what I see as a fundamentally positive future.</span></p>
-  <p><span class="sent" data-sid="m-i4">I think that most people are underestimating just how radical the upside of AI could be, just as I think most people are underestimating how bad the risks could be.</span> <span class="sent" data-sid="m-i5">In this essay I try to sketch out what that upside might look like — what a world with powerful AI might look like if everything goes right.</span></p>
+<div class="section-divider">Introduction / 들어가며</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Introduction</h2>
+    <p><span class="sent" data-sid="m-i1">I think and talk a lot about the risks of powerful AI. The company I'm the CEO of, Anthropic, does a lot of research on how to reduce these risks.</span> <span class="sent" data-sid="m-i2">Because of this, people sometimes draw the conclusion that I'm a pessimist or "doomer" who thinks AI will be mostly bad or dangerous. I don't think that at all.</span> <span class="sent" data-sid="m-i3">In fact, one of my main reasons for focusing on risks is that they're the only thing standing between us and what I see as a fundamentally positive future.</span></p>
+    <p><span class="sent" data-sid="m-i4">I think that most people are underestimating just how radical the upside of AI could be, just as I think most people are underestimating how bad the risks could be.</span> <span class="sent" data-sid="m-i5">In this essay I try to sketch out what that upside might look like &mdash; what a world with powerful AI might look like if everything goes right.</span></p>
+    <p><span class="sent" data-sid="m-i6">I need to have a genuinely inspiring vision of the future, and not just a plan to fight fires. Many of the implications of powerful AI are adversarial or dangerous, but at the end of it all, there has to be something we're fighting for &mdash; some positive-sum outcome where everyone is better off.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>들어가며</h2>
+    <p><span class="sent" data-sid="m-i1">저는 강력한 AI의 위험성에 대해 자주 생각하고 이야기합니다. 제가 CEO로 있는 앤트로픽은 이러한 위험을 줄이는 방법을 연구하고 있습니다.</span> <span class="sent" data-sid="m-i2">그래서 사람들은 종종 제가 AI가 대부분 나쁘거나 위험할 거라고 생각하는 비관론자 혹은 '둠어(doomer)'라는 결론을 내립니다. 저는 전혀 그렇게 생각하지 않습니다.</span> <span class="sent" data-sid="m-i3">사실 제가 위험성에 집중하는 가장 큰 이유는, 그것이 우리와 근본적으로 긍정적인 미래 사이에 놓인 유일한 장애물이기 때문입니다.</span></p>
+    <p><span class="sent" data-sid="m-i4">저는 대부분의 사람들이 AI의 긍정적 가능성이 얼마나 급진적일 수 있는지를 과소평가하고 있다고 생각합니다. 마찬가지로 위험 역시 과소평가되고 있습니다.</span> <span class="sent" data-sid="m-i5">이 에세이에서 저는 그 긍정적 가능성의 모습을 스케치해 보려 합니다 &mdash; 모든 것이 잘 풀렸을 때 강력한 AI가 있는 세상이 어떤 모습일지.</span></p>
+    <p><span class="sent" data-sid="m-i6">진정으로 영감을 주는 미래 비전이 필요합니다. 단순히 위험에 대응하는 계획만이 아닌. 강력한 AI의 많은 함의가 대립적이거나 위험하지만, 결국 우리가 싸워야 할 무언가 &mdash; 모두가 더 나아지는 포지티브섬(positive-sum) 결과 &mdash; 가 있어야 합니다.</span></p>
+  </div>
 </div>
 
 <!-- What is Powerful AI -->
-<div class="section-divider">What is Powerful AI?</div>
-<div class="mono-section">
-  <h2>What is Powerful AI?</h2>
-  <p><span class="sent" data-sid="m-p1">The AI I'm imagining is not the <span class="term" data-tid="t-robai">robotic AI of science fiction</span>. Think of it as a 'brilliant friend who happens to have the knowledge of a doctor, lawyer, financial advisor, and expert in whatever you need.'</span> <span class="sent" data-sid="m-p2">As a friend, they give real information based on your specific situation rather than overly cautious advice driven by fear of liability or a worry that it'll overwhelm you.</span></p>
-  <p><span class="sent" data-sid="m-p3">Unlike seeing a professional in a formal context, this friend will often speak frankly, help you understand your situation in full, and actually engage with your problem — while also knowing when to refer you to someone else.</span> <span class="sent" data-sid="m-p4">People with access to such friends are very lucky, and that's what AI can be for everyone.</span></p>
-  <p><span class="sent" data-sid="m-p5">I believe that many instances of such AI, working autonomously, are likely to be more like a '<span class="term" data-tid="t-cognilab">country of geniuses</span>' that could compress decades of scientific progress into just a few years.</span></p>
+<div class="section-divider">What is Powerful AI? / 강력한 AI란 무엇인가?</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>What is Powerful AI?</h2>
+    <p><span class="sent" data-sid="m-p1">The AI I'm imagining is not the <span class="term" data-tid="t-robai">robotic AI of science fiction</span>. Think of it as a "brilliant friend who happens to have the knowledge of a doctor, lawyer, financial advisor, and expert in whatever you need."</span> <span class="sent" data-sid="m-p2">As a friend, they give real information based on your specific situation rather than overly cautious advice driven by fear of liability or a worry that it'll overwhelm you.</span></p>
+    <p><span class="sent" data-sid="m-p3">Unlike seeing a professional in a formal context, this friend will often speak frankly, help you understand your situation in full, and actually engage with your problem &mdash; while also knowing when to refer you to someone else.</span> <span class="sent" data-sid="m-p4">People with access to such friends are very lucky, and that's what AI can be for everyone.</span></p>
+    <p><span class="sent" data-sid="m-p5">I believe that many instances of such AI, working autonomously, are likely to be more like a "<span class="term" data-tid="t-cognilab">country of geniuses in a datacenter</span>" that could compress decades of scientific progress into just a few years.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>강력한 AI란 무엇인가?</h2>
+    <p><span class="sent" data-sid="m-p1">제가 상상하는 AI는 <span class="term" data-tid="t-robai">SF의 로봇 AI</span>가 아닙니다. "의사, 변호사, 재정 고문, 그리고 당신이 필요로 하는 모든 분야의 전문가 지식을 갖춘 뛰어난 친구"라고 생각하면 됩니다.</span> <span class="sent" data-sid="m-p2">친구로서 그는 법적 책임에 대한 두려움이나 당신이 감당하지 못할 것이라는 걱정으로 지나치게 조심스럽게 조언하는 것이 아니라, 당신의 특수한 상황에 기반한 진짜 정보를 줄 것입니다.</span></p>
+    <p><span class="sent" data-sid="m-p3">공식적인 맥락에서 전문가를 만나는 것과 달리, 이 친구는 솔직하게 이야기하고, 당신이 처한 상황을 온전히 이해하도록 도와주며, 실제로 당신의 문제에 관여합니다 &mdash; 다른 사람에게 연결해야 할 때를 알면서도.</span> <span class="sent" data-sid="m-p4">그런 친구를 가진 사람들은 매우 운이 좋은 것이고, 그것이 AI가 모든 사람에게 될 수 있는 것입니다.</span></p>
+    <p><span class="sent" data-sid="m-p5">수천 개의 AI 인스턴스가 자율적으로 작동하는 것은 "데이터센터 안의 <span class="term" data-tid="t-cognilab">천재들의 나라</span>"처럼 수십 년의 과학적 진보를 몇 년으로 압축할 수 있을 거라고 저는 믿습니다.</span></p>
+  </div>
 </div>
 
 <!-- Biology and Health -->
-<div class="section-divider">Biology and Health</div>
-<div class="mono-section">
-  <h2>Biology and Health</h2>
-  <p><span class="sent" data-sid="m-b1">Millions of people die every year from cancer, heart disease, and other diseases that we think of as 'solved' but aren't.</span> <span class="sent" data-sid="m-b2">AI has the potential to compress 50–100 years of scientific progress into 5–10 years.</span></p>
-  <p><span class="sent" data-sid="m-b3">Concretely, I mean to actually defeat diseases that have plagued us for millennia — <span class="term" data-tid="t-alzheimer">Alzheimer's</span>, many forms of cancer, all infectious diseases we currently lack adequate treatments for.</span> <span class="sent" data-sid="m-b4">AI could also turn mental health care from the current state (barely functional for most people) to a genuine system that actually improves human well-being at scale.</span></p>
+<div class="section-divider">Biology and Health / 생물학 및 건강</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Biology and Health</h2>
+    <p><span class="sent" data-sid="m-b1">Millions of people die every year from cancer, heart disease, and other diseases that we think of as "solved" but aren't.</span> <span class="sent" data-sid="m-b2">AI has the potential to compress 50&ndash;100 years of scientific progress into 5&ndash;10 years.</span></p>
+    <p><span class="sent" data-sid="m-b3">Concretely, I mean to actually defeat diseases that have plagued us for millennia &mdash; <span class="term" data-tid="t-alzheimer">Alzheimer's</span>, many forms of cancer, all infectious diseases we currently lack adequate treatments for.</span> <span class="sent" data-sid="m-b4">AI could also turn mental health care from the current state (barely functional for most people) to a genuine system that actually improves human well-being at scale.</span></p>
+    <p><span class="sent" data-sid="m-b5">I want to repeat that I am not talking about AI as merely a tool to analyze data. I'm talking about using AI to perform, direct, and improve upon nearly everything biologists do &mdash; acting as a virtual biologist running real experiments, designing new techniques, and accelerating the whole research process.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>생물학 및 건강</h2>
+    <p><span class="sent" data-sid="m-b1">매년 수백만 명이 암, 심장병 등 '해결됐다'고 생각하지만 실제로는 그렇지 않은 질병으로 사망합니다.</span> <span class="sent" data-sid="m-b2">AI는 50&ndash;100년의 과학적 진보를 5&ndash;10년으로 압축할 잠재력을 가지고 있습니다.</span></p>
+    <p><span class="sent" data-sid="m-b3">구체적으로, 수천 년 동안 인류를 괴롭혀온 질병들 &mdash; <span class="term" data-tid="t-alzheimer">알츠하이머</span>, 많은 형태의 암, 현재 적절한 치료법이 없는 모든 감염성 질환 &mdash; 을 실질적으로 정복하는 것을 의미합니다.</span> <span class="sent" data-sid="m-b4">AI는 또한 정신건강 치료를 현재 상태(대부분의 사람들에게 거의 기능하지 않음)에서 실제로 인간의 웰빙을 규모 있게 개선하는 진정한 시스템으로 전환할 수 있습니다.</span></p>
+    <p><span class="sent" data-sid="m-b5">다시 한번 강조하고 싶습니다 &mdash; 저는 AI를 단순히 데이터를 분석하는 도구로 이야기하는 것이 아닙니다. 생물학자들이 하는 거의 모든 것을 수행하고, 지시하고, 개선하는 데 AI를 활용하는 것을 말합니다. 가상의 생물학자로서 실제 실험을 진행하고, 새로운 기술을 설계하며, 전체 연구 프로세스를 가속화하는 것입니다.</span></p>
+  </div>
 </div>
 
 <!-- Economic Development -->
-<div class="section-divider">Economic Development</div>
-<div class="mono-section">
-  <h2>Economic Development</h2>
-  <p><span class="sent" data-sid="m-e1">AI-driven economic growth could lift billions out of poverty.</span> <span class="sent" data-sid="m-e2">I think there's a real chance that, in the near term, AI could lift up much of the rest of the world so that they're closer to living the way people in developed countries live today.</span></p>
-  <p><span class="sent" data-sid="m-e3">The economic gains from AI could be very large, potentially raising global economic growth rates significantly and enabling people in lower-income countries to access education, healthcare, and economic opportunity that was previously out of reach.</span></p>
+<div class="section-divider">Economic Development / 경제 발전</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Economic Development</h2>
+    <p><span class="sent" data-sid="m-e1">AI-driven economic growth could lift billions out of poverty.</span> <span class="sent" data-sid="m-e2">I think there's a real chance that, in the near term, AI could lift up much of the rest of the world so that they're closer to living the way people in developed countries live today.</span></p>
+    <p><span class="sent" data-sid="m-e3">The economic gains from AI could be very large, potentially raising global economic growth rates significantly and enabling people in lower-income countries to access education, healthcare, and economic opportunity that was previously out of reach.</span></p>
+    <p><span class="sent" data-sid="m-e4">We could imagine a world where many of the world's poorest people have access to an "AI doctor" of sorts &mdash; an expert system able to diagnose and treat the most common diseases, give nutritional advice, and explain treatment options in a way that's understandable.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>경제 발전</h2>
+    <p><span class="sent" data-sid="m-e1">AI 주도 경제 성장은 수십억 명을 빈곤에서 구제할 수 있습니다.</span> <span class="sent" data-sid="m-e2">단기적으로 AI가 세계의 많은 지역을 오늘날 선진국 사람들이 사는 방식에 더 가깝게 끌어올릴 수 있는 현실적인 기회가 있다고 생각합니다.</span></p>
+    <p><span class="sent" data-sid="m-e3">AI로 인한 경제적 이득은 매우 클 수 있으며, 잠재적으로 전 세계 경제 성장률을 크게 높이고 저소득 국가의 사람들이 이전에는 닿을 수 없었던 교육, 의료 서비스, 경제적 기회에 접근할 수 있게 할 것입니다.</span></p>
+    <p><span class="sent" data-sid="m-e4">세계에서 가장 가난한 많은 사람들이 일종의 'AI 의사'에 접근할 수 있는 세상을 상상해볼 수 있습니다 &mdash; 가장 흔한 질병을 진단하고 치료하고, 영양 조언을 제공하며, 이해하기 쉬운 방식으로 치료 옵션을 설명하는 전문가 시스템.</span></p>
+  </div>
 </div>
 
 <!-- Peace and Governance -->
-<div class="section-divider">Peace and Governance</div>
-<div class="mono-section">
-  <h2>Peace and Governance</h2>
-  <p><span class="sent" data-sid="m-g1">I am cautiously optimistic that AI could also have a significant positive impact on reducing conflict and improving governance.</span> <span class="sent" data-sid="m-g2">AI systems could help identify the precursors to conflict, mediate disputes, and analyze large amounts of data to find the underlying causes of tension.</span></p>
-  <p><span class="sent" data-sid="m-g3">Good governance and democratic institutions could potentially be strengthened if AI helps people access better information and if AI helps governments make better decisions.</span> <span class="sent" data-sid="m-g4">This is speculative, but the potential is real and worth pursuing carefully.</span></p>
+<div class="section-divider">Peace and Governance / 평화와 거버넌스</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Peace and Governance</h2>
+    <p><span class="sent" data-sid="m-g1">I am cautiously optimistic that AI could also have a significant positive impact on reducing conflict and improving governance.</span> <span class="sent" data-sid="m-g2">AI systems could help identify the precursors to conflict, mediate disputes, and analyze large amounts of data to find the underlying causes of tension.</span></p>
+    <p><span class="sent" data-sid="m-g3">Good governance and democratic institutions could potentially be strengthened if AI helps people access better information and if AI helps governments make better decisions.</span> <span class="sent" data-sid="m-g4">This is speculative, but the potential is real and worth pursuing carefully.</span></p>
+    <p><span class="sent" data-sid="m-g5">At the same time, AI cuts both ways in the geopolitical domain. There is a real risk that AI is used to further concentrate power in the hands of a small number of individuals or entities. I think it's important that the benefits of AI flow broadly to humanity and that no single entity &mdash; including Anthropic &mdash; uses AI to "take over the world".</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>평화와 거버넌스</h2>
+    <p><span class="sent" data-sid="m-g1">저는 AI가 갈등을 줄이고 거버넌스를 개선하는 데도 상당히 긍정적인 영향을 미칠 수 있다고 조심스럽게 낙관합니다.</span> <span class="sent" data-sid="m-g2">AI 시스템은 갈등의 전조를 파악하고, 분쟁을 조정하며, 대량의 데이터를 분석하여 긴장의 근본 원인을 찾는 데 도움을 줄 수 있습니다.</span></p>
+    <p><span class="sent" data-sid="m-g3">AI가 사람들이 더 나은 정보에 접근하도록 돕고 정부가 더 나은 결정을 내리도록 도우면, 좋은 거버넌스와 민주주의 제도가 잠재적으로 강화될 수 있습니다.</span> <span class="sent" data-sid="m-g4">이것은 추측적이지만, 가능성은 현실적이며 신중하게 추구할 가치가 있습니다.</span></p>
+    <p><span class="sent" data-sid="m-g5">동시에 AI는 지정학적 영역에서 양날의 검입니다. AI가 소수의 개인이나 집단의 손에 권력을 더욱 집중시키는 데 사용될 실질적인 위험이 있습니다. AI의 혜택이 인류 전반에 광범위하게 흐르고, 앤트로픽을 포함하여 어떤 단일 주체도 AI를 이용해 '세상을 지배'하려 해서는 안 된다고 생각합니다.</span></p>
+  </div>
 </div>
 
 <!-- The Core Tension -->
-<div class="section-divider">The Core Tension</div>
-<div class="mono-section">
-  <h2>The Core Tension</h2>
-  <p><span class="sent" data-sid="m-c1">To sum up, I believe that the risks of powerful AI are very real — but I also believe that its potential benefits are equally real, and that these benefits deserve more serious discussion.</span></p>
-  <p><span class="sent" data-sid="m-c2">The most important thing we can do is develop AI carefully enough that the benefits actually materialize, while working hard to prevent the risks from derailing this fundamentally positive future.</span> <span class="sent" data-sid="m-c3">Powerful AI is coming regardless. The question is whether we can land in a world where it's genuinely beneficial.</span></p>
-  <p><span class="sent" data-sid="m-c4">The challenge — and the hope — is that we shape the trajectory of this technology deliberately, with both eyes open to the risks and the rewards. That is what it means to navigate the future of <span class="term" data-tid="t-agi">transformative AI</span>.</span></p>
+<div class="section-divider">The Core Tension / 핵심 긴장</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>The Core Tension</h2>
+    <p><span class="sent" data-sid="m-c1">To sum up, I believe that the risks of powerful AI are very real &mdash; but I also believe that its potential benefits are equally real, and that these benefits deserve more serious discussion.</span></p>
+    <p><span class="sent" data-sid="m-c2">The most important thing we can do is develop AI carefully enough that the benefits actually materialize, while working hard to prevent the risks from derailing this fundamentally positive future.</span> <span class="sent" data-sid="m-c3">Powerful AI is coming regardless. The question is whether we can land in a world where it's genuinely beneficial.</span></p>
+    <p><span class="sent" data-sid="m-c4">The challenge &mdash; and the hope &mdash; is that we shape the trajectory of this technology deliberately, with both eyes open to the risks and the rewards. That is what it means to navigate the future of <span class="term" data-tid="t-agi">transformative AI</span>.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>핵심 긴장</h2>
+    <p><span class="sent" data-sid="m-c1">요약하면, 저는 강력한 AI의 위험이 매우 현실적이라고 믿습니다 &mdash; 하지만 동시에 그 잠재적 혜택도 마찬가지로 현실적이며, 이 혜택들은 더 진지한 논의를 받을 자격이 있다고 믿습니다.</span></p>
+    <p><span class="sent" data-sid="m-c2">우리가 할 수 있는 가장 중요한 일은 혜택이 실제로 실현될 만큼 신중하게 AI를 개발하는 동시에, 위험이 이 근본적으로 긍정적인 미래를 탈선시키지 않도록 열심히 노력하는 것입니다.</span> <span class="sent" data-sid="m-c3">강력한 AI는 어쨌든 오고 있습니다. 문제는 우리가 그것이 진정으로 이로운 세상에 안착할 수 있는지입니다.</span></p>
+    <p><span class="sent" data-sid="m-c4">도전 &mdash; 그리고 희망 &mdash; 은 위험과 보상 모두에 두 눈을 열고, 이 기술의 궤적을 의도적으로 형성하는 것입니다. 그것이 <span class="term" data-tid="t-agi">변혁적 AI</span>의 미래를 헤쳐나가는 것의 의미입니다.</span></p>
+  </div>
 </div>
 
-</div><!-- /container-single -->
+</div><!-- /container -->
 </div><!-- /reading-2 -->
 
 

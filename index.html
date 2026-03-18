@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAIST Case Study Hub</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --border:   #30363d;
+  --gold:     #f0c040;
+  --blue:     #58a6ff;
+  --green:    #56d364;
+  --muted:    #8b949e;
+  --text:     #e6edf3;
+  --text-dim: #c9d1d9;
+  --red:      #ff7b72;
+  --radius:   10px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(88,166,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88,166,255,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+
+/* ── LOGIN PAGE ── */
+#login-page {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 420px;
+  background: rgba(22, 27, 34, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 36px 32px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(88,166,255,.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  animation: card-in .5s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(24px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.login-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(240,192,64,.1); border: 1px solid rgba(240,192,64,.25);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .5px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.login-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 6px var(--gold);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+.login-title {
+  font-size: 22px; font-weight: 700; color: var(--text);
+  line-height: 1.3; margin-bottom: 6px;
+}
+.login-sub {
+  font-size: 13px; color: var(--muted); margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.input-group { position: relative; margin-bottom: 12px; }
+.input-group label {
+  display: block; font-size: 11px; font-weight: 600;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 7px;
+}
+.input-group input {
+  width: 100%; padding: 11px 16px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-size: 14px;
+  outline: none; transition: border-color .15s, box-shadow .15s;
+  font-family: 'SF Mono', 'Cascadia Code', monospace;
+  letter-spacing: 2px;
+}
+.input-group input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(88,166,255,.15);
+}
+.input-group input::placeholder { letter-spacing: .5px; font-family: inherit; opacity: .4; }
+
+.login-btn {
+  width: 100%; padding: 12px;
+  background: linear-gradient(135deg, #1f6feb, #388bfd);
+  border: none; border-radius: 8px;
+  color: #fff; font-size: 14px; font-weight: 600;
+  cursor: pointer; margin-top: 8px;
+  transition: opacity .15s, transform .1s, box-shadow .15s;
+  box-shadow: 0 4px 16px rgba(31,111,235,.35);
+}
+.login-btn:hover { opacity: .92; box-shadow: 0 6px 20px rgba(31,111,235,.45); }
+.login-btn:active { transform: scale(.98); }
+
+.pw-error {
+  font-size: 12px; color: var(--red); margin-top: 8px;
+  min-height: 18px; display: flex; align-items: center; gap: 5px;
+}
+
+.login-footer {
+  margin-top: 32px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.login-footer-inner {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 12px; flex-wrap: wrap;
+}
+.login-author { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.login-author strong { color: var(--text-dim); display: block; font-size: 12px; margin-bottom: 2px; }
+
+/* ── HUB PAGE ── */
+#hub-page { display: none; position: relative; z-index: 1; min-height: 100vh; }
+
+.hub-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(13,17,23,.9);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 0 32px;
+  display: flex; align-items: center; gap: 0;
+  height: 56px;
+}
+.hub-logo {
+  font-size: 13px; font-weight: 700; color: var(--gold);
+  letter-spacing: .3px; display: flex; align-items: center; gap: 10px;
+}
+.hub-logo::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 8px var(--gold);
+  flex-shrink: 0;
+}
+.hub-nav {
+  margin-left: auto; font-size: 11px; color: var(--muted);
+  display: flex; align-items: center; gap: 16px;
+}
+.hub-logout {
+  font-size: 11px; color: var(--muted); background: none; border: none;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px;
+  transition: color .15s, background .15s;
+}
+.hub-logout:hover { color: var(--text); background: var(--surface); }
+
+.hub-hero {
+  padding: 56px 32px 40px;
+  max-width: 1100px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.hub-hero h1 {
+  font-size: 28px; font-weight: 800; color: var(--text);
+  letter-spacing: -.5px; margin-bottom: 8px;
+}
+.hub-hero h1 span { color: var(--gold); }
+.hub-hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 580px; }
+
+.hub-main { padding: 36px 32px 80px; max-width: 1100px; margin: 0 auto; }
+
+.hub-section-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hub-section-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.course-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 26px 22px;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: 0;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+  position: relative; overflow: hidden;
+}
+.course-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(86,211,100,.04), transparent);
+  opacity: 0; transition: opacity .2s;
+}
+.course-card:hover { border-color: rgba(86,211,100,.45); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+.course-card:hover::before { opacity: 1; }
+.course-card.coming { opacity: .55; cursor: default; pointer-events: none; }
+.course-card.coming::before { background: none; }
+
+.course-badge {
+  display: inline-flex; align-self: flex-start;
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+  padding: 3px 10px; border-radius: 20px; margin-bottom: 16px;
+}
+.course-badge.active { background: rgba(86,211,100,.15); color: var(--green); border: 1px solid rgba(86,211,100,.3); }
+.course-badge.soon { background: rgba(139,148,158,.12); color: var(--muted); border: 1px solid rgba(139,148,158,.2); }
+
+.course-id { font-size: 11px; font-family: 'SF Mono', monospace; color: var(--muted); margin-bottom: 8px; }
+.course-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.course-prof { font-size: 12px; color: var(--blue); margin-bottom: 12px; }
+.course-desc { font-size: 12px; color: var(--muted); line-height: 1.6; flex: 1; }
+.course-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border);
+}
+.course-meta { font-size: 11px; color: var(--muted); }
+.course-arrow { font-size: 14px; color: var(--muted); transition: color .15s, transform .15s; }
+.course-card:hover .course-arrow { color: var(--text); transform: translateX(3px); }
+
+.hub-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 32px; max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.hub-footer-left { font-size: 11px; color: var(--muted); line-height: 1.7; }
+.hub-footer-right { font-size: 11px; color: var(--muted); text-align: right; }
+.hub-footer a { color: var(--blue); text-decoration: none; }
+.hub-footer a:hover { text-decoration: underline; }
+
+.fade-out { animation: fade-out .25s ease both; }
+@keyframes fade-out { to { opacity: 0; transform: scale(.98); } }
+.fade-in  { animation: fade-in .35s cubic-bezier(.16,1,.3,1) both; }
+@keyframes fade-in  { from { opacity: 0; transform: translateY(12px); } }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login-page">
+  <div class="login-card">
+    <div class="login-badge">KAIST MBA 2026 Spring</div>
+    <h1 class="login-title">Case Study Hub</h1>
+    <p class="login-sub">영한 대조 케이스 스터디 아카이브<br>과목별 HBS/경영 케이스를 읽고 AI 용어 설명을 활용하세요.</p>
+
+    <div class="input-group">
+      <label for="pw-input">Access Password</label>
+      <input type="password" id="pw-input" placeholder="Enter password" autofocus>
+    </div>
+    <div class="pw-error" id="pw-error"></div>
+    <button class="login-btn" id="login-btn">Continue</button>
+
+    <div class="login-footer">
+      <div class="login-footer-inner">
+        <div class="login-author">
+          <strong>Gyehyu K</strong>
+          KAIST IMMS &mdash; Spring 2026
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HUB ── -->
+<div id="hub-page">
+  <header class="hub-header">
+    <div class="hub-logo">Case Hub</div>
+    <div class="hub-nav">
+      <span>KAIST MBA &bull; Spring 2026</span>
+      <button class="hub-logout" id="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <div class="hub-hero">
+    <h1>Case Study <span>Archive</span></h1>
+    <p>과목을 선택하세요. 각 과목의 HBS/경영 케이스를 영한 대조로 읽고, 핵심 용어를 사전에서 즉시 확인할 수 있습니다.</p>
+  </div>
+
+  <main class="hub-main">
+    <div class="hub-section-title">Courses</div>
+    <div class="courses-grid" id="courses-grid"></div>
+  </main>
+
+  <footer>
+    <div class="hub-footer">
+      <div class="hub-footer-left">
+        Copyright &copy; Harvard Business School Publishing. Fair Use only.
+      </div>
+      <div class="hub-footer-right">
+        Gyehyu K &bull; KAIST IMMS<br>
+        <a href="mailto:gyehyukim@kaist.ac.kr">gyehyukim@kaist.ac.kr</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+
+const COURSES = [
+  {
+    id: 'BIZ.60010',
+    title: 'Venture Capital',
+    prof: 'Prof. 백용욱',
+    desc: 'HBS VC 케이스 시리즈. 시드/시리즈 라운드, 텀시트, 밸류에이션, 엑싯 전략 등 벤처 투자의 전 과정을 다룹니다.',
+    cases: 10,
+    available: 2,
+    status: 'active',
+    url: 'venture-capital/',
+  },
+  {
+    id: 'BIZ.69911',
+    title: 'AI-Based Business Evolution',
+    prof: 'Prof. 이지수',
+    desc: 'AI 기반 비즈니스 진화, 전략 및 실습. AI/자동화가 비즈니스 모델과 조직에 미치는 영향을 분석합니다.',
+    cases: 2,
+    available: 0,
+    status: 'coming',
+    url: 'ai-evolution/',
+  },
+];
+
+function renderCourses() {
+  const grid = document.getElementById('courses-grid');
+  grid.innerHTML = COURSES.map(c => {
+    const isActive = c.status === 'active';
+    const cardClass = isActive ? 'course-card' : 'course-card coming';
+    const badgeClass = isActive ? 'active' : 'soon';
+    const badgeText = isActive ? c.available + ' Available' : 'Coming Soon';
+    return '<a class="' + cardClass + '" href="' + c.url + '">' +
+      '<span class="course-badge ' + badgeClass + '">' + badgeText + '</span>' +
+      '<div class="course-id">' + c.id + '</div>' +
+      '<div class="course-title">' + c.title + '</div>' +
+      '<div class="course-prof">' + c.prof + '</div>' +
+      '<div class="course-desc">' + c.desc + '</div>' +
+      '<div class="course-footer">' +
+        '<span class="course-meta">' + c.cases + ' cases</span>' +
+        '<span class="course-arrow">' + (isActive ? '&#8594;' : '...') + '</span>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+}
+
+// ── Auth ──
+function showHub() {
+  var lp = document.getElementById('login-page');
+  lp.classList.add('fade-out');
+  setTimeout(function() {
+    lp.style.display = 'none';
+    var hp = document.getElementById('hub-page');
+    hp.style.display = 'block';
+    hp.classList.add('fade-in');
+    renderCourses();
+  }, 240);
+}
+
+(function init() {
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryLogin();
+  });
+  document.getElementById('login-btn').addEventListener('click', tryLogin);
+  document.getElementById('logout-btn').addEventListener('click', logout);
+
+  if (sessionStorage.getItem(AUTH_KEY) === AUTH_VAL) showHub();
+})();
+
+function tryLogin() {
+  var v = document.getElementById('pw-input').value;
+  var err = document.getElementById('pw-error');
+  if (v === AUTH_VAL) {
+    sessionStorage.setItem(AUTH_KEY, AUTH_VAL);
+    err.textContent = '';
+    showHub();
+  } else {
+    err.textContent = '비밀번호가 올바르지 않습니다.';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+    document.getElementById('pw-input').style.borderColor = 'var(--red)';
+    setTimeout(function() { document.getElementById('pw-input').style.borderColor = ''; }, 1200);
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem(AUTH_KEY);
+  location.reload();
+}
+</script>
+</body>
+</html>

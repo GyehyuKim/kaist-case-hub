@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study Hub -- KAIST BIZ.69911 AI-Based Business Evolution</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --border:   #30363d;
+  --gold:     #f0c040;
+  --blue:     #58a6ff;
+  --green:    #56d364;
+  --muted:    #8b949e;
+  --text:     #e6edf3;
+  --text-dim: #c9d1d9;
+  --radius:   10px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; overflow-x: hidden;
+}
+
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(88,166,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88,166,255,.04) 1px, transparent 1px);
+  background-size: 48px 48px; pointer-events: none;
+}
+
+#hub-page { position: relative; z-index: 1; min-height: 100vh; }
+
+.hub-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(13,17,23,.9);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px); padding: 0 32px;
+  display: flex; align-items: center; height: 56px;
+}
+.hub-logo {
+  font-size: 13px; font-weight: 700; color: var(--gold);
+  letter-spacing: .3px; display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.hub-logo::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); box-shadow: 0 0 8px var(--gold); flex-shrink: 0;
+}
+.hub-course {
+  margin-left: auto; font-size: 11px; color: var(--muted);
+  display: flex; align-items: center; gap: 16px;
+}
+
+.hub-hero {
+  padding: 56px 32px 40px; max-width: 1100px; margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.hub-hero h1 { font-size: 28px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 8px; }
+.hub-hero h1 span { color: var(--gold); }
+.hub-hero p { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 580px; }
+
+.hub-main { padding: 36px 32px 80px; max-width: 1100px; margin: 0 auto; }
+
+.hub-section-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hub-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.cases-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;
+}
+
+.case-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px 22px 18px; text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; cursor: pointer;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+  position: relative; overflow: hidden;
+}
+.case-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(86,211,100,.04), transparent);
+  opacity: 0; transition: opacity .2s;
+}
+.case-card:hover { border-color: rgba(86,211,100,.45); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,.3); }
+.case-card:hover::before { opacity: 1; }
+.case-card.coming { opacity: .55; cursor: default; pointer-events: none; }
+.case-card.coming::before { background: none; }
+
+.card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+.card-num { font-size: 11px; font-family: 'SF Mono', monospace; color: var(--muted); font-weight: 600; }
+.badge { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; padding: 2px 8px; border-radius: 20px; }
+.badge.avail { background: rgba(86,211,100,.15); color: var(--green); border: 1px solid rgba(86,211,100,.3); }
+.badge.soon { background: rgba(139,148,158,.12); color: var(--muted); border: 1px solid rgba(139,148,158,.2); }
+
+.card-title { font-size: 15px; font-weight: 700; line-height: 1.35; margin-bottom: 6px; }
+.card-org { font-size: 12px; color: var(--blue); font-weight: 500; margin-bottom: 10px; }
+.card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; flex: 1; }
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border);
+}
+.card-meta { font-size: 11px; color: var(--muted); }
+.card-arrow { font-size: 14px; color: var(--muted); transition: color .15s, transform .15s; }
+.case-card:hover .card-arrow { color: var(--text); transform: translateX(3px); }
+
+.hub-footer {
+  border-top: 1px solid var(--border); padding: 24px 32px;
+  max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.hub-footer-left, .hub-footer-right { font-size: 11px; color: var(--muted); line-height: 1.7; }
+.hub-footer a { color: var(--blue); text-decoration: none; }
+.hub-footer a:hover { text-decoration: underline; }
+
+.fade-in { animation: fade-in .35s cubic-bezier(.16,1,.3,1) both; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(12px); } }
+</style>
+</head>
+<body>
+
+<div id="hub-page" class="fade-in">
+  <header class="hub-header">
+    <a class="hub-logo" href="../">Case Hub</a>
+    <div class="hub-course">
+      <span>BIZ.69911 AI-Based Business Evolution &bull; Spring 2026</span>
+    </div>
+  </header>
+
+  <div class="hub-hero">
+    <h1>AI Evolution <span>Cases</span></h1>
+    <p>Prof. 이지수 &mdash; AI 기반 비즈니스 진화, 전략 및 실습. 케이스를 영한 대조로 읽고 핵심 용어를 확인하세요.</p>
+  </div>
+
+  <main class="hub-main">
+    <div class="hub-section-title">Homework Cases -- 2 Cases</div>
+    <div class="cases-grid" id="cases-grid"></div>
+  </main>
+
+  <footer>
+    <div class="hub-footer">
+      <div class="hub-footer-left">Educational Fair Use only.</div>
+      <div class="hub-footer-right">
+        Gyehyu K &bull; KAIST IMMS<br>
+        <a href="mailto:gyehyukim@kaist.ac.kr">gyehyukim@kaist.ac.kr</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+
+if (sessionStorage.getItem(AUTH_KEY) !== AUTH_VAL) {
+  location.href = '../';
+}
+
+const CASES = [
+  {
+    num: '01',
+    title: 'Manna',
+    org: 'Marshall Brain',
+    desc: 'AI/자동화가 노동 시장과 사회 구조에 미치는 영향을 탐구하는 SF 케이스.',
+    tags: ['AI Automation', 'Labor Market', 'Society'],
+    session: 'HW 1',
+    status: 'coming',
+    url: '../coming_soon.html?id=01&title=Manna',
+  },
+  {
+    num: '02',
+    title: 'Navigating the Jagged Technological Frontier',
+    org: 'Dell\'Acqua et al.',
+    desc: 'AI 기술의 불균등한 능력 경계(Jagged Frontier)와 조직 내 AI 활용 전략.',
+    tags: ['Jagged Frontier', 'AI Strategy', 'Organization'],
+    session: 'HW 2',
+    status: 'coming',
+    url: '../coming_soon.html?id=02&title=Navigating+the+Jagged+Frontier',
+  },
+];
+
+function renderHub() {
+  var grid = document.getElementById('cases-grid');
+  grid.innerHTML = CASES.map(function(c) {
+    var badgeClass = c.status === 'available' ? 'avail' : 'soon';
+    var badgeText  = c.status === 'available' ? 'Available' : 'Coming Soon';
+    var cardClass  = c.status === 'available' ? 'case-card' : 'case-card coming';
+    var tags = c.tags.map(function(t) {
+      return '<span style="font-size:10px;background:rgba(88,166,255,.1);color:#58a6ff;border:1px solid rgba(88,166,255,.2);border-radius:4px;padding:1px 7px;margin-right:4px;">'+t+'</span>';
+    }).join('');
+    return '<a class="'+cardClass+'" href="'+c.url+'">' +
+      '<div class="card-header">' +
+        '<span class="card-num"># '+c.num+' &bull; '+c.session+'</span>' +
+        '<span class="badge '+badgeClass+'">'+badgeText+'</span>' +
+      '</div>' +
+      '<div class="card-title">'+c.title+'</div>' +
+      '<div class="card-org">'+c.org+'</div>' +
+      '<div class="card-desc">'+c.desc+'</div>' +
+      '<div style="margin-top:12px;line-height:2;">'+tags+'</div>' +
+      '<div class="card-footer">' +
+        '<span class="card-meta">'+(c.status === 'available' ? '영한 대조 + 사전 모드' : '준비 중')+'</span>' +
+        '<span class="card-arrow">'+(c.status === 'available' ? '&#8594;' : '...')+'</span>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+}
+
+renderHub();
+</script>
+</body>
+</html>

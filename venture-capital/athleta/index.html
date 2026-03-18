@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Athleta — 영한 대조 + AI 용어 설명</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; font-size: 14px; line-height: 1.75; background: #f5f5f5; color: #222; padding-bottom: 260px; }
+
+header { background: #1a1a2e; color: #eee; padding: 14px 32px; display: flex; align-items: center; gap: 20px; }
+header h1 { font-size: 18px; }
+header .sub { font-size: 11px; color: #999; }
+.back-btn { margin-left: auto; font-size: 11px; color: #aaa; text-decoration: none; padding: 4px 12px; border: 1px solid #444; border-radius: 5px; white-space: nowrap; }
+.back-btn:hover { color: #fff; border-color: #58a6ff; background: rgba(88,166,255,.08); }
+
+.help-bar { background: #2d2d44; color: #aaa; font-size: 11px; padding: 5px 32px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.help-bar kbd { background: #444; color: #eee; padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 10px; }
+.model-badge { margin-left: auto; background: #0e4f1a; color: #6eff8a; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-family: monospace; }
+
+.lang-bar { display: grid; grid-template-columns: 1fr 1fr; background: #2d2d44; border-bottom: 2px solid #555; }
+.lang-bar div { padding: 5px 32px; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #aaa; }
+.lang-bar .kr { border-left: 1px solid #444; }
+
+.section-divider { background: #e8e8f0; padding: 7px 28px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #666; border-bottom: 1px solid #ddd; }
+
+.container { max-width: 1500px; margin: 0 auto; }
+.bi-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ddd; }
+.cell { padding: 20px 28px; }
+.cell.en { background: #fff; border-right: 1px solid #ddd; }
+.cell.kr { background: #f8f8fc; }
+.cell.full { grid-column: 1 / -1; background: #f0f0f8; text-align: center; padding: 24px 32px; }
+
+.cell h2 { font-size: 13px; font-weight: bold; color: #1a1a2e; margin-bottom: 12px; padding-bottom: 5px; border-bottom: 2px solid #1a1a2e; text-transform: uppercase; letter-spacing: 0.5px; }
+.cell h3 { font-size: 12px; font-weight: bold; color: #444; margin: 14px 0 6px; }
+.cell p { margin-bottom: 10px; }
+.cell blockquote { margin: 10px 0; padding: 8px 14px; border-left: 3px solid #888; color: #555; font-style: italic; background: rgba(0,0,0,0.03); font-size: 13px; }
+.cell table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.cell th { background: #1a1a2e; color: #fff; padding: 5px 8px; text-align: left; font-weight: normal; font-size: 11px; }
+.cell td { padding: 5px 8px; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+.cell tr:nth-child(even) td { background: #f4f4f8; }
+.cell tr.total td { font-weight: bold; border-top: 2px solid #1a1a2e; background: #eeeef5; }
+.cell .note { font-size: 11px; color: #888; margin-top: 4px; }
+.cell.full img { max-width: 100%; max-height: 620px; height: auto; border: 1px solid #ccc; }
+.cell.full .img-cap { font-size: 11px; color: #888; margin-top: 8px; }
+.cell.full h2 { text-align: left; }
+
+/* ── Highlight states ── */
+.sent { cursor: pointer; border-radius: 2px; transition: background 0.1s; }
+.term { cursor: pointer; border-radius: 2px; transition: background 0.1s; border-bottom: 1px dotted #888; }
+.sent.h-on, .term.h-on { background: rgba(255,215,0,0.38); }
+.sent.on, .term.on { background: rgba(60,130,255,0.22); outline: 1px solid rgba(60,130,255,0.4); }
+
+/* ── Static tooltip ── */
+#tip { position: fixed; display: none; z-index: 9999; max-width: 340px; background: #1a1a2e; color: #eee; border-radius: 6px; padding: 12px 16px; font-size: 12px; line-height: 1.55; box-shadow: 0 4px 20px rgba(0,0,0,0.4); pointer-events: none; }
+#tip .t-title { font-size: 13px; font-weight: bold; color: #ffd700; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid #444; }
+#tip .t-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; margin: 6px 0 2px; }
+#tip .t-vc { color: #7ec8ff; }
+
+/* ── AI Panel (bottom) ── */
+#ai-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+  background: #0f0f1e; border-top: 2px solid #3a3a6a;
+  transform: translateY(100%); transition: transform 0.25s ease;
+  display: flex; flex-direction: column;
+  max-height: 55vh;
+}
+#ai-panel.open { transform: translateY(0); }
+
+#ai-panel-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 20px; background: #1a1a2e; flex-shrink: 0;
+}
+#ai-panel-header .ai-label { font-size: 11px; font-weight: bold; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; }
+#ai-term { font-size: 13px; color: #7ec8ff; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ai-model-tag { font-size: 10px; color: #6eff8a; background: #0e4f1a; padding: 2px 8px; border-radius: 8px; font-family: monospace; }
+#ai-close { background: none; border: none; color: #888; font-size: 18px; cursor: pointer; line-height: 1; padding: 0 4px; }
+#ai-close:hover { color: #fff; }
+
+#ai-body {
+  padding: 16px 24px; overflow-y: auto; flex: 1;
+  font-size: 13px; line-height: 1.7; color: #ddd;
+}
+#ai-body strong, #ai-body b { color: #ffd700; }
+#ai-body em { color: #7ec8ff; }
+#ai-cursor { display: inline-block; width: 2px; height: 1em; background: #7ec8ff; animation: blink 0.7s infinite; vertical-align: text-bottom; margin-left: 1px; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+#ai-spinner { color: #888; font-size: 12px; }
+#ai-error { color: #ff7070; font-size: 12px; }
+
+/* ── Vocab panel ── */
+.vocab-panel { padding: 16px 28px; background: #f0f0f8; border-bottom: 1px solid #ddd; }
+.vocab-panel > h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #777; margin-bottom: 12px; }
+.vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 8px; }
+.vcard { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 9px 12px; font-size: 12px; }
+.vcard .vt { font-weight: bold; color: #1a1a2e; font-size: 13px; }
+.vcard .vkr { color: #666; font-size: 11px; margin-bottom: 5px; }
+.vcard .vc1 { color: #444; margin-bottom: 4px; }
+.vcard .vc2 { color: #1a5fa8; border-top: 1px solid #eee; padding-top: 5px; margin-top: 4px; }
+.badge { display: inline-block; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; padding: 1px 5px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+.bg { background: #e0e0e0; color: #555; }
+.bv { background: #1a5fa8; color: #fff; }
+
+/* ── Clear button ── */
+#clear-btn { position: fixed; bottom: 20px; right: 20px; background: #1a1a2e; color: #eee; border: none; border-radius: 4px; padding: 7px 14px; font-size: 11px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.3); z-index: 500; }
+#clear-btn:hover { background: #2d2d44; }
+
+/* ── Password gate ── */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #1a1a2e; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 14px;
+}
+#pw-gate h2 { color: #ffd700; font-size: 18px; font-family: Georgia, serif; }
+#pw-gate .pw-sub { color: #888; font-size: 11px; }
+#pw-gate input { padding: 10px 16px; border-radius: 4px; border: 1px solid #555; background: #2d2d44; color: #eee; font-size: 14px; width: 240px; text-align: center; outline: none; }
+#pw-gate input:focus { border-color: #7ec8ff; }
+#pw-gate button { padding: 10px 32px; background: #1a5fa8; color: #fff; border: none; border-radius: 4px; font-size: 14px; cursor: pointer; }
+#pw-gate button:hover { background: #2272c3; }
+#pw-gate .pw-error { color: #ff7070; font-size: 12px; min-height: 16px; }
+
+/* ── Ask AI button ── */
+#ask-btn {
+  position: fixed; right: 28px; bottom: 52px; z-index: 700;
+  display: none; align-items: center; gap: 7px;
+  background: #1a5fa8; color: #fff; border: none; border-radius: 20px;
+  padding: 9px 18px; font-size: 13px; cursor: pointer;
+  box-shadow: 0 3px 16px rgba(0,0,0,.4);
+  transition: background .15s;
+}
+#ask-btn:hover { background: #2272c3; }
+
+/* ── Chat popup ── */
+#chat-popup {
+  position: fixed; z-index: 950; width: 400px; min-width: 260px;
+  background: #111827; border: 1px solid #2d3f55; border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.55);
+  display: none; flex-direction: column;
+  bottom: 80px; right: 28px; max-height: 72vh; overflow: hidden;
+}
+#chat-popup.open { display: flex; }
+#chat-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; background: #1a2d44;
+  border-radius: 12px 12px 0 0; cursor: grab; user-select: none; flex-shrink: 0;
+}
+#chat-hdr:active { cursor: grabbing; }
+#chat-title { font-size: 12px; font-weight: bold; color: #ffd700; flex: 1; }
+#chat-snippet { font-size: 10px; color: #7a99aa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.ccbtn { background: none; border: none; color: #667; font-size: 14px; cursor: pointer; padding: 0 4px; line-height: 1; }
+.ccbtn:hover { color: #ccc; }
+#chat-ctx {
+  background: rgba(255,215,0,.05); border-bottom: 1px solid #2d3f55;
+  padding: 8px 14px; font-size: 11px; color: #7a9aaa; font-style: italic;
+  flex-shrink: 0; line-height: 1.5; max-height: 68px;
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+#chat-msgs {
+  flex: 1; overflow-y: auto; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 8px; min-height: 100px;
+}
+.cmsg { max-width: 94%; font-size: 12px; line-height: 1.6; padding: 8px 11px; border-radius: 10px; word-break: break-word; }
+.cmsg.user { background: #1a3a5c; color: #cce0ff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.cmsg.ai   { background: #1e2d3e; color: #dde8f4; align-self: flex-start; border-bottom-left-radius: 3px; }
+.cmsg.sys  { color: #556677; font-size: 10px; align-self: center; background: none; padding: 0; font-style: italic; }
+.cmsg strong { color: #ffd700; }
+#chat-foot {
+  display: flex; gap: 8px; padding: 10px 12px;
+  border-top: 1px solid #2d3f55; flex-shrink: 0;
+  background: #111827; border-radius: 0 0 12px 12px;
+}
+#chat-input {
+  flex: 1; background: #1e2d42; border: 1px solid #2d4060;
+  border-radius: 8px; color: #dde8f4; font-size: 12px;
+  padding: 7px 10px; resize: none; height: 58px; font-family: inherit; outline: none;
+}
+#chat-input:focus { border-color: #7ec8ff; }
+#chat-send {
+  background: #1a5fa8; color: #fff; border: none; border-radius: 8px;
+  padding: 0 14px; cursor: pointer; font-size: 12px; align-self: flex-end; height: 34px;
+}
+#chat-send:hover { background: #2272c3; }
+#chat-send:disabled { background: #2a3a4a; color: #556; cursor: default; }
+#chat-popup.minimized #chat-msgs,
+#chat-popup.minimized #chat-foot,
+#chat-popup.minimized #chat-ctx { display: none; }
+#chat-popup.minimized { border-radius: 12px; }
+.cmsg.help { background: #1a2030; border: 1px solid #2d3f55; align-self: stretch; }
+.cmsg.help h4 { color: #ffd700; font-size: 11px; margin-bottom: 6px; }
+.cmsg.help ol { padding-left: 16px; margin: 4px 0 10px; color: #ccd8ee; font-size: 11px; line-height: 1.8; }
+.cmsg.help a { color: #58a6ff; }
+.cmsg.help code { background: #0a1020; color: #6eff8a; padding: 1px 5px; border-radius: 3px; font-size: 10px; font-family: monospace; }
+.prompt-box { background: #0a1020; border: 1px solid #2d4060; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #99bbdd; font-family: monospace; line-height: 1.6; margin: 6px 0; white-space: pre-wrap; word-break: break-all; }
+.copy-btn { background: #1a5fa8; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11px; cursor: pointer; margin-top: 4px; }
+.copy-btn:hover { background: #2272c3; }
+.copy-btn.copied { background: #0e4f1a; color: #6eff8a; }
+
+/* ── Copyright footer ── */
+#copyright-footer {
+  background: #111; color: #666; font-size: 10px; text-align: center;
+  padding: 14px 24px; line-height: 1.8; border-top: 1px solid #2a2a3a;
+}
+</style>
+</head>
+<body>
+
+<!-- ── Password gate ── -->
+<div id="pw-gate">
+  <h2>Athleta Case Viewer</h2>
+  <span class="pw-sub">KAIST BIZ.60010 Venture Capital — 수업 자료</span>
+  <input type="password" id="pw-input" placeholder="비밀번호 입력" autofocus>
+  <button onclick="checkPw()">확인</button>
+  <div class="pw-error" id="pw-error"></div>
+</div>
+
+<header>
+  <h1>Athleta — HBS 9-803-045</h1>
+  <span class="sub">Sahlman &amp; Friedman-Harris | Rev. July 30, 2003 &nbsp;|&nbsp; 영한 대조 + AI 용어 설명</span>
+  <a class="back-btn" href="../">&#8592; Hub</a>
+</header>
+
+<div class="help-bar">
+  <span><kbd>hover</kbd> 문장·용어 → 양방향 하이라이트</span>
+  <span><kbd>click</kbd> 파란색 고정 선택</span>
+  <span><kbd>Esc</kbd> 전체 해제</span>
+  <span><kbd>점선 밑줄</kbd> 사전 해설 팝업</span>
+  <span><kbd>더블클릭</kbd> 임의 단어 → AI(Ollama) 실시간 설명</span>
+  <span><kbd>드래그 후 Enter</kbd> 선택 구절 → AI 설명</span>
+  <span class="model-badge" id="model-display">모델 확인 중...</span>
+</div>
+
+<div class="lang-bar">
+  <div>English (Original)</div>
+  <div class="kr">한국어 번역 (Korean)</div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════ INTRO ═══════════ -->
+<div class="section-divider">Introduction / 도입</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Introduction</h2>
+    <blockquote>
+      <span class="sent" data-sid="q1">"The defining characteristic of an entrepreneur is that we can talk ourselves into almost anything."</span>
+      <span class="sent" data-sid="q2"> — Scott Kerslake, President &amp; CEO, Athleta</span>
+    </blockquote>
+    <p>
+      <span class="sent" data-sid="s2">On the morning of March 26, 2002, Scott Kerslake—president and CEO of Athleta—reflected on the unfamiliar sounds of the city while stuck in a Manhattan traffic jam.</span>
+      <span class="sent" data-sid="s3"> In contrast, several employees at the Athleta headquarters in Petaluma, California, were preparing to run in the open space near the office or take their dogs for a walk.</span>
+    </p>
+    <p>
+      <span class="sent" data-sid="s4">Kerslake and Joe Teno—Athleta's senior vice president of operations—were on a trip to New York City in the hopes of securing the remaining <span class="term" data-tid="t-series-e">Series E</span> round of financing from investors who understood and appreciated Athleta's business model and culture.</span>
+      <span class="sent" data-sid="s5"> Athleta had less than $750,000 in cash remaining.</span>
+      <span class="sent" data-sid="s6"> It was essential that they secure the additional capital to fund further growth.</span>
+    </p>
+    <p>
+      <span class="sent" data-sid="s7">In 1999, Kerslake founded Athleta as a "women's sports company" selling a wide range of women's multi-sport apparel through a <span class="term" data-tid="t-multichannel">multi-channel</span> platform that included catalog, online, and retail.</span>
+      <span class="sent" data-sid="s8"> Between 1998 and the end of 2002, Athleta expected to have fulfilled over 400,000 orders and generated over $55 million in revenue—all with less than $5 million in <span class="term" data-tid="t-equity">equity capital</span>.</span>
+    </p>
+  </div>
+  <div class="cell kr">
+    <h2>도입</h2>
+    <blockquote>
+      <span class="sent" data-sid="q1">"기업가의 가장 두드러진 특성은, 우리가 거의 모든 것을 스스로에게 납득시킬 수 있다는 것이다."</span>
+      <span class="sent" data-sid="q2"> — Scott Kerslake, Athleta 사장 겸 CEO</span>
+    </blockquote>
+    <p>
+      <span class="sent" data-sid="s2">2002년 3월 26일 아침, Athleta의 사장 겸 CEO Scott Kerslake는 맨해튼 교통 정체 속에서 낯선 도시의 소음을 들으며 생각에 잠겼다.</span>
+      <span class="sent" data-sid="s3"> 그 시각 캘리포니아주 페탈루마 본사에서는 직원들이 사무실 인근 공원으로 달리기를 나가거나 반려견 산책을 준비하고 있었다.</span>
+    </p>
+    <p>
+      <span class="sent" data-sid="s4">Kerslake와 수석 부사장 Joe Teno는 자사의 비즈니스 모델과 기업 문화를 이해하고 공감해 줄 투자자로부터 <span class="term" data-tid="t-series-e">시리즈 E(Series E)</span> 자금을 확보하기 위해 뉴욕을 방문 중이었다.</span>
+      <span class="sent" data-sid="s5"> 잔여 현금은 75만 달러 미만이었으며,</span>
+      <span class="sent" data-sid="s6"> 추가 자본 확보가 절실한 상황이었다.</span>
+    </p>
+    <p>
+      <span class="sent" data-sid="s7">1999년 Kerslake는 카탈로그·온라인·오프라인 매장을 포괄하는 <span class="term" data-tid="t-multichannel">멀티채널(Multi-channel)</span> 플랫폼을 통해 여성 다목적 스포츠 의류를 판매하는 회사로 Athleta를 창립했다.</span>
+      <span class="sent" data-sid="s8"> 1998년부터 2002년 말까지 500만 달러 미만의 <span class="term" data-tid="t-equity">자기자본(Equity Capital)</span>으로 40만 건 이상의 주문 처리와 5,500만 달러 이상의 매출을 달성할 것으로 예상했다.</span>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════ FOUNDER'S VISION ═══════════ -->
+<div class="section-divider">Founder's Vision · Women's Sports Apparel Market / 창업자의 비전 · 시장 현황</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Founder's Vision</h2>
+    <p><span class="sent" data-sid="fv1">Kerslake had always dreamed of starting his own company.</span> <span class="sent" data-sid="fv2">Prior to becoming an entrepreneur, he had started his career at a retail establishment before joining Sapient Corporation as a management consultant in 1993.</span> <span class="sent" data-sid="fv3">A project for Apple Computer convinced him of the value of having employees who were passionate about the company's products, and he was promoted to the position of director of marketing and was instrumental in Sapient's successful IPO in 1996.</span></p>
+    <p><span class="sent" data-sid="fv4">He identified a gap in the market: a lack of functional yet stylish apparel for women who were serious about sports.</span> <span class="sent" data-sid="fv5">This insight became the foundation for Athleta.</span></p>
+    <h2>Women's Sports Apparel Market</h2>
+    <p><span class="sent" data-sid="wm1">In 1999, when Athleta launched, women's participation in sports and fitness had grown rapidly over the past decade.</span> <span class="sent" data-sid="wm2">The total market for women's sports apparel exceeded <strong>$6 billion</strong> in 1999, with analysts forecasting strong continued growth.</span> <span class="sent" data-sid="wm3">In 2000, U.S. women spent approximately <strong>$25 billion</strong> on sports apparel alone.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>창업자의 비전</h2>
+    <p><span class="sent" data-sid="fv1">Kerslake는 항상 자신만의 회사를 설립하는 꿈을 가지고 있었다.</span> <span class="sent" data-sid="fv2">Athleta 창업 이전, 그는 소매업체에서 경력을 시작한 후 Sapient Corporation에 경영 컨설턴트로 합류했다.</span> <span class="sent" data-sid="fv3">Apple Computer 프로젝트를 통해 자사 제품에 대한 열정의 가치를 실감했으며, 이후 마케팅 이사(Director of Marketing)로 승진하여 1996년 Sapient의 성공적인 IPO를 이끌었다.</span></p>
+    <p><span class="sent" data-sid="fv4">그는 스포츠에 진지한 여성들을 위한 기능적이고 스타일리시한 의류의 부재를 발견했고, 이것이 Athleta 창업의 출발점이 되었다.</span></p>
+    <h2>여성 스포츠 의류 시장</h2>
+    <p><span class="sent" data-sid="wm1">Athleta가 출범한 1999년, 여성의 스포츠·피트니스 참여는 빠르게 증가하고 있었다.</span> <span class="sent" data-sid="wm2">여성 스포츠 의류 시장 규모는 1999년 기준 약 <strong>$60억 이상</strong>이었으며, 애널리스트들은 강세 성장을 전망했다.</span> <span class="sent" data-sid="wm3">2000년 미국 여성들은 스포츠 의류에만 약 $250억을 지출했다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ TABLE A + COMPETITION ═══════════ -->
+<div class="section-divider">Table A · Competition / 시장 참여 현황 · 경쟁 환경</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Table A &nbsp; Women's Sports Participation (1999)</h2>
+    <table>
+      <tr><th>Sport</th><th>Women / Total Participants</th></tr>
+      <tr><td>Running</td><td>43%</td></tr>
+      <tr><td>Fitness Walking</td><td>64%</td></tr>
+      <tr><td>Swimming</td><td>56%</td></tr>
+      <tr><td>Aerobics</td><td>76%</td></tr>
+      <tr><td>Skiing</td><td>30%</td></tr>
+      <tr><td>Fitness/Gym</td><td>72%</td></tr>
+    </table>
+    <p class="note">Source: Company documents.</p>
+    <h2>Competition</h2>
+    <p><span class="sent" data-sid="comp1">Kerslake conceptualized Athleta as a premier multi-channel sports retailer offering a limited selection of best-of-class products across a wide variety of sports and an exceptional level of customer service.</span></p>
+    <p><span class="sent" data-sid="comp2">There were four tiers of competitors: <strong>Tier 1</strong> — women-specific sports retailers (Athleta, Title 9 Sports); <strong>Tier 2</strong> — specialty retailers (REI, EMS); <strong>Tier 3</strong> — mass-market sporting goods stores (Foot Locker, Sports Authority); <strong>Tier 4</strong> — department stores (Nordstrom, Macy's).</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>Table A: 여성 스포츠 참여 현황 (1999)</h2>
+    <table>
+      <tr><th>종목</th><th>여성 참여자 비율</th></tr>
+      <tr><td>달리기 (Running)</td><td>43%</td></tr>
+      <tr><td>피트니스 걷기 (Fitness Walking)</td><td>64%</td></tr>
+      <tr><td>수영 (Swimming)</td><td>56%</td></tr>
+      <tr><td>에어로빅 (Aerobics)</td><td>76%</td></tr>
+      <tr><td>스키 (Skiing)</td><td>30%</td></tr>
+      <tr><td>피트니스 센터 (Fitness/Gym)</td><td>72%</td></tr>
+    </table>
+    <p class="note">출처: 회사 자료</p>
+    <h2>경쟁 환경</h2>
+    <p><span class="sent" data-sid="comp1">Kerslake는 Athleta를 다양한 스포츠 종목에 걸쳐 최고 제품군과 탁월한 고객 서비스를 제공하는 프리미엄 <span class="term" data-tid="t-multichannel">멀티채널</span> 여성 스포츠 의류 소매업체로 포지셔닝했다.</span></p>
+    <p><span class="sent" data-sid="comp2">경쟁 구도는 크게 4개 Tier로 분류됐다: <strong>Tier 1</strong> 여성 스포츠 소매업체(Athleta, Title 9 Sports), <strong>Tier 2</strong> 전문 소매업체(REI, EMS), <strong>Tier 3</strong> 대형 종합 소매업체(Foot Locker, Sports Authority), <strong>Tier 4</strong> 백화점(Nordstrom, Macy's).</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ CHANNEL / PRODUCT / CUSTOMER ═══════════ -->
+<div class="section-divider">Channel Strategy · Product · Customer / 채널 전략 · 제품 · 고객</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Channel Strategy</h2>
+    <p><span class="sent" data-sid="cs1">Athleta served customers through a <span class="term" data-tid="t-multichannel">multi-channel</span> model encompassing catalog, online, and retail stores.</span> <span class="sent" data-sid="cs2">Catalog shoppers who visited the Web site spent <strong>50% more per year</strong> and increased their catalog purchasing frequency by 11%.</span> <span class="sent" data-sid="cs3">Management believed e-commerce did not cannibalize other channels, and that multi-channel customers showed stronger brand loyalty.</span></p>
+    <h2>Product</h2>
+    <p><span class="sent" data-sid="pr1">Athleta's product line started with "Athleta Essentials," a <span class="term" data-tid="t-privlabel">private-label</span> line of activewear.</span> <span class="sent" data-sid="pr2">The launch of private-label products was driven not merely by margin improvement but by a desire to offer customers the best possible selection alongside existing high-quality external brands.</span></p>
+    <p><span class="sent" data-sid="pr3">There are two models for private-label branding: either a knockoff of an existing distinctive product, or a truly distinctive product. Many vendors were on par with other high-quality manufacturers, so Athleta did not want to create a lot of average-quality private-label products.</span></p>
+    <h2>Target Customer</h2>
+    <p><span class="sent" data-sid="tc1">Athleta's initial target customer was a <strong>college-educated woman aged 18–49</strong> with household income of <strong>$85,000 or more</strong>.</span> <span class="sent" data-sid="tc2">She was physically active and wanted multi-sport apparel that combined functionality and fashion.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>채널 전략</h2>
+    <p><span class="sent" data-sid="cs1">Athleta는 카탈로그·온라인·오프라인 매장을 포괄하는 <span class="term" data-tid="t-multichannel">멀티채널</span> 모델로 고객에게 서비스를 제공했다.</span> <span class="sent" data-sid="cs2">카탈로그 쇼핑객 중 웹사이트를 방문한 고객은 연간 <strong>50% 더 많은 금액</strong>을 지출하고 카탈로그 구매 빈도도 11% 증가했다.</span> <span class="sent" data-sid="cs3">경영진은 전자상거래가 다른 채널을 잠식하지 않으며, 오히려 멀티채널 고객이 더 강한 브랜드 충성도를 보인다고 믿었다.</span></p>
+    <h2>제품</h2>
+    <p><span class="sent" data-sid="pr1">Athleta의 제품 라인은 'Athleta Essentials'라는 <span class="term" data-tid="t-privlabel">자체 브랜드(Private-label)</span> 액티브웨어에서 시작됐다.</span> <span class="sent" data-sid="pr2">자체 브랜드 제품 출시는 단순한 마진 확대보다, 기존의 고품질 외부 브랜드와 함께 고객에게 최고의 선택지를 제공하겠다는 의지에서 비롯됐다.</span></p>
+    <h2>목표 고객</h2>
+    <p><span class="sent" data-sid="tc1">초기 목표 고객은 <strong>18~49세의 대학 교육을 받은 여성</strong>으로, 가구 소득 <strong>$85,000 이상</strong>이었다.</span> <span class="sent" data-sid="tc2">이들은 신체적으로 활동적이며 기능성과 패션을 모두 갖춘 멀티스포츠 의류를 원했다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ CULTURE + COMPANY HISTORY ═══════════ -->
+<div class="section-divider">Culture · Company History / 기업 문화 · 회사 역사</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Culture</h2>
+    <p><span class="sent" data-sid="cu1">Athleta worked hard to create an executive culture in which the employees embraced the company's values.</span> <span class="sent" data-sid="cu2">Athleta employees were encouraged to put their families first even though this sometimes meant working from home, because management felt that this created a more dedicated, loyal workforce.</span></p>
+    <p><span class="sent" data-sid="cu3">The open-plan office was designed to facilitate open communication and to accommodate employees who actually participated in the sports Athleta served.</span></p>
+    <h2>Company History</h2>
+    <p><span class="sent" data-sid="ch1">Kerslake raised approximately $590,000 in the <span class="term" data-tid="t-series-e">Series A</span> round at $0.75 per share, followed by subsequent rounds through Series D.</span> <span class="sent" data-sid="ch2">The collapse of the dot-com bubble in the late 1990s and early 2000s had a severe impact on the VC market overall.</span> <span class="sent" data-sid="ch3">Consumer retail-focused VCs had largely exited the market, making the Series E round extremely difficult to complete.</span></p>
+    <p><span class="sent" data-sid="ch4">However, at the end of 1998, nearly all of the seed capital Kerslake had raised in the Series A was exhausted. After reviewing his options, Kerslake decided to raise additional capital in a subsequent round.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>기업 문화</h2>
+    <p><span class="sent" data-sid="cu1">Athleta는 직원들이 회사의 사명을 진심으로 믿고 고객 서비스와 최고 제품에 집중할 수 있는 문화를 만들기 위해 노력했다.</span> <span class="sent" data-sid="cu2">직원들은 가족을 사무실에 데려와도 되고, 인근에서 달리기나 사이클을 즐겨도 되며, 점심 시간에 반려견 산책을 해도 된다는 장려를 받았다.</span></p>
+    <p><span class="sent" data-sid="cu3">오픈 플랜(Open-plan) 사무실은 열린 소통을 촉진하도록 설계됐다. Athleta 직원들은 스포츠에 참여하는 여성의 삶을 직접 체험하는 사람들이었으며, 이러한 진정성이 고객 서비스 전반에 배어 있었다.</span></p>
+    <h2>회사 역사</h2>
+    <p><span class="sent" data-sid="ch1">Kerslake는 Series A 라운드에서 약 $59만 달러를 $0.75 주당 <span class="term" data-tid="t-equity">우선주(Preferred Stock)</span> 가격으로 조달했으며, 이후 Series B~D까지 순차적으로 추가 자금을 유치했다.</span> <span class="sent" data-sid="ch2">1990년대 후반~2000년대 초반의 닷컴 버블(Dot-com Bubble) 붕괴는 VC 시장 전반에 극심한 충격을 가져왔다.</span> <span class="sent" data-sid="ch3">소비자 소매 부문에 특화된 VC들은 대거 시장에서 이탈해 있었으며, 이로 인해 Athleta의 <span class="term" data-tid="t-series-e">Series E</span> 자금 조달이 매우 어려운 상황이 됐다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ PLANS FOR GROWTH — OVERVIEW ═══════════ -->
+<div class="section-divider">Plans for Growth / 성장 계획</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Plans for Growth</h2>
+    <p><span class="sent" data-sid="pg1">From Kerslake's perspective, the venture capitalists were routinely focused on the overall business rather than on the consumer channel.</span></p>
+    <blockquote><span class="sent" data-sid="pg2">"I know that a lot of companies took the money and then privately decided to do what they wanted to do. We stuck to our principles. Building a company while maintaining its integrity is the hardest thing you can do." — Scott Kerslake</span></blockquote>
+    <blockquote><span class="sent" data-sid="pg3">"Not having enough capital is a really hard thing. The Series E funds will allow us to execute on every opportunity that we think is real."</span></blockquote>
+    <p><span class="sent" data-sid="pg4">Athleta's catalog response rate was <strong>6.4%</strong> — more than three times the industry average of 2% — with an average order size of approximately <strong>$138</strong>.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>성장 계획</h2>
+    <p><span class="sent" data-sid="pg1">경영진은 Athleta를 선도적인 멀티채널 여성 스포츠 의류 회사로 성장시키기 위한 전략적 계획을 수립했다.</span></p>
+    <blockquote><span class="sent" data-sid="pg2">"많은 회사들이 투자금을 받고 나서 결국 자신들이 원하는 대로 하기로 결심했습니다. 우리는 우리의 원칙을 고수했습니다. 기업 가치를 지키며 회사를 만드는 것은 가장 어려운 일입니다." — Scott Kerslake</span></blockquote>
+    <blockquote><span class="sent" data-sid="pg3">"자본이 충분하지 않다는 것은 정말 힘든 일입니다. 시리즈 E 자금을 통해 우리는 진짜라고 생각하는 모든 기회를 실행에 옮길 수 있게 됩니다."</span></blockquote>
+    <p><span class="sent" data-sid="pg4">Athleta의 <span class="term" data-tid="t-circulation">카탈로그 응답률</span>은 업계 평균(2%)의 3배 이상인 <strong>6.4%</strong>였으며, 평균 주문 금액은 약 <strong>$138</strong>이었다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ TABLE B ═══════════ -->
+<div class="section-divider">Table B: Operating Results Summary / 운영 실적 요약</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Table B: Summary of Athleta Operating Results (운영 실적 및 예측 요약)</h2>
+    <img src="Captures/Screenshot 2026-03-17 162812.png" alt="Table B" style="max-width:100%;max-height:620px;height:auto;border:1px solid #ccc;cursor:zoom-in;" onclick="window.open(this.src)">
+    <p class="img-cap">Source: Company documents. / 클릭하여 확대</p>
+  </div>
+</div>
+
+<!-- ═══════════ PLANS 1–4 DETAILS ═══════════ -->
+<div class="section-divider">Growth Plan Details / 성장 계획 세부사항</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h3>1. Increase catalog circulation to acquire a larger base of customers</h3>
+    <p><span class="sent" data-sid="p1a">The catalog business relied heavily on acquiring new customers.</span> <span class="sent" data-sid="p1b">Athleta achieved a response rate of <strong>6.4%</strong> and an average order size of <strong>$138</strong> — significantly better than the industry average of 2%.</span> <span class="sent" data-sid="p1c"><strong>$1.48M</strong> of the Series E proceeds would be used to scale annual <span class="term" data-tid="t-circulation">catalog circulation</span> to 6 million copies.</span></p>
+    <h3>2. Improve supplier terms</h3>
+    <p><span class="sent" data-sid="p2a">As of 2002, Athleta was required to prepay certain key suppliers, which negatively impacted cash flow.</span> <span class="sent" data-sid="p2b"><strong>$0.68M</strong> would be used to negotiate Net 30–60 day payment terms, improving working capital efficiency.</span></p>
+    <h3>3. Improve management information systems (MIS) and distribution center</h3>
+    <p><span class="sent" data-sid="p3a">Rapid growth necessitated upgrades to the company's MIS and <span class="term" data-tid="t-distrib">distribution center</span>.</span> <span class="sent" data-sid="p3b"><strong>$0.58M</strong> would be invested in infrastructure improvements.</span></p>
+    <h3>4. Expand Athleta's private-label line</h3>
+    <p><span class="sent" data-sid="p4a">Expanding the Athleta Essentials <span class="term" data-tid="t-privlabel">private-label</span> product line was the key driver of gross margin improvement.</span> <span class="sent" data-sid="p4b">Increasing the private-label mix would reduce dependence on external brands and improve profitability.</span></p>
+    <h3>5. Store expansion and marketing initiatives</h3>
+    <p><span class="sent" data-sid="p5a">The remaining <strong>$0.47M</strong> would fund brand expansion into physical retail and marketing initiatives to drive awareness and customer acquisition.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>성장 계획 세부사항</h2>
+    <h3>1. 카탈로그 발행 확대</h3>
+    <p><span class="sent" data-sid="p1a">카탈로그 사업은 신규 고객 확보에 크게 의존한다.</span> <span class="sent" data-sid="p1b">Athleta는 <strong>6.4%의 응답률</strong>과 <strong>평균 주문 금액 $138</strong>를 달성했는데, 이는 업계 평균(2%)보다 현저히 우수한 성과였다.</span> <span class="sent" data-sid="p1c">Series E 자금 중 <strong>$1.48M</strong>을 투입하여 연간 <span class="term" data-tid="t-circulation">카탈로그 발행 부수</span>를 600만 부로 확대할 계획이었다.</span></p>
+    <h3>2. 공급업체 결제 조건 개선</h3>
+    <p><span class="sent" data-sid="p2a">2002년 당시 Athleta는 일부 주요 공급업체에 <span class="term" data-tid="t-terms">선급 결제(Prepayment)</span> 의무가 있어 현금 흐름에 부정적인 영향을 미쳤다.</span> <span class="sent" data-sid="p2b"><strong>$0.68M</strong>을 활용하여 Net 30~60일 조건을 협상함으로써 운전자본 효율성을 개선할 계획이었다.</span></p>
+    <h3>3. MIS 업그레이드 및 물류센터 개선</h3>
+    <p><span class="sent" data-sid="p3a">급속한 성장으로 경영 정보 시스템(MIS)과 <span class="term" data-tid="t-distrib">물류센터(Distribution Center)</span> 업그레이드가 필요했다.</span> <span class="sent" data-sid="p3b"><strong>$0.58M</strong>을 인프라 개선에 투입할 계획이었다.</span></p>
+    <h3>4. 자체 브랜드 확장</h3>
+    <p><span class="sent" data-sid="p4a">Athleta Essentials <span class="term" data-tid="t-privlabel">자체 브랜드(Private-Label)</span> 제품 라인 확장은 Gross Margin 개선의 핵심 동력이었다.</span> <span class="sent" data-sid="p4b">자체 브랜드 매출 비중을 높임으로써 외부 브랜드 의존도를 낮추고 수익성을 향상시키는 전략이었다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ TABLE C ═══════════ -->
+<div class="section-divider">Series E Financing Requirements / 자금 조달 내역</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Table C: Athleta Financing Requirements</h2>
+    <table>
+      <tr><th>Area</th><th>Purpose of Proceeds</th><th>$M</th></tr>
+      <tr><td><span class="term" data-tid="t-circulation">Catalog Circulation</span> Growth</td><td>Scale mailings to 6M/year</td><td>$1.48</td></tr>
+      <tr><td>Supplier <span class="term" data-tid="t-terms">Terms</span> Improvement</td><td>Eliminate prepayment requirements</td><td>$0.68</td></tr>
+      <tr><td>Infrastructure / <span class="term" data-tid="t-distrib">Distribution Center</span></td><td>MIS &amp; dist. center upgrade</td><td>$0.58</td></tr>
+      <tr><td>Human Resources</td><td>Key hires</td><td>$0.22</td></tr>
+      <tr><td><span class="term" data-tid="t-privlabel">Private-Label</span> / Store / Marketing</td><td>Brand expansion &amp; marketing</td><td>$0.47</td></tr>
+      <tr class="total"><td>Total</td><td></td><td>$3.43</td></tr>
+    </table>
+    <p class="note">Source: Company documents.</p>
+  </div>
+  <div class="cell kr">
+    <h2>Table C: Athleta 자금 조달 내역</h2>
+    <table>
+      <tr><th>항목</th><th>자금 용도</th><th>$M</th></tr>
+      <tr><td><span class="term" data-tid="t-circulation">카탈로그 발행(Catalog Circulation)</span> 확대</td><td>연간 600만부로 확대</td><td>$1.48</td></tr>
+      <tr><td>공급업체 결제 <span class="term" data-tid="t-terms">조건(Terms)</span> 개선</td><td>선급 결제 의무 해소</td><td>$0.68</td></tr>
+      <tr><td>인프라 / <span class="term" data-tid="t-distrib">물류센터(Distribution Center)</span></td><td>MIS 및 물류센터 업그레이드</td><td>$0.58</td></tr>
+      <tr><td>인적 자원</td><td>핵심 인력 채용</td><td>$0.22</td></tr>
+      <tr><td><span class="term" data-tid="t-privlabel">자체 브랜드(Private-Label)</span> / 매장 / 마케팅</td><td>브랜드 확장 및 마케팅</td><td>$0.47</td></tr>
+      <tr class="total"><td>합계</td><td></td><td>$3.43</td></tr>
+    </table>
+    <p class="note">출처: 회사 자료</p>
+  </div>
+</div>
+
+<div class="vocab-panel">
+  <h3>Table C — 주요 용어 (사전 해설 · 더블클릭으로 AI 심화 설명 가능)</h3>
+  <div class="vgrid">
+    <div class="vcard">
+      <div class="vt">Series E / 시리즈 E</div>
+      <div class="vkr">다섯 번째 우선주 투자 라운드</div>
+      <div class="vc1"><span class="badge bg">일반</span>A→B→C→D→E 순서의 투자 라운드</div>
+      <div class="vc2"><span class="badge bv">VC</span>후기 성장 단계 자금. 라운드마다 밸류에이션 상승·지분 희석(Dilution) 누적. 후기일수록 Term Sheet 복잡화 — 청산 우선권 배수, 참여 우선주 등.</div>
+    </div>
+    <div class="vcard">
+      <div class="vt">Equity Capital / 자기자본</div>
+      <div class="vkr">주식 발행으로 조달한 자본, 상환 의무 없음</div>
+      <div class="vc1"><span class="badge bg">일반</span>부채(Debt)와 달리 이자·원금 상환 없는 자본</div>
+      <div class="vc2"><span class="badge bv">VC</span>VC는 우선주(Preferred Stock)로 투자. 청산 우선권(Liquidation Preference), 반희석(Anti-dilution), 이사회 참여권(Board Seat) 등 특별 권리 수반.</div>
+    </div>
+    <div class="vcard">
+      <div class="vt">Catalog Circulation / 카탈로그 발행 부수</div>
+      <div class="vkr">인쇄·배포되는 카탈로그 총 부수</div>
+      <div class="vc1"><span class="badge bg">일반</span>잡지·카탈로그 등의 총 배포 수량</div>
+      <div class="vc2"><span class="badge bv">VC</span>CAC의 핵심 결정 요인. ROI = Response Rate × AOV ÷ 카탈로그 단가. Athleta 6.4% vs 업계 평균 2% → 발행 부수 확대 기대 ROI 높음.</div>
+    </div>
+    <div class="vcard">
+      <div class="vt">Private-Label Brand / 자체 브랜드</div>
+      <div class="vkr">소매업체가 직접 기획·제조하는 PB 상품</div>
+      <div class="vc1"><span class="badge bg">일반</span>OEM/ODM 방식의 자체 브랜드 상품</div>
+      <div class="vc2"><span class="badge bv">VC</span>외부 브랜드 의존도 축소 → Gross Margin 개선(+5~15%p). VC는 자체 브랜드 매출 비중을 마진 레버(Margin Lever)로 평가.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FINANCING OPTIONS ═══════════ -->
+<div class="section-divider">Financing Options / 파이낸싱 옵션</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Financing Options</h2>
+    <p><span class="sent" data-sid="fo0">Kerslake and Teno considered three potential sources of financing: venture capital, angel investors, and commercial banks.</span></p>
+    <h3>Venture Capital</h3>
+    <p><span class="sent" data-sid="fo1">The first quarter of 2002 marked a cyclical downturn in the VC market (see Exhibit 5).</span> <span class="sent" data-sid="fo2">Hundreds of companies had declared bankruptcy, and <strong>consumer retail-focused VCs had largely exited the market</strong>.</span> <span class="sent" data-sid="fo3">Post dot-com bust, VCs demanded a strong growth story and a clear exit path.</span></p>
+    <p><span class="sent" data-sid="fo4">It was difficult to find a VC that invested in specialty retail companies — especially with strong, proven concepts, strong management teams, and aggressive growth. Most of those that did were willing to move quickly when they found the right deal.</span></p>
+    <h3>Angel Investors</h3>
+    <p><span class="sent" data-sid="fo5">In 2002, there were literally thousands of angel investors, and generally they could provide smaller investments in the range of <strong>$750,000 to $2 million</strong>.</span> <span class="sent" data-sid="fo6">They tended to want to be <strong>"partners"</strong> rather than purely financial investors.</span> <span class="sent" data-sid="fo7">Because the amount of capital from any single angel was limited, Athleta would need to assemble multiple angels to meet the $3.43M target — a logistical challenge.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>파이낸싱 옵션</h2>
+    <p><span class="sent" data-sid="fo0">Kerslake와 Teno는 세 가지 자금 조달 원천을 검토했다: 벤처 캐피탈(VC), 엔젤 투자자, 상업은행.</span></p>
+    <h3>벤처 캐피탈 (Venture Capital)</h3>
+    <p><span class="sent" data-sid="fo1">2002년 1분기는 VC 시장의 바닥 국면이었다 (Exhibit 5 참조).</span> <span class="sent" data-sid="fo2">수백 개의 기업이 파산을 선언했고, <strong>소비자 소매 부문에 특화된 VC들은 이미 시장에서 대거 이탈</strong>해 있었다.</span> <span class="sent" data-sid="fo3">닷컴 버블 붕괴 이후 VC들은 강력한 성장 스토리와 명확한 투자 회수(Exit) 경로를 더욱 엄격하게 요구했다.</span></p>
+    <h3>엔젤 투자자 (Angel Investors)</h3>
+    <p><span class="sent" data-sid="fo5">2002년 당시 수천 명의 <span class="term" data-tid="t-equity">엔젤 투자자</span>들이 있었으며, 일반적으로 <strong>$75만~$200만 달러 규모</strong>의 소규모 투자를 제공할 수 있었다.</span> <span class="sent" data-sid="fo6">이들은 순수한 재무적 수익보다는 회사의 <strong>"파트너(Partner)"</strong>가 되기를 원하는 경향이 있었다.</span> <span class="sent" data-sid="fo7">단일 엔젤의 투자 규모가 제한적이어서 필요한 $3.43M을 충당하기 위해서는 여러 명의 엔젤을 모아야 한다는 어려움이 있었다.</span></p>
+  </div>
+</div>
+
+<div class="bi-row">
+  <div class="cell en">
+    <h3>Commercial Banks</h3>
+    <p><span class="sent" data-sid="fo8">Raising a small amount of debt would buy enough time to raise the <span class="term" data-tid="t-series-e">Series E</span> from other sources.</span> <span class="sent" data-sid="fo9">Unfortunately, <strong>commercial banks were very tight-fisted in 2002</strong>, and had low appetite for lending to consumer retail companies.</span></p>
+    <h2>Conclusion</h2>
+    <p><span class="sent" data-sid="concl1">Kerslake was eager to develop a sound financing plan for Athleta.</span> <span class="sent" data-sid="concl2">Every day, his company helped hundreds of women find athletic apparel that met their needs.</span> <span class="sent" data-sid="concl3">And Kerslake was convinced that bringing Athleta into physical retail outlets would open up dozens of new opportunities for the company to serve female athletes.</span> <span class="sent" data-sid="concl4">Now all he had to do was secure the capital necessary to take Athleta to the next level.</span></p>
+  </div>
+  <div class="cell kr">
+    <h3>상업은행 (Commercial Banks)</h3>
+    <p><span class="sent" data-sid="fo8">소액의 부채(Debt)를 조달하면 다른 소스에서 <span class="term" data-tid="t-series-e">시리즈 E</span>를 확보할 시간을 벌 수 있었다.</span> <span class="sent" data-sid="fo9">그러나 <strong>2002년 상업은행들은 매우 인색한(tight-fisted) 태도</strong>를 보였으며, 소비자 소매 기업에 대한 대출 의향이 낮은 상황이었다.</span></p>
+    <h2>결론</h2>
+    <p><span class="sent" data-sid="concl1">Kerslake는 Athleta를 위한 건전한 자금 조달 계획을 수립하기 위해 분주하게 움직였다.</span> <span class="sent" data-sid="concl2">매일 그의 회사는 수백 명의 여성이 자신의 니즈에 맞는 스포츠 의류를 찾는 데 도움을 주고 있었다.</span> <span class="sent" data-sid="concl3">Kerslake는 Athleta가 오프라인 소매 매장으로 진출하면 여성 운동선수를 위한 수십 가지 새로운 기회가 열릴 것이라고 확신했다.</span> <span class="sent" data-sid="concl4">이제 남은 과제는 Athleta를 다음 단계로 이끌 자본을 확보하는 것뿐이었다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ EXHIBIT 1 ═══════════ -->
+<div class="section-divider">Exhibit 1: Management Biographies / 경영진 약력</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Exhibit 1: Management Biographies (경영진 약력)</h2>
+    <img src="Captures/Screenshot 2026-03-17 162845.png" alt="Exhibit 1 Management Bios" style="max-width:100%;max-height:620px;height:auto;border:1px solid #ccc;cursor:zoom-in;" onclick="window.open(this.src)">
+    <p class="img-cap">Source: Company documents. / 클릭하여 확대</p>
+  </div>
+</div>
+<div class="bi-row">
+  <div class="cell full">
+    <img src="Captures/Screenshot 2026-03-17 162852.png" alt="Exhibit 1 continued" style="max-width:100%;max-height:620px;height:auto;border:1px solid #ccc;cursor:zoom-in;" onclick="window.open(this.src)">
+    <p class="img-cap">Source: Company documents. / 클릭하여 확대</p>
+  </div>
+</div>
+<div class="vocab-panel">
+  <h3>Exhibit 1 — 경영진 약력 요약</h3>
+  <div class="vgrid">
+    <div class="vcard"><div class="vt">Scott Kerslake</div><div class="vkr">사장 겸 CEO</div><div class="vc1">Sapient Corporation 마케팅 이사 출신. 1996년 Sapient IPO 주도. Athleta 창업자.</div></div>
+    <div class="vcard"><div class="vt">Joe Teno</div><div class="vkr">수석 부사장 운영 (SVP of Operations)</div><div class="vc1">Travelers $65M 직접 마케팅 사업 총괄 이사 출신. 운영·인적 자원 13년 경력.</div></div>
+    <div class="vcard"><div class="vt">Noelle Della Chiesa</div><div class="vkr">컨트롤러 (Controller)</div><div class="vc1">재고 예측·계획·구매 18년 경력. Roland Mendez 수석 재정 기획가 출신.</div></div>
+    <div class="vcard"><div class="vt">Elizabeth Howland</div><div class="vkr">유통 이사 (Director of Circulation)</div><div class="vc1">카탈로그 유통·마케팅 전문가. Gymboree 상품 기획 이사 출신.</div></div>
+    <div class="vcard"><div class="vt">Tami Anderson</div><div class="vkr">마케팅 & 브랜드 개발 이사</div><div class="vc1">Gryphon Books 마케팅 이사 출신. 포춘 500대 기업 마케터 경력.</div></div>
+    <div class="vcard"><div class="vt">Ellen Krimmel</div><div class="vkr">고객 서비스 이사</div><div class="vc1">Saturn Women's Cycling Team 기술 이사, Esprit 의류 디자이너 출신. University of Vermont MVP.</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ EXHIBIT 2 ═══════════ -->
+<div class="section-divider">Exhibit 2: Women's Sportswear Competitive Space / 경쟁 구도</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Exhibit 2: Women's Sportswear Competitive Space (여성 스포츠웨어 경쟁 구도)</h2>
+    <img src="Captures/Screenshot 2026-03-17 162859.png" alt="Exhibit 2 Competitive Space" style="max-width:100%;max-height:620px;height:auto;border:1px solid #ccc;cursor:zoom-in;" onclick="window.open(this.src)">
+    <p class="img-cap">Source: Company documents. R=Offline Retailer / O=Online Retailer / C=Catalog Retailer</p>
+  </div>
+</div>
+
+<!-- ═══════════ EXHIBIT 3 ═══════════ -->
+<div class="section-divider">Exhibit 3: Historical Financials / 과거 재무제표</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Income Statement (손익계산서)</h2>
+    <img src="Captures/Screenshot 2026-03-17 162905.png" alt="Exhibit 3 Income Statement">
+    <p class="img-cap">Source: Company documents.</p>
+  </div>
+</div>
+<div class="vocab-panel">
+  <h3>손익계산서 주요 용어 — 더블클릭으로 AI 심화 설명 가능</h3>
+  <div class="vgrid">
+    <div class="vcard"><div class="vt">Net Sales / 순매출액</div><div class="vc1"><span class="badge bg">일반</span>총매출 − 반품 − 할인</div><div class="vc2"><span class="badge bv">VC</span>성장성 평가 핵심 KPI. Athleta: $1.4M→$7.7M→$14.3M (FY99~01). YoY ~85% 성장.</div></div>
+    <div class="vcard"><div class="vt">COGS / 매출원가</div><div class="vc1"><span class="badge bg">일반</span>상품 제조·구매 직접 원가</div><div class="vc2"><span class="badge bv">VC</span>Gross Margin = (Net Sales−COGS)/Net Sales. Athleta ~43% — 소매업 기준 양호. Private-Label 확장 시 개선 여지.</div></div>
+    <div class="vcard"><div class="vt">Operating Income (EBIT) / 영업이익</div><div class="vc1"><span class="badge bg">일반</span>이자·세금 차감 전 영업 이익</div><div class="vc2"><span class="badge bv">VC</span>Path to Profitability 핵심 지표. Break-even Revenue가 언제·어느 규모에서 달성되는지 검토.</div></div>
+    <div class="vcard"><div class="vt">Marketing Expense / 마케팅 비용</div><div class="vc1"><span class="badge bg">일반</span>카탈로그 인쇄·배송·광고 비용</div><div class="vc2"><span class="badge bv">VC</span>매출 대비 ~29%. 영업 적자의 주요 원인. 매출 성장에 따라 비중 감소 여부(Operating Leverage) 판단.</div></div>
+    <div class="vcard"><div class="vt">Retained Earnings (Deficit) / 누적 결손금</div><div class="vc1"><span class="badge bg">일반</span>설립 이후 누적 순손익</div><div class="vc2"><span class="badge bv">VC</span>Athleta ~$3.41M(FY01). 성장 투자성 결손은 용인, 구조적 비효율 결손은 경고 신호.</div></div>
+    <div class="vcard"><div class="vt">Depreciation &amp; Amortization / 감가상각</div><div class="vc1"><span class="badge bg">일반</span>자산 가치 소모분 비용 인식</div><div class="vc2"><span class="badge bv">VC</span>비현금 비용(Non-cash). EBITDA = EBIT + D&amp;A. VC 밸류에이션 시 EV/EBITDA 배수 사용.</div></div>
+  </div>
+</div>
+
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Balance Sheet (대차대조표)</h2>
+    <img src="Captures/Screenshot 2026-03-17 162924.png" alt="Exhibit 3 Balance Sheet">
+    <p class="img-cap">Source: Company documents.</p>
+  </div>
+</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Statement of Cash Flows (현금흐름표)</h2>
+    <img src="Captures/Screenshot 2026-03-17 162935.png" alt="Exhibit 3 Cash Flow">
+    <p class="img-cap">Source: Company documents.</p>
+  </div>
+</div>
+
+<!-- ═══════════ EXHIBIT 4 ═══════════ -->
+<div class="section-divider">Exhibit 4: Financial Projections / 재무 예측</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Projected Income Statement (예상 손익계산서)</h2>
+    <img src="Captures/Screenshot 2026-03-17 163026.png" alt="Exhibit 4 Projected IS">
+    <p class="img-cap">Source: Company documents.</p>
+  </div>
+</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Projected Balance Sheet (예상 대차대조표)</h2>
+    <img src="Captures/Screenshot 2026-03-17 163110.png" alt="Exhibit 4 Projected BS">
+    <p class="img-cap">Source: Company documents.</p>
+  </div>
+</div>
+
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Projected Cash Flow Statement (예상 현금흐름표)</h2>
+    <img src="Captures/Screenshot 2026-03-17 163151.png" alt="Exhibit 4 Projected CF">
+    <p class="img-cap">Source: Company documents.</p>
+  </div>
+</div>
+
+<!-- ═══════════ EXHIBIT 5 & 6 ═══════════ -->
+<div class="section-divider">Exhibit 5 &amp; 6</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Exhibit 5: VC Financing Trends (VC 파이낸싱 트렌드, 1995–2002)</h2>
+    <img src="Captures/Screenshot 2026-03-17 163157.png" alt="Exhibit 5">
+    <p class="img-cap">Source: Venture One; Equity Financings for Venture-Backed Companies, by Industry Group (1995–1Q 2002).</p>
+  </div>
+</div>
+<div class="bi-row">
+  <div class="cell full">
+    <h2>Exhibit 6: Specialty Retailer Comparables (전문 소매업체 비교)</h2>
+    <img src="Captures/Screenshot 2026-03-17 163204.png" alt="Exhibit 6">
+    <p class="img-cap">Source: Merrill Lynch (Specialty Retail Scorecard, April 2002).</p>
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ── Static tooltip ── -->
+<div id="tip">
+  <div class="t-title" id="tt-title">—</div>
+  <div class="t-label">일반적 의미</div>
+  <div class="t-common" id="tt-common">—</div>
+  <div class="t-label">VC 업계에서의 의미</div>
+  <div id="tt-vc" class="t-vc">—</div>
+</div>
+
+<!-- ── AI Panel ── -->
+<div id="ai-panel">
+  <div id="ai-panel-header">
+    <span class="ai-label">AI 설명</span>
+    <span id="ai-term">—</span>
+    <span id="ai-model-tag">—</span>
+    <button id="ai-close" onclick="closeAI()">✕</button>
+  </div>
+  <div id="ai-body">
+    <span id="ai-spinner"></span>
+    <span id="ai-content"></span>
+    <span id="ai-cursor" style="display:none"></span>
+    <span id="ai-error"></span>
+  </div>
+</div>
+
+<button id="ask-btn" onclick="openChat()">&#128172; AI에게 질문</button>
+
+<div id="chat-popup">
+  <div id="chat-hdr">
+    <span id="chat-title">&#128172; 케이스 Q&amp;A</span>
+    <span id="chat-snippet"></span>
+    <button class="ccbtn" id="chat-min-btn" onclick="toggleChatMin()" title="최소화">&#9660;</button>
+    <button class="ccbtn" onclick="closeChat()" title="닫기">&#x2715;</button>
+  </div>
+  <div id="chat-ctx"></div>
+  <div id="chat-msgs"></div>
+  <div id="chat-foot">
+    <textarea id="chat-input" placeholder="이 문장에 대해 질문하세요...&#10;(Ctrl+Enter: 전송)"></textarea>
+    <button id="chat-send" onclick="sendChat()">전송</button>
+  </div>
+</div>
+
+<button id="clear-btn" onclick="clearAll()">선택 해제 (Esc)</button>
+
+<footer id="copyright-footer">
+  Copyright &copy; 2003 Harvard Business School Publishing. Case 9-803-045 &ldquo;Athleta Corporation&rdquo; by William A. Sahlman &amp; Alexis Friedman-Harris.<br>
+  All rights reserved. Reproduced for <em>educational purposes only</em> under Fair Use (17 U.S.C. &sect;107). Commercial use, redistribution, or republication strictly prohibited.<br>
+  DMCA takedown requests honored — contact via GitHub Issues.
+</footer>
+
+<script>
+// ─── App mode & state ─────────────────────────────────────
+let appMode = 'static';   // 'local' | 'static'
+let termsData = {};
+let currentModel = 'qwen3.5:2b';
+
+const SYSTEM_PROMPT =
+  '당신은 벤처 캐피탈(VC)과 재무/경영 분야의 전문가입니다. ' +
+  '사용자가 제공하는 영어 단어·표현을 반드시 아래 형식 그대로 출력하세요.\n\n' +
+  '• **일반적 의미:** (1문장)\n\n' +
+  '• **맥락적 의미:** (문맥 기반 VC/투자 해석, 2문장 이내)\n\n' +
+  '규칙: 두 항목 사이에 반드시 빈 줄 하나를 넣으세요. 전체 80단어 이내.';
+
+// ─── Password gate ────────────────────────────────────────
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+
+(function initAuth() {
+  if (sessionStorage.getItem(AUTH_KEY) === AUTH_VAL) {
+    document.getElementById('pw-gate').style.display = 'none';
+  } else {
+    document.getElementById('pw-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPw();
+    });
+  }
+})();
+
+function checkPw() {
+  const v = document.getElementById('pw-input').value;
+  if (v === AUTH_VAL) {
+    sessionStorage.setItem(AUTH_KEY, AUTH_VAL);
+    document.getElementById('pw-gate').style.display = 'none';
+  } else {
+    document.getElementById('pw-error').textContent = '비밀번호가 틀렸습니다.';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+// ─── Static term definitions (inline fallback for hover tips) ──
+const TERMS = {
+  't-series-e':  { title:'Series E / 시리즈 E', common:'A→B→C→D→E 순서의 다섯 번째 우선주 투자 라운드.', vc:'후기 성장 단계 자금 조달. 각 라운드마다 지분 희석(Dilution) 누적. 후기일수록 Term Sheet 복잡화 — 청산 우선권 배수(Liquidation Preference), 참여 우선주(Participating Preferred) 등.' },
+  't-equity':    { title:'Equity Capital / 자기자본', common:'주식 발행으로 조달한 자본. 상환 의무 없음.', vc:'VC는 우선주(Preferred Stock)로 투자. 청산 우선권, 반희석(Anti-dilution), 이사회 참여권(Board Seat) 등 특별 권리 수반.' },
+  't-multichannel':{ title:'Multi-channel / 멀티채널', common:'카탈로그·온라인·오프라인 복수 채널 운영.', vc:'LTV 극대화 전략. 채널 시너지로 CAC 효율화. 카탈로그+웹 고객은 지출 50% 증가. 채널 갈등(Cannibalization) 리스크 존재.' },
+  't-circulation':{ title:'Catalog Circulation / 카탈로그 발행 부수', common:'카탈로그 인쇄·배포 총 부수.', vc:'ROI = Response Rate × AOV ÷ 카탈로그 단가. Athleta 6.4% vs 업계 2% → 발행 확대 기대 ROI 높음.' },
+  't-terms':     { title:'Supplier Terms / 공급업체 결제 조건', common:'Net 30 = 납품 후 30일 내 지급. 선급(Prepayment) = 납품 전 지급.', vc:'선급 조건은 Working Capital 잠식. Net 30~60 협상 → 현금 효율 개선. VC는 협상력을 비즈니스 성숙도 지표로 봄.' },
+  't-privlabel': { title:'Private-Label Brand / 자체 브랜드', common:'소매업체가 직접 기획·제조하는 PB 상품.', vc:'외부 브랜드 의존도 축소 → Gross Margin 개선(+5~15%p). VC는 자체 브랜드 비중을 마진 레버로 평가.' },
+  't-distrib':   { title:'Distribution Center / 물류센터', common:'상품 보관·포장·배송 처리 시설.', vc:'Operating Leverage 핵심 인프라. 고정비 성격 → 매출 증가 시 단위 비용 감소.' },
+};
+
+// ─── Sentence hover / click ───────────────────────────────
+document.querySelectorAll('.sent').forEach(el => {
+  const sid = el.dataset.sid;
+  el.addEventListener('mouseenter', () => { qs(`.sent[data-sid="${sid}"]`, 'h-on', true); });
+  el.addEventListener('mouseleave', () => { qs(`.sent[data-sid="${sid}"]`, 'h-on', false); });
+  el.addEventListener('click', e => {
+    e.stopPropagation();
+    const was = el.classList.contains('on');
+    qs(`.sent[data-sid="${sid}"]`, 'on', !was);
+    updateAskBtn();
+  });
+});
+
+// ─── Term hover + static tooltip + click ─────────────────
+const tip = document.getElementById('tip');
+document.querySelectorAll('.term').forEach(el => {
+  const tid = el.dataset.tid;
+  el.addEventListener('mouseenter', e => {
+    qs(`.term[data-tid="${tid}"]`, 'h-on', true);
+    if (TERMS[tid]) {
+      const d = TERMS[tid];
+      document.getElementById('tt-title').textContent = d.title;
+      document.getElementById('tt-common').textContent = d.common;
+      document.getElementById('tt-vc').textContent = d.vc;
+      tip.style.display = 'block';
+      moveTip(e);
+    }
+  });
+  el.addEventListener('mousemove', moveTip);
+  el.addEventListener('mouseleave', () => {
+    qs(`.term[data-tid="${tid}"]`, 'h-on', false);
+    tip.style.display = 'none';
+  });
+  el.addEventListener('click', e => {
+    e.stopPropagation();
+    const was = el.classList.contains('on');
+    qs(`.term[data-tid="${tid}"]`, 'on', !was);
+  });
+});
+
+function moveTip(e) {
+  const tw = tip.offsetWidth || 340, th = tip.offsetHeight || 140;
+  tip.style.left = (e.clientX + 18 + tw > window.innerWidth ? e.clientX - tw - 8 : e.clientX + 18) + 'px';
+  tip.style.top  = (e.clientY + 18 + th > window.innerHeight ? e.clientY - th - 8 : e.clientY + 18) + 'px';
+}
+
+function qs(sel, cls, on) {
+  document.querySelectorAll(sel).forEach(el => el.classList.toggle(cls, on));
+}
+
+// ─── Clear ────────────────────────────────────────────────
+function clearAll() {
+  document.querySelectorAll('.on').forEach(el => el.classList.remove('on'));
+  updateAskBtn();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { clearAll(); closeAI(); } });
+document.addEventListener('click', e => {
+  if (!e.target.closest('#ai-panel') && !e.target.closest('#chat-popup') && !e.target.closest('#ask-btn') && !e.target.closest('.term') && !e.target.closest('.sent') && !e.target.closest('#pw-gate')) clearAll();
+});
+
+// ─── AI Panel ────────────────────────────────────────────
+const aiPanel   = document.getElementById('ai-panel');
+const aiTerm    = document.getElementById('ai-term');
+const aiContent = document.getElementById('ai-content');
+const aiCursor  = document.getElementById('ai-cursor');
+const aiError   = document.getElementById('ai-error');
+const aiSpinner = document.getElementById('ai-spinner');
+const aiModelTag= document.getElementById('ai-model-tag');
+
+let activeController = null;
+
+function closeAI() {
+  if (activeController) { activeController.abort(); activeController = null; }
+  aiPanel.classList.remove('open');
+}
+
+// ─── openAI: dispatch to local or static ─────────────────
+function openAI(text, context) {
+  if (!text.trim()) return;
+  if (activeController) { activeController.abort(); activeController = null; }
+
+  aiTerm.textContent = '"' + text + '"';
+  aiContent.textContent = '';
+  aiError.textContent = '';
+  aiCursor.style.display = 'none';
+  aiSpinner.textContent = '검색 중...';
+  aiPanel.classList.add('open');
+
+  if (appMode === 'local') {
+    openAI_local(text, context);
+  } else {
+    openAI_static(text);
+  }
+}
+
+function openAI_static(text) {
+  aiSpinner.textContent = '';
+  const key = text.trim().toLowerCase().replace(/[^a-z0-9\s&/-]/g, '').trim();
+
+  // Exact match
+  let entry = termsData[key];
+
+  // Partial match fallback
+  if (!entry) {
+    for (const k of Object.keys(termsData)) {
+      if (k.includes(key) || key.includes(k)) {
+        entry = termsData[k];
+        break;
+      }
+    }
+  }
+
+  if (entry) {
+    aiContent.innerHTML =
+      '<strong>• 일반적 의미:</strong> ' + entry.common +
+      '<br><br><strong>• 맥락적 의미:</strong> ' + entry.context;
+  } else {
+    aiContent.textContent = '이 단어는 사전에 등록되지 않았습니다.';
+  }
+}
+
+function openAI_local(text, context) {
+  const ctx = context ? '\n문맥: "' + context.slice(0, 200) + '"' : '';
+  const prompt = '설명할 표현: "' + text + '"' + ctx;
+
+  aiModelTag.textContent = '연결 중';
+  aiCursor.style.display = 'inline-block';
+  activeController = new AbortController();
+
+  fetch('http://localhost:11434/api/generate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: currentModel,
+      system: SYSTEM_PROMPT,
+      prompt: prompt,
+      stream: true,
+      think: false,
+      options: { temperature: 0.2, num_predict: 450 },
+    }),
+    signal: activeController.signal,
+  }).then(async resp => {
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    aiSpinner.textContent = '';
+    aiModelTag.textContent = currentModel;
+
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const d = JSON.parse(line);
+          if (d.response) appendToken(d.response);
+          if (d.done) { aiCursor.style.display = 'none'; }
+        } catch (_) {}
+      }
+    }
+    aiCursor.style.display = 'none';
+  }).catch(err => {
+    if (err.name === 'AbortError') return;
+    aiSpinner.textContent = '';
+    aiError.textContent = '오류: ' + err.message;
+    aiCursor.style.display = 'none';
+  });
+}
+
+function appendToken(tok) {
+  aiContent.textContent += tok;
+  const raw = aiContent.textContent;
+  aiContent.innerHTML = raw
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(•\s*)?(일반적 의미\s*:)/g, '<strong>• 일반적 의미:</strong>')
+    .replace(/(•\s*)?(맥락적 의미\s*:)/g, '<br><br><strong>• 맥락적 의미:</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+// ─── Double-click = explain ───────────────────────────────
+document.addEventListener('dblclick', e => {
+  if (e.target.closest('#ai-panel') || e.target.closest('button') || e.target.closest('#pw-gate')) return;
+  tip.style.display = 'none';
+
+  const sel = window.getSelection();
+  let text = sel.toString().trim();
+
+  if (!text && e.target.closest('.container')) {
+    const range = document.caretRangeFromPoint
+      ? document.caretRangeFromPoint(e.clientX, e.clientY)
+      : null;
+    if (range) {
+      range.expand('word');
+      text = range.toString().trim();
+    }
+  }
+
+  if (!text) return;
+  e.preventDefault();
+  const ctx = e.target.closest('p, blockquote, td, .sent')?.textContent?.trim() || '';
+  openAI(text, ctx);
+});
+
+// ─── Enter key on text selection ─────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.target.matches('input,textarea')) {
+    const sel = window.getSelection().toString().trim();
+    if (sel.length > 1 && sel.length < 200) {
+      e.preventDefault();
+      openAI(sel, '');
+    }
+  }
+});
+
+// ─── Mode detection on load ───────────────────────────────
+window.addEventListener('load', async () => {
+  const badge = document.getElementById('model-display');
+
+  // Load terms.json (runs in background regardless of mode)
+  fetch('../terms.json')
+    .then(r => r.json())
+    .then(d => { termsData = d; })
+    .catch(() => {});
+
+  // Try to connect to Ollama directly
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000);
+    const r = await fetch('http://localhost:11434/api/tags', { signal: controller.signal });
+    clearTimeout(timeout);
+    const d = await r.json();
+    const names = (d.models || []).map(m => m.name);
+    const has = name => names.some(n => n === name || n.startsWith(name.split(':')[0]));
+    const prefs = ['qwen3.5:2b', 'qwen3.5:4b', 'qwen3:1.7b', 'qwen2.5:1.5b', 'llama3.2:1b'];
+    const model = prefs.find(p => has(p)) || null;
+    if (model) {
+      currentModel = model;
+      appMode = 'local';
+      badge.textContent = 'AI: ' + model;
+      badge.style.background = '#0e4f1a';
+      badge.style.color = '#6eff8a';
+    } else {
+      setStaticMode(badge);
+    }
+  } catch (_) {
+    setStaticMode(badge);
+  }
+});
+
+function setStaticMode(badge) {
+  appMode = 'static';
+  badge.textContent = '사전 모드';
+  badge.style.background = '#1a4f8a';
+  badge.style.color = '#7ec8ff';
+}
+
+// ─── Ask-AI button ────────────────────────────────────────
+let chatContext = '';
+let chatHistory = []; // {role:'user'|'ai', text}
+let chatMinimized = false;
+
+function showStaticHelp() {
+  const promptText =
+    'I\'m reading the HBS case "Athleta Corporation" (9-803-045).\n' +
+    'The following sentence is from the case:\n\n"' + chatContext + '"\n\n' +
+    'Please explain what this means in the context of venture capital investing. Answer in Korean.';
+
+  const d = document.createElement('div');
+  d.className = 'cmsg help';
+  d.innerHTML =
+    '<h4>Ollama 로컬 AI 설치 (5분)</h4>' +
+    '<ol>' +
+    '<li><a href="https://ollama.com" target="_blank">ollama.com</a> 다운로드 &amp; 설치</li>' +
+    '<li>터미널: <code>ollama pull qwen3.5:2b</code></li>' +
+    '<li>실행: <code>OLLAMA_ORIGINS=* ollama serve</code></li>' +
+    '<li>이 페이지 새로고침 → 배지가 초록으로 변경되면 준비 완료</li>' +
+    '</ol>' +
+    '<h4>대안: ChatGPT / Claude에 직접 질문</h4>' +
+    '<div class="prompt-box" id="static-prompt">' + escHtml(promptText) + '</div>' +
+    '<button class="copy-btn" id="copy-prompt-btn" onclick="copyPrompt()">프롬프트 복사</button>';
+
+  document.getElementById('chat-msgs').appendChild(d);
+  scrollChat();
+}
+
+function copyPrompt() {
+  const el = document.getElementById('static-prompt');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = document.getElementById('copy-prompt-btn');
+    btn.textContent = '복사됨!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '프롬프트 복사'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function updateAskBtn() {
+  const sel = document.querySelectorAll('.sent.on');
+  const btn = document.getElementById('ask-btn');
+  if (sel.length === 0) { btn.style.display = 'none'; return; }
+  // Prefer EN cell text; fall back to KR
+  const enNodes = document.querySelectorAll('.cell.en .sent.on');
+  const nodes = enNodes.length ? enNodes : document.querySelectorAll('.cell.kr .sent.on');
+  chatContext = Array.from(nodes).map(n => n.textContent.trim()).join(' ');
+  btn.style.display = 'flex';
+}
+
+function openChat() {
+  const popup = document.getElementById('chat-popup');
+  document.getElementById('chat-ctx').textContent = chatContext;
+  document.getElementById('chat-snippet').textContent =
+    chatContext.length > 44 ? chatContext.slice(0, 44) + '…' : chatContext;
+  popup.classList.add('open');
+  popup.classList.remove('minimized');
+  chatMinimized = false;
+  document.getElementById('chat-min-btn').textContent = '\u25BC';
+  if (chatHistory.length === 0) {
+    addSysMsg('선택된 문장을 바탕으로 자유롭게 질문하세요.');
+  }
+  document.getElementById('chat-input').focus();
+}
+
+function closeChat() {
+  document.getElementById('chat-popup').classList.remove('open');
+  chatHistory = [];
+  document.getElementById('chat-msgs').innerHTML = '';
+}
+
+function toggleChatMin() {
+  chatMinimized = !chatMinimized;
+  document.getElementById('chat-popup').classList.toggle('minimized', chatMinimized);
+  document.getElementById('chat-min-btn').textContent = chatMinimized ? '\u25B2' : '\u25BC';
+}
+
+function addSysMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'cmsg sys';
+  d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d);
+  scrollChat();
+}
+
+function addMsg(role, text) {
+  chatHistory.push({ role, text });
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + role;
+  d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d);
+  scrollChat();
+  return d;
+}
+
+function scrollChat() {
+  const m = document.getElementById('chat-msgs');
+  m.scrollTop = m.scrollHeight;
+}
+
+function mdToHtml(t) {
+  return t
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/^### (.+)$/gm, '<strong>$1</strong>')
+    .replace(/^## (.+)$/gm, '<strong>$1</strong>')
+    .replace(/^# (.+)$/gm, '<strong>$1</strong>')
+    .replace(/^\s*[-*]\s+(.+)$/gm, '• $1')
+    .replace(/\n/g, '<br>');
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMsg('user', text);
+  input.value = '';
+  sendBtn.disabled = true;
+
+  if (appMode !== 'local') {
+    showStaticHelp();
+    sendBtn.disabled = false;
+    return;
+  }
+
+  const typingEl = addMsg('ai', '▌');
+
+  const sysPrompt =
+    '당신은 벤처 캐피탈(VC)과 HBS 케이스 분석 전문가입니다. ' +
+    '사용자가 아래 케이스 문장에 대해 질문합니다. 한국어로 간결하게 답하세요.\n\n' +
+    '선택 문장: "' + chatContext.slice(0, 300) + '"';
+
+  const messages = [
+    { role: 'system', content: sysPrompt },
+    ...chatHistory.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text })),
+    { role: 'user', content: text },
+  ];
+
+  let buf = '';
+  try {
+    const ctrl = new AbortController();
+    const r = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: currentModel, think: false, messages, stream: true }),
+      signal: ctrl.signal,
+    });
+    const reader = r.body.getReader();
+    const dec = new TextDecoder();
+    typingEl.textContent = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try {
+          const j = JSON.parse(line);
+          if (j.message?.content) { buf += j.message.content; typingEl.innerHTML = mdToHtml(buf); scrollChat(); }
+        } catch (_) {}
+      });
+    }
+    chatHistory[chatHistory.length - 1] = { role: 'ai', text: buf };
+  } catch (err) {
+    typingEl.textContent = '오류: ' + err.message;
+  }
+  sendBtn.disabled = false;
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); sendChat(); }
+});
+
+// ─── Drag ─────────────────────────────────────────────────
+(function initDrag() {
+  const popup = document.getElementById('chat-popup');
+  const hdr   = document.getElementById('chat-hdr');
+  let dragging = false, ox = 0, oy = 0;
+  hdr.addEventListener('mousedown', e => {
+    if (e.target.closest('.ccbtn')) return;
+    dragging = true;
+    const r = popup.getBoundingClientRect();
+    ox = e.clientX - r.left; oy = e.clientY - r.top;
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const x = Math.max(0, Math.min(e.clientX - ox, window.innerWidth  - popup.offsetWidth));
+    const y = Math.max(0, Math.min(e.clientY - oy, window.innerHeight - 60));
+    popup.style.right = 'auto'; popup.style.bottom = 'auto';
+    popup.style.left = x + 'px'; popup.style.top = y + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+})();
+</script>
+</body>
+</html>

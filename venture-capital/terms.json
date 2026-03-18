@@ -1,0 +1,378 @@
+{
+  "series e": {
+    "common": "스타트업이 다섯 번째로 진행하는 공식 자금 조달 라운드.",
+    "context": "Athleta의 경우 물리적 매장 확장을 위한 $3.43M 조달 라운드. 닷컴 버블 붕괴 후 VC가 철수한 2002년에 진행되어 엔젤·은행 자금을 혼합해야 했다."
+  },
+  "series a": {
+    "common": "스타트업의 첫 번째 공식 기관 투자 라운드.",
+    "context": "제품-시장 적합성(PMF) 검증 후 진행. VC가 우선주로 투자하며 이사회 참여권을 획득한다. 일반적으로 $1M~$15M 규모."
+  },
+  "series b": {
+    "common": "두 번째 기관 투자 라운드. 시장 확장 단계.",
+    "context": "PMF 이후 본격 성장을 위한 자금. 팀 확대, 마케팅 강화, 신시장 진출에 사용."
+  },
+  "series c": {
+    "common": "세 번째 투자 라운드. 규모 확장 단계.",
+    "context": "입증된 비즈니스 모델을 더 빠르게 스케일링하는 자금. 이 단계부터 IPO 또는 M&A 준비를 병행하는 경우가 많다."
+  },
+  "series d": {
+    "common": "네 번째 투자 라운드.",
+    "context": "IPO 전 마지막 민간 조달 라운드이거나, 이전 라운드 목표 미달성으로 인한 추가 자금 조달. Athleta는 Series D까지 VC에서 조달했다."
+  },
+  "equity capital": {
+    "common": "주식 발행을 통해 조달한 자본. 부채와 달리 상환 의무가 없다.",
+    "context": "VC는 보통주(Common Stock)가 아닌 우선주(Preferred Stock)로 투자한다. 청산 우선권, 반희석 조항, 이사회 참여권 등 특별 권리가 수반된다."
+  },
+  "preferred stock": {
+    "common": "보통주보다 우선적 권리를 갖는 주식.",
+    "context": "VC 투자의 표준 형태. 청산 시 보통주보다 먼저 자금을 회수하고, 전환 옵션, 배당 우선권 등을 가진다. Athleta의 모든 VC 투자도 우선주 방식."
+  },
+  "common stock": {
+    "common": "기업의 기본 의결권과 이익배당 청구권을 가진 주식.",
+    "context": "창업자, 임직원이 보유하는 형태. VC 우선주보다 청산 순위가 낮다. 옵션풀(ESOP)도 보통주 기준으로 설계된다."
+  },
+  "liquidation preference": {
+    "common": "회사 청산 또는 매각 시 특정 주주가 다른 주주보다 먼저 자금을 회수할 수 있는 권리.",
+    "context": "1x 비참여 우선주가 표준. 2x, 3x 배수는 투자자에게 유리하지만 창업자에게 불리. 참여 우선주(Participating Preferred)는 우선 회수 후 잔여금도 나눠 갖는다."
+  },
+  "anti-dilution": {
+    "common": "추후 라운드에서 더 낮은 밸류에이션으로 투자자가 투자 시, 기존 투자자의 지분율을 보호하는 조항.",
+    "context": "Full Ratchet(완전조정)과 Broad-Based Weighted Average(광범위 가중평균) 두 종류. 창업자 입장에서는 가중평균 방식이 덜 불리하다. 다운라운드 방지 인센티브."
+  },
+  "valuation": {
+    "common": "기업의 현재 시장 가치 추정치.",
+    "context": "Pre-money valuation = 투자 전 기업가치, Post-money = 투자 후. 지분율 = 투자금 / Post-money. Athleta의 경우 수익 성장세, 시장 규모, 비교기업 배수를 기반으로 산정."
+  },
+  "pre-money valuation": {
+    "common": "투자금 유입 전의 기업 가치.",
+    "context": "협상의 핵심. 창업자는 높게, 투자자는 낮게 평가하려는 구조적 긴장이 있다. Series E에서 Pre-money가 낮으면 기존 투자자 지분이 크게 희석된다."
+  },
+  "post-money valuation": {
+    "common": "투자금 유입 후의 기업 가치. Pre-money + 투자금.",
+    "context": "투자자 지분율 = 투자금 / Post-money. Athleta에 $3.43M 투자 시 지분율은 협상된 pre-money에 따라 결정된다."
+  },
+  "term sheet": {
+    "common": "투자 조건을 명시한 비구속적 의향서.",
+    "context": "VC 투자 협상의 출발점. 핵심 조항: 밸류에이션, 투자금액, 청산우선권, 반희석, 이사회 구성, 정보권, 참여권(Pro-rata). 일반적으로 법적 구속력 없음."
+  },
+  "angel investor": {
+    "common": "개인 자산으로 초기 스타트업에 투자하는 개인 투자자.",
+    "context": "2002년 Athleta의 주요 자금원. VC 대비 의사결정 빠르고 조건 유연. 체크 사이즈 $750K~$1M, 파트너십 관계 선호. 순수 재무적 수익보다 관계·브랜드 가치를 중시하는 경향."
+  },
+  "venture capital": {
+    "common": "고성장 잠재력이 있는 스타트업에 투자하는 기관 자금.",
+    "context": "2002년 닷컴 버블 붕괴 후 소비재 VC들이 대거 철수. Athleta가 Series E에서 VC 조달에 어려움을 겪은 직접 원인. Fund of Funds 구조로 LP들의 자금을 모아 투자."
+  },
+  "term": {
+    "common": "거래 또는 계약의 조건.",
+    "context": "공급업체 결제 조건(Payment Terms)의 경우, Net 30이면 납품 후 30일 내 결제. Athleta는 선급(Prepayment) 조건이었으나 Series E로 조건 개선 목표."
+  },
+  "working capital": {
+    "common": "유동자산에서 유동부채를 뺀 단기 운전 자금.",
+    "context": "Working Capital = 유동자산 - 유동부채. 선급 공급업체 조건은 Working Capital을 잠식한다. Series E 자금의 일부($0.68M)를 공급업체 조건 개선에 사용한 이유."
+  },
+  "gross margin": {
+    "common": "매출총이익률. (매출 - 매출원가) / 매출.",
+    "context": "Athleta ~43%. 소매업 평균보다 높은 편. Private-Label 확대 시 추가 개선 가능. VC는 이를 Unit Economics 건전성의 핵심 지표로 본다."
+  },
+  "ebitda": {
+    "common": "이자, 세금, 감가상각 차감 전 영업이익.",
+    "context": "VC/PE의 표준 밸류에이션 배수 기준(EV/EBITDA). Non-cash 비용(감가상각) 제거로 현금 창출력을 더 정확히 반영. Athleta는 아직 EBITDA도 적자."
+  },
+  "ebit": {
+    "common": "이자, 세금 차감 전 영업이익(영업이익과 동일).",
+    "context": "Path to Profitability 평가 기준. Athleta는 FY01까지 EBIT 적자. 투자자는 언제 Break-even에 도달하는지 분석."
+  },
+  "net sales": {
+    "common": "총매출에서 반품, 할인 등을 차감한 순매출액.",
+    "context": "Athleta: $1.4M(FY99) → $7.7M(FY00) → $14.3M(FY01). 연간 약 85% 성장. VC가 성장성을 평가하는 핵심 KPI."
+  },
+  "cogs": {
+    "common": "매출원가(Cost of Goods Sold). 제품 생산·구매에 직접 소요된 원가.",
+    "context": "Gross Margin = (Net Sales - COGS) / Net Sales. Athleta COGS = ~57% of Net Sales. Private-Label 비중 확대 시 COGS 절감 효과."
+  },
+  "burn rate": {
+    "common": "스타트업이 매월 현금을 소비하는 속도.",
+    "context": "Athleta 잔여 현금 $750K. Burn Rate와 조달 타임라인이 맞지 않으면 runway가 바닥난다. Series E 협상 중 레버리지가 낮아지는 원인."
+  },
+  "runway": {
+    "common": "현재 보유 현금으로 운영할 수 있는 기간.",
+    "context": "Runway = 현금잔고 / 월 Burn Rate. Athleta가 $750K 밖에 없다는 점은 협상력을 약화시킨다. VC는 runway가 짧은 회사에 더 유리한 조건을 요구할 수 있다."
+  },
+  "runway extension": {
+    "common": "운영 가능 기간을 연장하는 자금 조달 또는 비용 절감 조치.",
+    "context": "엔젤 투자 $750K~$1M는 runway를 수개월 연장해주지만, Series E 전액을 대체하지는 못한다. 트랜치(Tranche) 방식도 runway 관리 수단."
+  },
+  "dilution": {
+    "common": "신주 발행으로 기존 주주의 지분율이 낮아지는 현상.",
+    "context": "각 라운드마다 희석 누적. 창업자는 총 지분율보다 절대 가치(Equity Value)에 집중해야 한다. 반희석 조항은 투자자 희석만 방어, 창업자 희석은 방어 안 됨."
+  },
+  "down round": {
+    "common": "이전 투자 라운드보다 낮은 기업가치로 진행되는 투자.",
+    "context": "닷컴 버블 붕괴 후 많은 스타트업이 직면. 반희석 조항이 발동되어 이전 투자자들의 지분율이 조정된다. 창업자와 임직원 스톡옵션의 동기 부여 효과도 크게 떨어진다."
+  },
+  "ipo": {
+    "common": "기업공개(Initial Public Offering). 주식을 처음으로 일반 대중에게 공모하는 것.",
+    "context": "VC Exit의 이상적 경로. 2002년에는 IPO 시장이 거의 닫혀 있었다. Athleta의 경우 소비재 전문 소매업으로 IPO보다 전략적 M&A 가능성이 더 높았다."
+  },
+  "exit": {
+    "common": "투자자가 보유 주식을 매각하여 투자금 및 수익을 회수하는 사건.",
+    "context": "주요 Exit 경로: IPO, M&A(전략적 인수), Secondary Sale. VC는 7~10년 펀드 만기 내 Exit을 목표로 한다. 2002년 VC 시장 침체는 Exit 전망 불투명으로 연결."
+  },
+  "m&a": {
+    "common": "인수합병(Mergers & Acquisitions).",
+    "context": "Athleta의 현실적 Exit 경로. 2008년 Gap Inc.가 Athleta를 약 $150M에 인수. VC 투자자 관점에서 전략적 인수자 파악이 밸류에이션 근거가 된다."
+  },
+  "ltv": {
+    "common": "고객 생애 가치(Lifetime Value). 한 고객이 관계 기간 동안 발생시키는 총 수익.",
+    "context": "LTV / CAC 비율이 3 이상이면 지속 가능한 비즈니스 모델로 평가. Athleta의 멀티채널 전략은 반복 구매를 유도해 LTV를 높이는 효과."
+  },
+  "cac": {
+    "common": "고객 획득 비용(Customer Acquisition Cost). 신규 고객 1명을 유치하는 데 드는 총 비용.",
+    "context": "카탈로그 마케팅 비용이 Athleta CAC의 핵심. 카탈로그 응답률 6.4%(업계 평균 2%)는 CAC 효율이 높다는 의미. VC의 Unit Economics 평가 핵심 지표."
+  },
+  "catalog circulation": {
+    "common": "카탈로그가 발행·배포되는 총 부수.",
+    "context": "Series E의 최대 사용처($1.48M). ROI = 응답률 × 평균주문금액 ÷ 카탈로그 단가. 발행 부수 증가 → 고객 기반 확대 → 매출 성장의 직접 레버."
+  },
+  "private label": {
+    "common": "소매업체가 직접 기획·제조하는 자체 브랜드 상품(PB).",
+    "context": "외부 브랜드 의존도 감소 → Gross Margin 개선(+5~15%p). VC는 자체 브랜드 비중을 마진 레버이자 브랜드 차별화 지표로 평가. Athleta의 장기 성장 전략."
+  },
+  "distribution center": {
+    "common": "상품 보관, 포장, 배송을 처리하는 물류 시설.",
+    "context": "Operating Leverage 핵심 인프라. 고정비 성격 → 매출 증가 시 단위 처리 비용 감소. Series E 자금($0.58M)으로 MIS 및 물류센터 업그레이드 목표."
+  },
+  "multi-channel": {
+    "common": "카탈로그, 온라인, 오프라인 등 복수의 판매 채널을 운영하는 방식.",
+    "context": "LTV 극대화 전략. 채널 시너지로 CAC 효율화. Athleta 데이터: 카탈로그+웹 병행 고객은 단일 채널 대비 지출 50% 증가. 채널 간 Cannibalization 리스크도 존재."
+  },
+  "board seat": {
+    "common": "이사회 구성원으로 참여할 수 있는 권리.",
+    "context": "VC 투자의 표준 조건. 이사회를 통해 전략 결정에 영향력 행사. 엔젤은 이사회 참여 대신 옵서버(Observer) 자격으로 협상하는 경우도 있다."
+  },
+  "pro-rata rights": {
+    "common": "미래 투자 라운드에 기존 지분율만큼 참여할 수 있는 권리.",
+    "context": "지분 희석 방지 수단. 유망 기업에서는 투자자가 적극 행사. Athleta 입장에서는 다음 라운드 협상 복잡성 증가 요인이나 기존 투자자 유치에는 도움."
+  },
+  "information rights": {
+    "common": "투자자가 회사의 재무 정보, 경영 현황을 정기적으로 제공받을 권리.",
+    "context": "월간 재무제표, 연간 감사보고서 등. 창업자 부담을 높이지만 투자자 신뢰 형성에 필수. 통상 Term Sheet의 표준 조항."
+  },
+  "vesting": {
+    "common": "시간 경과에 따라 주식 또는 옵션이 단계적으로 귀속되는 일정.",
+    "context": "표준: 4년 Cliff+월별 Vest (1년 Cliff → 25% 즉시 귀속, 이후 36개월 분할). 창업자 이탈 방지 및 장기 헌신 유도. VC가 Term Sheet에 삽입하는 핵심 조항."
+  },
+  "cliff": {
+    "common": "베스팅 일정에서 최초 귀속까지 기다려야 하는 최소 기간.",
+    "context": "1년 Cliff = 입사 1년 미만 퇴사 시 주식 0개 귀속. 창업자·핵심 인력 조기 이탈 방지 장치. VC가 창업자에게도 재베스팅(Re-vesting) 요구하는 경우 있음."
+  },
+  "tranching": {
+    "common": "투자금을 한 번에 지급하지 않고 마일스톤 달성 시마다 분할 지급하는 방식.",
+    "context": "투자자 입장에서 리스크 관리 수단. Athleta 같이 자금 사정이 급한 회사에 불리할 수 있다. 마일스톤이 지나치게 공격적이면 Tranche 미달성 시 경영 위기."
+  },
+  "milestone": {
+    "common": "자금 지급 또는 사업 진행의 기준이 되는 목표 달성 시점.",
+    "context": "투자자가 Tranche 방식 투자 시 마일스톤 미달성을 이유로 다음 Tranche를 거부할 수 있다. Athleta의 경우 카탈로그 발행 부수, 매출 목표 등이 마일스톤이 될 수 있다."
+  },
+  "bridge financing": {
+    "common": "다음 투자 라운드 전까지 운영을 유지하기 위한 단기 임시 자금 조달.",
+    "context": "주로 전환사채(Convertible Note) 형태. 기존 투자자나 은행에서 조달. Athleta의 경우 Series E 완성 전까지 현금이 부족해 Bridge가 필요했을 수 있다."
+  },
+  "convertible note": {
+    "common": "일정 조건 충족 시 주식으로 전환되는 전환사채(대출).",
+    "context": "밸류에이션 협상을 미루는 수단. Discount Rate(전환 할인율)와 Valuation Cap(전환 상한가) 조건으로 초기 투자자에게 인센티브 제공. 에이전 투자에 많이 활용."
+  },
+  "safe": {
+    "common": "Simple Agreement for Future Equity. 미래 주식 발행을 약속하는 단순 계약.",
+    "context": "Y Combinator가 2013년 도입. Convertible Note보다 단순하고 창업자 친화적. 이자 없음, 만기 없음. 2002년 Athleta 시대에는 존재하지 않았던 구조."
+  },
+  "operating leverage": {
+    "common": "매출 증가 시 영업이익이 더 빠르게 증가하는 원가 구조.",
+    "context": "고정비 비중이 높을수록 Operating Leverage 크다. Athleta의 물류센터, MIS 투자는 Operating Leverage 확보 목적. 매출이 충분히 성장하면 수익성 급개선 기대."
+  },
+  "unit economics": {
+    "common": "제품 또는 고객 1단위당 수익성 분석.",
+    "context": "LTV vs. CAC, 주문 건당 Contribution Margin 등. VC가 비즈니스 지속 가능성을 평가하는 핵심 프레임. Athleta: 응답률 6.4%, AOV $100+는 긍정적 Unit Economics."
+  },
+  "path to profitability": {
+    "common": "손익분기점 및 흑자 전환 시점에 대한 계획.",
+    "context": "VC는 막연한 '언젠가 흑자' 대신 구체적 규모와 시점을 요구. Athleta는 카탈로그 발행 부수 확대 → 매출 성장 → Operating Leverage를 통한 흑자 전환 논리를 제시해야 했다."
+  },
+  "break-even": {
+    "common": "수익과 비용이 같아지는 손익분기점.",
+    "context": "Break-even Revenue = Fixed Costs / Gross Margin %. Athleta Gross Margin ~43%, 고정비 구조상 $25M~$30M 매출에서 Break-even 달성 추정 가능."
+  },
+  "ebitda multiple": {
+    "common": "기업가치(EV)를 EBITDA로 나눈 밸류에이션 배수.",
+    "context": "소매업 비교기업 EV/EBITDA 5~15배. Athleta는 아직 EBITDA 적자이므로 Revenue Multiple 또는 비교기업 GMV 대비 할인 방식으로 밸류에이션."
+  },
+  "revenue multiple": {
+    "common": "기업가치를 연매출로 나눈 배수.",
+    "context": "수익성 없는 성장 단계 기업 밸류에이션에 사용. 소매업 0.5~2x Revenue가 일반적. Athleta처럼 고성장($14.3M FY01) 기업은 다소 높은 배수 적용 가능."
+  },
+  "due diligence": {
+    "common": "투자 전 기업의 재무, 법률, 사업 현황을 면밀히 검토하는 절차.",
+    "context": "VC가 Term Sheet 발행 후 본계약 전 수행. 재무제표 검증, 고객 인터뷰, 법률 검토 등 포함. 2002년 소비재 섹터는 DD 기준이 더 엄격했다."
+  },
+  "cap table": {
+    "common": "주주 구성 및 지분율 현황을 나타내는 표.",
+    "context": "각 투자 라운드, 옵션풀, 창업자 지분 등을 정리. VC는 투자 전 Cap Table을 통해 지분 구조의 복잡성과 기존 투자자 관계를 파악."
+  },
+  "option pool": {
+    "common": "임직원에게 스톡옵션을 부여하기 위해 확보해 둔 주식 보유분.",
+    "context": "신규 투자 전 Option Pool Shuffle: VC가 투자 전 옵션풀을 기존 주주 지분에서 확대하도록 요구 → 실질적인 Pre-money 밸류에이션 희석 효과."
+  },
+  "esop": {
+    "common": "직원 주식 소유 제도(Employee Stock Option Plan).",
+    "context": "핵심 인재 유치·유지 수단. Athleta Series E의 인적 자원($0.22M) 항목에는 핵심 인력 채용을 위한 옵션 설계도 포함. 베스팅 일정과 연계하여 장기 헌신 유도."
+  },
+  "weighted average anti-dilution": {
+    "common": "다운라운드 시 기존 투자자의 전환가격을 가중평균 방식으로 조정하는 반희석 조항.",
+    "context": "Full Ratchet보다 창업자에게 덜 불리. 신규 발행 주식 수와 가격을 가중하여 조정 전환가격 산출. 현재 VC 투자의 표준 방식."
+  },
+  "full ratchet": {
+    "common": "다운라운드 발생 시 기존 투자자의 전환가격을 신규 발행가격과 동일하게 완전 조정하는 강력한 반희석 조항.",
+    "context": "창업자와 보통주 주주에게 가장 불리. 2002년처럼 협상력이 투자자에게 기울어진 시장에서 등장 가능. 현재는 거의 사용 안 됨."
+  },
+  "drag-along": {
+    "common": "다수 주주가 M&A에 찬성할 경우 소수 주주도 동의하도록 강제하는 조항.",
+    "context": "Exit을 원하는 VC가 창업자나 초기 투자자의 거부를 방지하기 위해 삽입. Athleta처럼 여러 라운드 투자자가 있는 경우 중요."
+  },
+  "tag-along": {
+    "common": "대주주가 지분 매각 시 소수 주주도 같은 조건으로 동반 매각할 수 있는 권리.",
+    "context": "소수 주주 보호 장치. 창업자나 초기 투자자가 우선 Exit할 때 후기 VC도 동일 조건으로 참여 가능."
+  },
+  "right of first refusal": {
+    "common": "주식 매도 시 제3자보다 먼저 구매 제안을 받을 수 있는 우선매수권.",
+    "context": "기존 투자자 보호 조항. 창업자나 다른 주주가 지분을 외부에 매각하기 전 기존 투자자에게 먼저 제안해야 한다."
+  },
+  "participating preferred": {
+    "common": "청산 시 우선 회수 후 잔여 금액도 보통주와 함께 배분받는 우선주.",
+    "context": "VC에게 유리하지만 창업자에게 불리. 비참여 우선주(Non-participating) 대비 투자자 회수 금액 크게 증가. 협상 레버리지가 큰 VC가 요구."
+  },
+  "non-participating preferred": {
+    "common": "청산 시 우선 회수 후 보통주로 전환하거나 우선 금액 중 유리한 것을 선택하는 우선주.",
+    "context": "창업자에게 더 유리한 구조. M&A 금액이 높을수록 우선주 전환이 유리. 현재 VC 시장의 표준에 가까운 형태."
+  },
+  "dot-com bubble": {
+    "common": "1990년대 말~2000년대 초 인터넷 기업에 대한 과도한 투자와 이후 대규모 붕괴.",
+    "context": "Athleta Case의 핵심 배경. 2000~2002년 VC 투자 급감, 소비재·인터넷 기업 IPO 창구 닫힘. VC들이 portfolio 관리에 집중하며 신규 투자 크게 축소."
+  },
+  "consumer retail": {
+    "common": "일반 소비자를 대상으로 하는 소매업.",
+    "context": "2002년 닷컴 붕괴 후 가장 먼저 VC 관심에서 멀어진 섹터. Athleta가 자금 조달에 어려움을 겪은 구조적 원인. 엔젤 투자자나 전략적 투자자가 대안."
+  },
+  "women's sports apparel": {
+    "common": "여성용 스포츠 의류 시장.",
+    "context": "2002년 시장 규모 약 $60억. 여성 스포츠 참여율 증가 트렌드와 맞물려 성장 전망. Athleta는 Title IX 이후 여성 운동 참여 증가를 핵심 시장 기회로 삼았다."
+  },
+  "title ix": {
+    "common": "미국 연방 교육법 Title IX. 교육 프로그램에서의 성차별 금지 규정으로 여성 스포츠 참여 확대에 기여.",
+    "context": "1972년 제정. Athleta 창업 배경: Title IX 이후 여성 스포츠 참여자 급증 → 여성 전용 고성능 스포츠 의류 수요 증가. 시장 규모 성장의 구조적 동인."
+  },
+  "aov": {
+    "common": "평균 주문 금액(Average Order Value).",
+    "context": "Athleta의 고품질 제품 전략은 AOV를 높여 Unit Economics를 개선. LTV = AOV × 구매 빈도 × 고객 수명. 카탈로그 ROI 계산의 핵심 변수."
+  },
+  "response rate": {
+    "common": "카탈로그 발송 대비 실제 구매로 이어진 비율.",
+    "context": "Athleta 6.4% vs 업계 평균 2%. 이 차이가 카탈로그 마케팅 ROI를 높이는 결정적 요인. 응답률이 높을수록 발행 부수 확대의 경제성이 강해진다."
+  },
+  "catalog roi": {
+    "common": "카탈로그 마케팅의 투자 수익률.",
+    "context": "ROI = (Response Rate × AOV × Gross Margin) ÷ 카탈로그 제작·발송 단가. Athleta의 높은 응답률과 AOV는 긍정적 ROI를 시사하며 Series E 활용 근거."
+  },
+  "gross profit": {
+    "common": "매출총이익. 순매출에서 매출원가를 뺀 금액.",
+    "context": "Gross Profit = Net Sales - COGS. Gross Margin으로 정규화. Athleta ~43% Gross Margin은 소매업 기준 양호. 이 위에 마케팅·운영비를 차감하면 EBIT."
+  },
+  "operating expenses": {
+    "common": "영업 활동에 필요한 비용(판관비 등). 매출원가 제외.",
+    "context": "Athleta의 주요 OpEx: 카탈로그 마케팅(매출의 ~29%), 인건비, 물류, 관리비. OpEx 절감이나 매출 성장을 통해 영업레버리지 실현."
+  },
+  "net income": {
+    "common": "모든 수익과 비용을 반영한 최종 순이익(당기순이익).",
+    "context": "Athleta는 FY01까지 순손실. 누적 결손금 $3.41M. 투자자는 현재 순이익보다 미래 흑자 전환 가능성과 속도를 더 중시."
+  },
+  "retained earnings": {
+    "common": "설립 이후 누적된 순이익의 합산. 누적 결손이면 마이너스.",
+    "context": "Athleta FY01: 누적 결손 ~$3.41M. 성장 투자성 결손은 VC가 용인하지만, 구조적 비효율성이 반영된 결손은 경고 신호."
+  },
+  "depreciation": {
+    "common": "유형자산의 가치 감소를 비용으로 인식하는 회계 처리.",
+    "context": "비현금 비용. EBITDA = EBIT + Depreciation & Amortization. VC 밸류에이션에서 EV/EBITDA 사용 시 D&A를 더해 현금 창출력을 측정."
+  },
+  "cash flow": {
+    "common": "특정 기간 동안 기업에 유입·유출된 실제 현금의 흐름.",
+    "context": "Operating / Investing / Financing Cash Flow로 구분. 순이익이 적자라도 Operating Cash Flow가 양수면 건전. Athleta는 성장 투자로 Investing CF 음수."
+  },
+  "accounts receivable": {
+    "common": "매출은 발생했으나 아직 현금을 받지 못한 채권.",
+    "context": "Working Capital의 일부. 직접 소비자(D2C) 판매 위주인 Athleta는 AR이 상대적으로 낮을 것. B2B 도매 채널이 있으면 AR 증가."
+  },
+  "inventory": {
+    "common": "판매를 위해 보유하고 있는 재고 자산.",
+    "context": "소매업의 Working Capital 핵심 항목. 재고 과잉은 현금 잠김과 마크다운 리스크. Series E의 공급업체 조건 개선은 재고 구매 시점을 늦춰 재고 리스크를 낮출 수 있다."
+  },
+  "petaluma": {
+    "common": "캘리포니아주 소노마 카운티 소재 도시. Athleta 본사 위치.",
+    "context": "소규모 도시에 위치한 본사는 임직원들이 야외 활동 친화적 라이프스타일을 즐길 수 있는 환경. Athleta의 기업 문화와 직결되는 지리적 선택."
+  },
+  "scott kerslake": {
+    "common": "Athleta 창립자, 사장 겸 CEO.",
+    "context": "직접 뉴욕 출장으로 Series E 마지막 자금 조달 시도. 기업가 정신의 상징적 인물. 'We can talk ourselves into almost anything' 명언의 주인공."
+  },
+  "joe teno": {
+    "common": "Athleta 운영 담당 수석 부사장(SVP of Operations).",
+    "context": "Scott Kerslake와 함께 뉴욕 투자자 미팅 동행. 운영 효율화와 물류센터 업그레이드 주도 인물."
+  },
+  "mbo": {
+    "common": "경영자 매수(Management Buyout). 경영진이 외부 자금을 빌려 회사를 인수하는 방식.",
+    "context": "Athleta의 직접 관련은 없지만, VC Exit 시나리오 중 하나. PE가 자금 지원 후 기존 경영진이 회사를 인수."
+  },
+  "strategic investor": {
+    "common": "재무적 수익보다 사업적 시너지를 목적으로 투자하는 대기업 또는 기업.",
+    "context": "Athleta에게는 스포츠 의류 대기업이나 멀티채널 소매업체가 전략적 투자자가 될 수 있다. 2008년 Gap Inc. 인수가 이에 해당."
+  },
+  "financial investor": {
+    "common": "사업적 시너지보다 재무적 수익(자본 차익, 배당)을 목적으로 투자하는 투자자.",
+    "context": "VC, 엔젤 투자자, PE 펀드. 2002년 금융 투자자들은 소비재 섹터에 소극적이었고, Athleta는 이 공백을 전략적/엔젤 투자자로 메워야 했다."
+  },
+  "specialty retailer": {
+    "common": "특정 상품 카테고리에 집중하는 전문 소매업체.",
+    "context": "Exhibit 6의 비교기업 그룹. Gap, lululemon, REI 등. VC는 비교기업 EV/EBITDA 또는 EV/Sales 배수를 활용해 Athleta를 밸류에이션."
+  },
+  "lululemon": {
+    "common": "캐나다의 여성 스포츠·요가 의류 전문 브랜드.",
+    "context": "Athleta의 직접 경쟁사. 2002년 당시 lululemon은 아직 소규모 초창기였다. 이후 IPO하여 대형 전문 소매업체로 성장. Athleta와 동일한 여성 스포츠 시장 공략."
+  },
+  "title 9 sports": {
+    "common": "Athleta와 같은 여성 스포츠 의류 카탈로그/멀티채널 업체.",
+    "context": "HBS 케이스의 직접 경쟁자. Quadrant 1(여성 스포츠 소매업) 내 Athleta의 가장 가까운 경쟁사. 두 회사 모두 카탈로그 기반 D2C 모델."
+  },
+  "direct-to-consumer": {
+    "common": "중간 유통 없이 브랜드가 소비자에게 직접 판매하는 방식(D2C, DTC).",
+    "context": "Athleta의 카탈로그와 온라인 채널이 D2C. 브랜드 통제, 마진 보호, 고객 데이터 확보에 유리. 소비자 직접 접점이 LTV와 CAC에 직접 영향."
+  },
+  "d2c": {
+    "common": "Direct-to-Consumer. 브랜드가 소비자에게 직접 판매.",
+    "context": "Athleta의 카탈로그·온라인 판매 방식. 도매 채널 없이 직접 판매 → 마진 보호. 디지털 데이터로 고객 행동 분석 가능."
+  },
+  "fund of funds": {
+    "common": "다수의 VC 또는 PE 펀드에 투자하는 상위 펀드.",
+    "context": "VC 생태계의 LP(유한책임투자자) 구조. 대학 기금, 연기금 등이 Fund of Funds를 통해 VC에 간접 투자. 닷컴 붕괴 후 LP들의 VC 배분 감소 → VC 운용 자금 축소."
+  },
+  "lp": {
+    "common": "유한책임투자자(Limited Partner). VC 펀드에 자본을 출자하는 기관 또는 개인.",
+    "context": "대학 기금, 연기금, 보험사, Fund of Funds 등. LP는 경영에 참여하지 않고 재무적 수익만 추구. 닷컴 붕괴 후 LP들의 VC 재투자 의지 약화."
+  },
+  "gp": {
+    "common": "무한책임투자자(General Partner). VC 펀드를 운용하는 파트너.",
+    "context": "투자 결정, 포트폴리오 관리, Exit 실행 담당. Management Fee(펀드 규모의 2%)와 Carry(수익의 20%)로 보상. 닷컴 시대 GP들의 과도한 투자가 버블 형성."
+  },
+  "carry": {
+    "common": "Carried Interest. VC GP가 펀드 수익의 일정 비율(보통 20%)을 받는 성과 보수.",
+    "context": "Hurdle Rate(최소 수익률) 초과분에 대해 GP가 20%를 가져가는 구조. 투자자(LP)와 운용자(GP)의 이해관계를 일치시키는 인센티브 설계."
+  }
+}

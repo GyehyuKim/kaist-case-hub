@@ -1,0 +1,10 @@
+.claude/
+*.pdf
+*_Memo*
+*_Draft*
+*LectureNote*
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+desktop.ini

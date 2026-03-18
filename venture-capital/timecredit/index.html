@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>TimeCredit — 영한 대조 + AI 용어 설명</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; font-size: 14px; line-height: 1.75; background: #f5f5f5; color: #222; padding-bottom: 260px; }
+
+header { background: #0f2540; color: #eee; padding: 14px 32px; display: flex; align-items: center; gap: 20px; }
+header h1 { font-size: 18px; }
+header .sub { font-size: 11px; color: #99b4cc; }
+
+.help-bar { background: #1a3a5c; color: #aaa; font-size: 11px; padding: 5px 32px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.help-bar kbd { background: #2a4a6c; color: #eee; padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 10px; }
+.model-badge { margin-left: auto; background: #0e4f1a; color: #6eff8a; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-family: monospace; }
+.back-btn { margin-left: auto; font-size: 11px; color: #99b4cc; text-decoration: none; padding: 4px 12px; border: 1px solid #2a4a6c; border-radius: 5px; white-space: nowrap; }
+.back-btn:hover { color: #fff; border-color: #58a6ff; background: rgba(88,166,255,.08); }
+
+.lang-bar { display: grid; grid-template-columns: 1fr 1fr; background: #1a3a5c; border-bottom: 2px solid #2a5080; }
+.lang-bar div { padding: 5px 32px; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #99b4cc; }
+.lang-bar .kr { border-left: 1px solid #2a4a6c; }
+
+.section-divider { background: #e8eef4; padding: 7px 28px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #2a5080; border-bottom: 1px solid #ccd8e4; }
+
+.container { max-width: 1500px; margin: 0 auto; }
+.bi-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ddd; }
+.cell { padding: 20px 28px; }
+.cell.en { background: #fff; border-right: 1px solid #ddd; }
+.cell.kr { background: #f6f8fc; }
+.cell.full { grid-column: 1 / -1; background: #eef2f8; text-align: center; padding: 24px 32px; }
+
+.cell h2 { font-size: 13px; font-weight: bold; color: #0f2540; margin-bottom: 12px; padding-bottom: 5px; border-bottom: 2px solid #0f2540; text-transform: uppercase; letter-spacing: 0.5px; }
+.cell h3 { font-size: 12px; font-weight: bold; color: #2a5080; margin: 14px 0 6px; }
+.cell p { margin-bottom: 10px; }
+.cell blockquote { margin: 10px 0; padding: 8px 14px; border-left: 3px solid #5580aa; color: #444; font-style: italic; background: rgba(15,37,64,.04); font-size: 13px; }
+.cell table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.cell th { background: #0f2540; color: #fff; padding: 5px 8px; text-align: left; font-weight: normal; font-size: 11px; }
+.cell td { padding: 5px 8px; border-bottom: 1px solid #e0e8f0; vertical-align: top; }
+.cell tr:nth-child(even) td { background: #f0f4f8; }
+.cell tr.total td { font-weight: bold; border-top: 2px solid #0f2540; background: #dce8f0; }
+.cell .note { font-size: 11px; color: #888; margin-top: 4px; }
+.cell.full img { max-width: 100%; max-height: 680px; height: auto; border: 1px solid #ccc; cursor: zoom-in; }
+.cell.full .img-cap { font-size: 11px; color: #888; margin-top: 8px; }
+.cell.full h2 { text-align: left; }
+
+.sent { cursor: pointer; border-radius: 2px; transition: background 0.1s; }
+.term { cursor: pointer; border-radius: 2px; transition: background 0.1s; border-bottom: 1px dotted #5580aa; }
+.sent.h-on, .term.h-on { background: rgba(255,215,0,0.38); }
+.sent.on, .term.on { background: rgba(60,130,255,0.22); outline: 1px solid rgba(60,130,255,0.4); }
+
+#tip { position: fixed; display: none; z-index: 9999; max-width: 340px; background: #0f2540; color: #eee; border-radius: 6px; padding: 12px 16px; font-size: 12px; line-height: 1.55; box-shadow: 0 4px 20px rgba(0,0,0,0.4); pointer-events: none; }
+#tip .t-title { font-size: 13px; font-weight: bold; color: #7ec8ff; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid #2a4a6c; }
+#tip .t-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7a99bb; margin: 6px 0 2px; }
+
+#ai-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+  background: #07192e; border-top: 2px solid #2a4a6c;
+  transform: translateY(100%); transition: transform 0.25s ease;
+  display: flex; flex-direction: column; max-height: 55vh;
+}
+#ai-panel.open { transform: translateY(0); }
+#ai-panel-header { display: flex; align-items: center; gap: 12px; padding: 8px 20px; background: #0f2540; flex-shrink: 0; }
+#ai-panel-header .ai-label { font-size: 11px; font-weight: bold; color: #7ec8ff; text-transform: uppercase; letter-spacing: 1px; }
+#ai-term { font-size: 13px; color: #a0c8ff; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ai-model-tag { font-size: 10px; color: #6eff8a; background: #0e4f1a; padding: 2px 8px; border-radius: 8px; font-family: monospace; }
+#ai-close { background: none; border: none; color: #888; font-size: 18px; cursor: pointer; line-height: 1; padding: 0 4px; }
+#ai-close:hover { color: #fff; }
+#ai-body { padding: 16px 24px; overflow-y: auto; flex: 1; font-size: 13px; line-height: 1.7; color: #dde8f4; }
+#ai-body strong { color: #7ec8ff; }
+#ai-body em { color: #a0c8ff; }
+
+#copyright-footer { background: #0f2540; color: #667; font-size: 10px; text-align: center; padding: 10px 32px; line-height: 1.7; }
+#copyright-footer a { color: #4a7aaa; text-decoration: none; }
+
+/* ── Ask AI button ── */
+#ask-btn {
+  position: fixed; right: 28px; bottom: 28px; z-index: 700;
+  display: none; align-items: center; gap: 7px;
+  background: #1a6abf; color: #fff; border: none; border-radius: 20px;
+  padding: 9px 18px; font-size: 13px; cursor: pointer;
+  box-shadow: 0 3px 16px rgba(0,0,0,.4); transition: background .15s;
+}
+#ask-btn:hover { background: #2280df; }
+
+/* ── Chat popup ── */
+#chat-popup {
+  position: fixed; z-index: 950; width: 400px; min-width: 260px;
+  background: #071929; border: 1px solid #2a4a6c; border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.55);
+  display: none; flex-direction: column;
+  bottom: 80px; right: 28px; max-height: 72vh; overflow: hidden;
+}
+#chat-popup.open { display: flex; }
+#chat-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; background: #0f2540;
+  border-radius: 12px 12px 0 0; cursor: grab; user-select: none; flex-shrink: 0;
+}
+#chat-hdr:active { cursor: grabbing; }
+#chat-title { font-size: 12px; font-weight: bold; color: #7ec8ff; flex: 1; }
+#chat-snippet { font-size: 10px; color: #7a99aa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.ccbtn { background: none; border: none; color: #667; font-size: 14px; cursor: pointer; padding: 0 4px; line-height: 1; }
+.ccbtn:hover { color: #ccc; }
+#chat-ctx {
+  background: rgba(88,166,255,.06); border-bottom: 1px solid #2a4a6c;
+  padding: 8px 14px; font-size: 11px; color: #7a9aaa; font-style: italic;
+  flex-shrink: 0; line-height: 1.5; max-height: 68px;
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+#chat-msgs {
+  flex: 1; overflow-y: auto; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 8px; min-height: 100px;
+}
+.cmsg { max-width: 94%; font-size: 12px; line-height: 1.6; padding: 8px 11px; border-radius: 10px; word-break: break-word; }
+.cmsg.user { background: #1a3a5c; color: #cce0ff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.cmsg.ai   { background: #0f2540; color: #dde8f4; align-self: flex-start; border-bottom-left-radius: 3px; }
+.cmsg.sys  { color: #4a6a8a; font-size: 10px; align-self: center; background: none; padding: 0; font-style: italic; }
+.cmsg strong { color: #7ec8ff; }
+#chat-foot {
+  display: flex; gap: 8px; padding: 10px 12px;
+  border-top: 1px solid #2a4a6c; flex-shrink: 0;
+  background: #071929; border-radius: 0 0 12px 12px;
+}
+#chat-input {
+  flex: 1; background: #0f2540; border: 1px solid #2a4a6c;
+  border-radius: 8px; color: #dde8f4; font-size: 12px;
+  padding: 7px 10px; resize: none; height: 58px; font-family: inherit; outline: none;
+}
+#chat-input:focus { border-color: #58a6ff; }
+#chat-send {
+  background: #1a6abf; color: #fff; border: none; border-radius: 8px;
+  padding: 0 14px; cursor: pointer; font-size: 12px; align-self: flex-end; height: 34px;
+}
+#chat-send:hover { background: #2280df; }
+#chat-send:disabled { background: #1a2a3a; color: #445; cursor: default; }
+#chat-popup.minimized #chat-msgs,
+#chat-popup.minimized #chat-foot,
+#chat-popup.minimized #chat-ctx { display: none; }
+#chat-popup.minimized { border-radius: 12px; }
+.cmsg.help { background: #071929; border: 1px solid #2a4a6c; align-self: stretch; }
+.cmsg.help h4 { color: #7ec8ff; font-size: 11px; margin-bottom: 6px; }
+.cmsg.help ol { padding-left: 16px; margin: 4px 0 10px; color: #99bbdd; font-size: 11px; line-height: 1.8; }
+.cmsg.help a { color: #58a6ff; }
+.cmsg.help code { background: #030d18; color: #6eff8a; padding: 1px 5px; border-radius: 3px; font-size: 10px; font-family: monospace; }
+.prompt-box { background: #030d18; border: 1px solid #2a4060; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #99bbdd; font-family: monospace; line-height: 1.6; margin: 6px 0; white-space: pre-wrap; word-break: break-all; }
+.copy-btn { background: #1a6abf; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11px; cursor: pointer; margin-top: 4px; }
+.copy-btn:hover { background: #2280df; }
+.copy-btn.copied { background: #0e4f1a; color: #6eff8a; }
+
+/* Password gate */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #07192e;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+}
+#pw-gate h2 { color: #7ec8ff; font-size: 22px; letter-spacing: 1px; }
+#pw-gate .pw-sub { color: #556; font-size: 12px; }
+#pw-gate input { padding: 10px 18px; border-radius: 8px; border: 1px solid #2a4a6c; background: #0f2540; color: #eee; font-size: 15px; width: 260px; text-align: center; outline: none; }
+#pw-gate input:focus { border-color: #7ec8ff; }
+#pw-gate button { padding: 10px 32px; background: #1a6abf; color: #fff; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+#pw-gate button:hover { background: #2280df; }
+#pw-gate .pw-error { color: #ff6b6b; font-size: 12px; min-height: 18px; }
+</style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <h2>TimeCredit Case Viewer</h2>
+  <span class="pw-sub">KAIST BIZ.60010 Venture Capital — 수업 자료</span>
+  <input type="password" id="pw-input" placeholder="비밀번호 입력" autofocus>
+  <button onclick="checkPw()">확인</button>
+  <div class="pw-error" id="pw-error"></div>
+</div>
+
+<header>
+  <h1>TimeCredit — HBS 9-824-073</h1>
+  <span class="sub">Wang &amp; Lerner | 영한 대조 + AI 용어 설명</span>
+  <a class="back-btn" href="../">&#8592; Hub</a>
+</header>
+
+<div class="help-bar">
+  <span><kbd>hover</kbd> 문장·용어 → 양방향 하이라이트</span>
+  <span><kbd>click</kbd> 파란색 고정 선택</span>
+  <span><kbd>Esc</kbd> 전체 해제</span>
+  <span><kbd>점선 밑줄</kbd> 사전 해설 팝업</span>
+  <span><kbd>더블클릭</kbd> 임의 단어 → AI 설명</span>
+  <span class="model-badge" id="model-display">모델 확인 중...</span>
+</div>
+
+<div class="lang-bar">
+  <div>English (Original)</div>
+  <div class="kr">한국어 번역 (Korean)</div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════ INTRODUCTION ═══════════ -->
+<div class="section-divider">Introduction / 도입</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>TimeCredit</h2>
+    <p><span class="sent" data-sid="i1">With her May 2023 Harvard Business School (HBS) graduation looming, Ndonga Sagnia was less than halfway to meeting the fundraising goal for her artificial intelligence (AI) accounting startup.</span> <span class="sent" data-sid="i2">She sat down to meet with her cofounder, Kevin Shabahang, to decide whether to continue dedicating nearly all of her time to raising money or to shift her focus toward developing the company.</span></p>
+    <p><span class="sent" data-sid="i3">Her venture, TimeCredit, aimed to use new AI <span class="term" data-tid="t-llm">Large Language Models (LLMs)</span> to streamline the arduous process of creating accounting memos, addressing a pain point Sagnia knew firsthand from her years at Ernst &amp; Young (EY).</span> <span class="sent" data-sid="i4">Unfortunately, she had picked a difficult time to raise capital. Soaring inflation, high interest rates, the collapse of Silicon Valley Bank, and a widespread tech recession had led to a pullback in <span class="term" data-tid="t-vc">venture capital (VC)</span> activity and non-committal investors.</span></p>
+    <p><span class="sent" data-sid="i5">There was palpable excitement over applications of new AI technology which helped attract investor interest, but most had not yet landed on an investment strategy in the space. Meanwhile, competition was growing by the day.</span></p>
+    <p><span class="sent" data-sid="i6">Sagnia had secured an early win by landing a reputable launch partner for TimeCredit's prototype as a first customer and source of data to build out their product, but the longer fundraising delayed development of a <span class="term" data-tid="t-mvp">minimum viable product (MVP)</span>, the higher the risk they would lose this early traction.</span> <span class="sent" data-sid="i7">Both their launch partner and Sagnia's technical cofounder, Shabahang, were growing impatient with the lack of progress.</span> <span class="sent" data-sid="i8">Sagnia felt pressure to end the round less than halfway to their initial goal of raising $1.5 million, but this also risked leaving them short of the computing and engineering resources they needed to hit their next milestones without running out of money.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>TimeCredit</h2>
+    <p><span class="sent" data-sid="i1">2023년 5월 하버드 비즈니스 스쿨(HBS) 졸업을 앞두고, Ndonga Sagnia는 자신의 AI 회계 스타트업에 대한 자금 조달 목표액의 절반도 채우지 못한 상태였다.</span> <span class="sent" data-sid="i2">그녀는 공동창업자 Kevin Shabahang과 만나, 자금 조달에 거의 모든 시간을 쏟을 것인지 아니면 회사 개발에 집중할 것인지 결정을 내려야 했다.</span></p>
+    <p><span class="sent" data-sid="i3">그녀의 스타트업 TimeCredit은 새로운 AI <span class="term" data-tid="t-llm">거대 언어 모델(LLM)</span>을 활용해 회계 메모 작성의 까다로운 과정을 자동화하는 것을 목표로 했다. 이는 Sagnia가 Ernst &amp; Young(EY) 근무 시절 직접 겪었던 고충이었다.</span> <span class="sent" data-sid="i4">안타깝게도 그녀는 자금 조달 시점을 잘못 택했다. 치솟는 인플레이션, 고금리, 실리콘밸리은행 붕괴, 그리고 광범위한 기술 경기 침체가 <span class="term" data-tid="t-vc">벤처 캐피탈(VC)</span> 투자 위축과 투자자들의 소극적 태도로 이어졌다.</span></p>
+    <p><span class="sent" data-sid="i5">새로운 AI 기술 응용에 대한 기대감이 높아 투자자들의 관심을 끌기는 했지만, 대부분의 투자자들은 아직 이 분야에 대한 투자 전략을 확립하지 못한 상태였다. 한편 경쟁은 나날이 치열해지고 있었다.</span></p>
+    <p><span class="sent" data-sid="i6">Sagnia는 TimeCredit의 프로토타입을 위한 첫 고객이자 데이터 소스로 유력한 런치 파트너를 확보하는 초기 성과를 올렸다. 하지만 자금 조달이 지연될수록 <span class="term" data-tid="t-mvp">최소 기능 제품(MVP)</span> 개발이 늦어지고, 이 초기 트랙션을 잃을 위험이 높아졌다.</span> <span class="sent" data-sid="i7">런치 파트너와 기술 공동창업자 Shabahang 모두 진전 부재에 점점 조급해하고 있었다.</span> <span class="sent" data-sid="i8">Sagnia는 초기 목표액 $150만 달러의 절반에도 미치지 못한 채 라운드를 마무리해야 한다는 압박을 느꼈지만, 그럴 경우 다음 마일스톤을 달성하기 위한 컴퓨팅·개발 자원이 부족해질 위험이 있었다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ NDONGA SAGNIA ═══════════ -->
+<div class="section-divider">Ndonga Sagnia / 창업자 소개</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Ndonga Sagnia</h2>
+    <p><span class="sent" data-sid="ns1">Ndonga Sagnia was born in The Gambia but moved all over Africa throughout her childhood, spending time in Uganda, Tanzania, Botswana, Côte D'Ivoire, Ghana, Cameroon, and Kenya.</span> <span class="sent" data-sid="ns2">She spoke Wolof in her earliest years but needed to learn new languages as her family moved around the continent. "It was a real struggle for me, as someone who was extremely talkative, and not being able to communicate with people around me."</span></p>
+    <p><span class="sent" data-sid="ns3">While the moves were tiring, Sagnia appreciated her father's job as a banker for the stability it brought amid poverty.</span> <span class="sent" data-sid="ns4">Sagnia's childhood exposed her to a rich set of environments and experiences that expanded her entrepreneurial perspective.</span></p>
+    <p><span class="sent" data-sid="ns5">Sagnia started HBS in 2021 and used the summer of 2022 as a "strategic summer" to learn about accounting. Upon graduating in 2016, Sagnia joined one of the top professional service firms in the US, Ernst &amp; Young (EY). The decision to join EY was driven by the external validation it would offer: "I wanted to build a company with integrity. So, we stuck to our guns. Building a company from the ground is the hardest thing you can do."</span></p>
+    <p><span class="sent" data-sid="ns6">Tired of the corporate accounting grind, Sagnia decided to explore a career pivot by pursuing an MBA in 1998. "I kept asking myself, 'what have I always enjoyed and how can some of my skills make it possible for me to be an operator?'"</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>Ndonga Sagnia</h2>
+    <p><span class="sent" data-sid="ns1">Ndonga Sagnia는 감비아에서 태어났지만 어린 시절 우간다, 탄자니아, 보츠와나, 코트디부아르, 가나, 카메룬, 케냐 등 아프리카 전역을 돌며 자랐다.</span> <span class="sent" data-sid="ns2">어린 시절에는 울로프어를 사용했지만 가족이 대륙 곳곳을 이동하면서 새로운 언어를 계속 배워야 했다. "말하기 좋아하는 제가 주변 사람들과 소통하지 못한다는 것이 정말 힘들었어요."</span></p>
+    <p><span class="sent" data-sid="ns3">잦은 이사는 힘들었지만, Sagnia는 아버지의 은행원 직업이 가난 속에서도 안정을 가져다 준 것에 감사했다.</span> <span class="sent" data-sid="ns4">다양한 환경에서의 어린 시절 경험은 그녀의 기업가적 시각을 넓혀 주었다.</span></p>
+    <p><span class="sent" data-sid="ns5">Sagnia는 2021년 HBS에 입학했고, 2022년 여름을 회계를 배우는 "전략적 여름"으로 활용했다. 2016년 졸업 후 미국 최고 전문 서비스 회사 중 하나인 Ernst &amp; Young(EY)에 입사했다. EY를 선택한 것은 외부의 검증을 얻기 위해서였다.</span></p>
+    <p><span class="sent" data-sid="ns6">회계법인의 반복적인 업무에 지친 Sagnia는 MBA를 통해 새로운 커리어를 모색하기로 했다. "나는 항상 내가 즐겨왔던 것이 무엇인지, 그리고 어떻게 하면 내 역량으로 사업을 운영할 수 있을지 자문했습니다."</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ FINDING AN IDEA ═══════════ -->
+<div class="section-divider">Finding an Idea / 아이디어 발굴</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Finding an Idea</h2>
+    <p><span class="sent" data-sid="fi1">Sagnia returned to HBS after a summer internship convinced and inspired to use the second year of her MBA to identify a business opportunity.</span> <span class="sent" data-sid="fi2">Months before, she had identified the potential of LLMs to automate previously impossible tasks — including one she had experienced firsthand at EY: creating accounting memos for lease accounting.</span></p>
+    <p><span class="sent" data-sid="fi3">Sagnia had done a summer internship at a technology-focused startup and worked on content for social media commentary. She decided to launch TimeCredit — a software-as-a-service (SaaS) AI accounting platform.</span></p>
+    <p><span class="sent" data-sid="fi4">On her strengths and experience, Sagnia arrived at her idea: "I think there's a gap in the market. I used to write blog posts and tweets in Excel. But for me, the customer use case would have been to improve my accounting processes. I focused on what I could deliver, and, two years later, I realized there was something really interesting — you can automate tasks that previously were impossible."</span></p>
+    <p><span class="sent" data-sid="fi5">She had considered two conventional paths, but instead arrived at a less-traveled path: building an accounting AI platform. Sagnia focused on <span class="term" data-tid="t-lease">lease accounting</span> — specifically the laborious process of creating accounting memos required under <span class="term" data-tid="t-asc842">ASC 842</span> (US GAAP) and <span class="term" data-tid="t-ifrs16">IFRS 16</span> standards.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>아이디어 발굴</h2>
+    <p><span class="sent" data-sid="fi1">Sagnia는 여름 인턴십을 마치고 HBS로 돌아와 2학년 동안 사업 기회를 발굴하기로 결심했다.</span> <span class="sent" data-sid="fi2">몇 달 전, 그녀는 LLM이 기존에는 불가능했던 업무를 자동화할 수 있다는 가능성을 발견했다. EY에서 직접 경험했던 <span class="term" data-tid="t-lease">리스 회계(Lease Accounting)</span> 메모 작성 업무가 바로 그 대상이었다.</span></p>
+    <p><span class="sent" data-sid="fi3">Sagnia는 기술 스타트업에서 소셜 미디어 콘텐츠 작업을 하는 여름 인턴십을 마친 후, SaaS 기반의 AI 회계 플랫폼 TimeCredit을 창업하기로 결정했다.</span></p>
+    <p><span class="sent" data-sid="fi4">"시장에 갭이 있다고 생각했어요. 저는 예전에 엑셀로 블로그와 트윗을 썼는데, 핵심은 내가 제공할 수 있는 것에 집중한 거예요. 2년 후 깨달았죠 — 기존에는 불가능했던 업무를 자동화할 수 있다는 걸."</span></p>
+    <p><span class="sent" data-sid="fi5">Sagnia는 <span class="term" data-tid="t-lease">리스 회계</span>에 집중했다. 특히 <span class="term" data-tid="t-asc842">ASC 842</span>(미국 회계 기준)와 <span class="term" data-tid="t-ifrs16">IFRS 16</span> 기준에 따라 필수적으로 작성해야 하는 회계 메모를 자동화하는 것이 목표였다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ FINDING A COFOUNDER ═══════════ -->
+<div class="section-divider">Finding a Cofounder / 공동창업자 발굴</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Finding a Cofounder</h2>
+    <p><span class="sent" data-sid="fc1">Recognizing the complexity of developing an AI-intensive platform like TimeCredit, Sagnia knew she needed to strategize with someone who also had technical expertise.</span> <span class="sent" data-sid="fc2">In November 2022, Sagnia began her search for a cofounder in accelerator corridors — Harvard's joint center for the study of entrepreneurship at the Career and Professional Development center.</span></p>
+    <p><span class="sent" data-sid="fc3">Shabahang was a Cognitive Science PhD candidate from the University of Melbourne based in Canada.</span> <span class="sent" data-sid="fc4">His family had immigrated to Canada when he was an adolescent. As a researcher in the lab, Shabahang had published numerous academic papers on the internal processing of the brain — a field that was increasingly connected to AI research.</span></p>
+    <p><span class="sent" data-sid="fc5">Sagnia needed someone to strategize with. "I need someone who can think deeply about what we're doing and understanding what your vision is and understanding your customer." Shabahang was attracted to the prospect of working with Sagnia because she seemed to share his company vision and values. "What drives me is impact rather than valuation. I had a lot of concern about this company." They continued working together through the winter to assess whether Sagnia's vision was technically achievable.</span></p>
+    <p><span class="sent" data-sid="fc6">As an undergraduate, Shabahang had fostered countless side projects and worked on software for two companies, including a startup. But he was not that interested in startup life. "I had a lot of concern about this company." Ultimately, both Sagnia and Shabahang agreed that, despite the domain expertise mismatch between them, their shared values and complementary skills made them a strong team.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>공동창업자 발굴</h2>
+    <p><span class="sent" data-sid="fc1">AI 집약적 플랫폼인 TimeCredit 개발의 복잡성을 인식한 Sagnia는 기술 전문성을 갖춘 공동창업자가 필요하다는 것을 알았다.</span> <span class="sent" data-sid="fc2">2022년 11월, Sagnia는 하버드의 창업지원 센터에서 공동창업자 탐색을 시작했다.</span></p>
+    <p><span class="sent" data-sid="fc3">Shabahang은 캐나다에 거주하는 멜버른대학교 인지과학(Cognitive Science) 박사과정 연구원이었다.</span> <span class="sent" data-sid="fc4">청소년기에 캐나다로 이민을 온 그는 AI 연구와 점점 더 긴밀히 연결되는 뇌의 내부 처리 과정을 연구하며 다수의 학술 논문을 발표했다.</span></p>
+    <p><span class="sent" data-sid="fc5">Sagnia는 깊이 사고하는 파트너를 원했다. "우리가 무엇을 하는지, 비전이 무엇인지, 고객이 누구인지 깊이 이해할 수 있는 사람이 필요했어요." Shabahang은 회사의 비전과 가치관을 공유하는 Sagnia에게 매력을 느꼈다. "저를 움직이는 건 밸류에이션이 아니라 임팩트입니다." 두 사람은 겨울 내내 협력하며 Sagnia의 비전이 기술적으로 실현 가능한지 검토했다.</span></p>
+    <p><span class="sent" data-sid="fc6">도메인 전문성의 불일치에도 불구하고, 두 사람은 공유된 가치관과 상호 보완적인 역량이 강한 팀을 만들어 줄 것이라는 데 동의했다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ BUILDING TIMECREDIT ═══════════ -->
+<div class="section-divider">Building TimeCredit / 제품 개발</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Building TimeCredit</h2>
+    <p><span class="sent" data-sid="bt1">Using LLMs to create accounting memos posed three main challenges. First and foremost was the <span class="term" data-tid="t-hallucination">hallucination</span> risk — the tendency of LLMs to generate plausible but incorrect information.</span> <span class="sent" data-sid="bt2">The second challenge was domain expertise: generating accurate accounting memos required specialized knowledge of both accounting standards and the LLM's capabilities.</span> <span class="sent" data-sid="bt3">The third challenge was ensuring that the LLM's output was consistently reliable, easily verifiable, and implementable within the customer's workflow.</span></p>
+    <p><span class="sent" data-sid="bt4">Sagnia had thought of an innovative approach to tackling this problem: she referred to it as "accounting tenants," which was initially inspired by her observation of how accounting was done within large organizations.</span> <span class="sent" data-sid="bt5">Her goal was to build a structured workflow that could transform unstructured data (e.g., lease contracts) into accurate, audit-ready accounting memos.</span></p>
+    <p><span class="sent" data-sid="bt6">The roadmap they had chosen was a less conventional path — reaching out to about 90 AI or as consultants or contract labor. They determined that their roadmap of $1.5 to $2 million was within reach for a startup of this nature. Balanced against that, the potential of TimeCredit to transform productivity and reduce costs in the accounting industry resistance was unmatched.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>제품 개발</h2>
+    <p><span class="sent" data-sid="bt1">LLM을 활용해 회계 메모를 작성하는 데는 세 가지 주요 과제가 있었다. 첫 번째는 <span class="term" data-tid="t-hallucination">환각(Hallucination)</span> 리스크 — LLM이 그럴듯하지만 잘못된 정보를 생성하는 경향이었다.</span> <span class="sent" data-sid="bt2">두 번째는 도메인 전문성: 정확한 회계 메모를 생성하려면 회계 기준과 LLM 역량 모두에 대한 전문 지식이 필요했다.</span> <span class="sent" data-sid="bt3">세 번째는 LLM 출력물이 일관되게 신뢰할 수 있고, 검증 가능하며, 고객 워크플로우에 통합될 수 있도록 하는 것이었다.</span></p>
+    <p><span class="sent" data-sid="bt4">Sagnia는 이 문제를 해결하기 위한 혁신적인 접근법을 고안했다. 대규모 조직 내 회계 처리 방식에서 영감을 받은 "accounting tenants" 개념이었다.</span> <span class="sent" data-sid="bt5">목표는 비정형 데이터(예: 리스 계약서)를 감사 준비가 된 정확한 회계 메모로 변환하는 구조화된 워크플로우를 구축하는 것이었다.</span></p>
+    <p><span class="sent" data-sid="bt6">TimeCredit이 회계 업계의 생산성을 혁신하고 비용을 절감할 수 있는 잠재력은 독보적이었다. 그러나 그 실현에는 $150만~$200만 달러 규모의 초기 자금이 필요했다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ BUSINESS PLAN ═══════════ -->
+<div class="section-divider">Business Plan / 사업 계획</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Business Plan</h2>
+    <p><span class="sent" data-sid="bp1">The information included in accounting memos would often include sensitive financial data (e.g., balance sheet information). This made potential customers reluctant to try new tech unless it came with strict data security protocols — specifically, <span class="term" data-tid="t-soc2">SOC 2</span> compliance, a cybersecurity framework developed by the American Institute of Certified Public Accountants (AICPA).</span></p>
+    <p><span class="sent" data-sid="bp2">TimeCredit's two customer segments had different needs. <strong>Smaller companies</strong> (1–50 leases): valued speed and ease of use, were cost-conscious, and needed intuitive software that could be adopted without extensive technical knowledge. <strong>Larger companies</strong> (50+ leases): had more complex accounting needs, required robust integrations with existing ERP systems, prioritized data security, and often needed customized solutions.</span></p>
+    <p><span class="sent" data-sid="bp3">To bring in their first customers, Sagnia and Shabahang planned their strategy. They also planned to offer two types of payment models: a pay-per-use model tied to specific product outputs and a subscription model. They thought two different music types might have some appeal, particularly if used in combination. First, the LLM might still produce errors, especially if used in isolation.</span></p>
+    <p><span class="sent" data-sid="bp4">Finally, the information included in accounting memos would often include sensitive financial data, so they would need to offer a compelling reason to potential investors to help them enter their production processes. This was particularly difficult for me because of how hard it had been to test their technical risk involved in developing the technology stack.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>사업 계획</h2>
+    <p><span class="sent" data-sid="bp1">회계 메모에는 재무제표 등 민감한 금융 데이터가 포함되는 경우가 많았다. 이로 인해 잠재 고객들은 엄격한 데이터 보안 프로토콜 — 특히 미국공인회계사협회(AICPA)가 개발한 사이버보안 프레임워크인 <span class="term" data-tid="t-soc2">SOC 2</span> 인증 — 없이는 새로운 기술 도입을 꺼렸다.</span></p>
+    <p><span class="sent" data-sid="bp2">TimeCredit의 두 고객 세그먼트는 서로 다른 니즈를 가지고 있었다. <strong>소규모 기업</strong> (리스 1~50건): 속도와 사용 편의성을 중시하고, 비용에 민감하며, 기술 지식 없이도 쉽게 사용할 수 있는 직관적인 소프트웨어를 필요로 했다. <strong>대규모 기업</strong> (리스 50건 이상): 복잡한 회계 니즈를 가지며, 기존 ERP 시스템과의 강력한 연동, 데이터 보안 우선순위, 맞춤형 솔루션이 필요했다.</span></p>
+    <p><span class="sent" data-sid="bp3">첫 고객 확보를 위해 Sagnia와 Shabahang은 두 가지 결제 모델을 제안할 계획이었다: 특정 아웃풋에 연동된 종량제 모델과 구독 모델. 두 모델을 조합하면 고객 니즈를 더 잘 충족할 수 있을 것으로 판단했다.</span></p>
+    <p><span class="sent" data-sid="bp4">잠재 고객이 생산 프로세스에 TimeCredit을 도입할 수 있도록 설득하려면 명확한 가치 제안이 필요했다. 기술 스택 개발에 내재된 기술적 리스크를 실증적으로 검증하는 것도 중요한 과제였다.</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ EARLY STAGE FUNDRAISING ═══════════ -->
+<div class="section-divider">Early Stage Fundraising / 초기 자금 조달</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Early Stage Fundraising</h2>
+    <p><span class="sent" data-sid="es1">TimeCredit was a pre-revenue startup at which its investors were betting their time and investment activity was tailing off the peaks of 2021. To start the company, they would need significant software developers and in some cases contract labor.</span> <span class="sent" data-sid="es2">Their roadmap to $1.5 to $2 million was within reach for a startup of this nature. Balanced against that, the potential of TimeCredit to transform productivity and reduce costs in the accounting industry resistance was unmatched.</span></p>
+    <p><span class="sent" data-sid="es3">To acquire any of these goals, they needed to resolve a Catch-22 common to many pre-revenue technology startups — to generate training data, they needed to offer their product to accounting firms. Without access to training data, they could not offer a product worth wanting. To break this cycle, they planned to approach accounting firms and offer them the product for free in exchange for access to their proprietary data and favoring and licensing the Athleta AI stack would be critical for scaling the business.</span></p>
+    <p><span class="sent" data-sid="es4">In November 2022, Sagnia began her search. By early 2023, things were beginning to crystallize. TimeCredit launched the product on Demo Day on the first HBS Demo Day on the first Thursday of February 2023. By on point, the project was starting to gain some traction — first checks came in in December 2023.</span></p>
+    <p><span class="sent" data-sid="es5">With graduation looming, Sagnia ramped up her fundraising efforts. She sought out pitch opportunities, advisors, and even mentors of HBS — urged to value herself as a founder and keep networking. "That's where I was able to actually start talking to investors in a real way — understanding what their vision is and understanding your customer."</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>초기 자금 조달</h2>
+    <p><span class="sent" data-sid="es1">TimeCredit은 매출이 없는 초기 단계 스타트업으로, 투자자들은 가능성에 베팅하는 상황이었다. 투자 시장은 2021년 정점 이후 크게 위축되어 있었다. 회사를 시작하려면 소프트웨어 개발자와 경우에 따라 계약직 인력이 필요했다.</span> <span class="sent" data-sid="es2">목표 조달 금액인 $150만~$200만 달러는 이런 성격의 스타트업에는 달성 가능한 범위였다. TimeCredit이 회계 업계의 생산성을 혁신하고 비용을 절감할 잠재력은 독보적이었다.</span></p>
+    <p><span class="sent" data-sid="es3">이 목표를 달성하려면 많은 초기 기술 스타트업이 직면하는 닭이 먼저냐 달걀이 먼저냐의 딜레마를 해결해야 했다 — 학습 데이터를 얻으려면 회계법인에 제품을 제공해야 했고, 학습 데이터 없이는 가치 있는 제품을 만들 수 없었다. 이 순환을 끊기 위해 회계법인에 무료로 제품을 제공하고 대신 독점 데이터 접근권을 얻는 전략을 계획했다.</span></p>
+    <p><span class="sent" data-sid="es4">2022년 11월 Sagnia는 본격적인 탐색을 시작했다. 2023년 2월 첫 번째 목요일, HBS Demo Day에서 TimeCredit을 공개했다. 첫 번째 수표는 2023년 12월에 들어왔다.</span></p>
+    <p><span class="sent" data-sid="es5">졸업이 다가오면서 Sagnia는 자금 조달 활동을 강화했다. 피칭 기회를 찾고, 어드바이저와 멘토를 구하며 네트워킹에 집중했다. "그것이 제가 투자자들과 진정한 대화를 시작할 수 있었던 계기였어요."</span></p>
+  </div>
+</div>
+
+<!-- ═══════════ TIME TO STOP FUNDRAISING ═══════════ -->
+<div class="section-divider">Time to Stop Fundraising? / 자금 조달을 멈춰야 할 때?</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Time to Stop Fundraising?</h2>
+    <p><span class="sent" data-sid="ts1">With graduation approaching, Sagnia ramped up her fundraising efforts. She sought out pitch opportunities, advisors, and even mentors at HBS who urged her to value herself as a founder.</span></p>
+    <p><span class="sent" data-sid="ts2">Sagnia returned to the investors she had pitched throughout the angel's offer in its entirety. Is it that the last time he had been in touch throughout conversations with the angel's offer in its entity. It turns out, the statistics on the world's accounting software were pretty favorable for Sagnia and Shabahang. Time had passed forward ahead of them and, one by one, they had been amassed since back.</span></p>
+    <p><span class="sent" data-sid="ts3">In February 2023, Sagnia secured <strong>$81,000</strong> from their launch partner — a data-sharing agreement that also provided the company's first real customer and dataset. By February 2023, the launch partner's enthusiasm had grown substantially, and Sagnia was excited to close the deal.</span></p>
+    <p><span class="sent" data-sid="ts4">Sagnia returned to the investors she had pitched throughout the angel's offer. She also successfully managed to secure a <strong>$50,000</strong> check from <span class="term" data-tid="t-drf">Dorm Room Fund</span>, an organization that provided early-stage funding for student startups. Sagnia raised additional small checks from angel investors, bringing the total to roughly <strong>$181,000</strong> from angels plus the Dorm Room Fund check.</span></p>
+    <p><span class="sent" data-sid="ts5">Getting Olson on board also required some back-and-forth conversations as the potential investor tried to understand more about the company's space. At one point, he asked Sagnia to meet with her with the angel's offer in its entirety, and if they were, I would want to take on your cofounder with the angel's offer in its entity.</span></p>
+    <p><span class="sent" data-sid="ts6">Sagnia's advisors cautioned that fundraising is a marathon, not a sprint, and it is normal for the process to span several months as momentum and interest build. Stopping early could leave them short of the runway they needed to hit their key milestones, leaving them with an urgent need for cash and a worse bargaining position in a few months' time.</span></p>
+    <p><span class="sent" data-sid="ts7">Sagnia and Shabahang revisited their financial models and product timeline. Should Sagnia pivot away from financing and turn her attention fully to building the product? Could they hire the development operations lead and engineers they needed to execute their vision with the current amount of funding? How were they going to deliver for their launch partner and when would they need to raise their next round? Their mutual trust was put to the test as quickly as it was built.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>자금 조달을 멈춰야 할 때?</h2>
+    <p><span class="sent" data-sid="ts1">졸업이 다가오면서 Sagnia는 피칭 기회를 늘리고 어드바이저와 멘토들의 도움을 구했다.</span></p>
+    <p><span class="sent" data-sid="ts2">Sagnia는 과거에 피칭했던 투자자들에게 다시 연락을 취했다. 회계 소프트웨어 시장의 통계는 Sagnia와 Shabahang에게 유리했고, 하나씩 투자 약정이 쌓이기 시작했다.</span></p>
+    <p><span class="sent" data-sid="ts3">2023년 2월, Sagnia는 런치 파트너로부터 <strong>$81,000</strong>를 확보했다. 데이터 공유 계약으로 첫 실제 고객과 데이터셋을 동시에 얻은 것이었다. 런치 파트너의 열의가 높아지면서 Sagnia는 딜을 클로징할 수 있었다.</span></p>
+    <p><span class="sent" data-sid="ts4">Sagnia는 학생 스타트업을 지원하는 <span class="term" data-tid="t-drf">Dorm Room Fund</span>로부터 <strong>$50,000</strong>를 확보했다. 엔젤 투자자들로부터도 소규모 수표들을 받아, 총 조달 금액은 엔젤 <strong>$181,000</strong>와 Dorm Room Fund $50,000를 합쳐 약 <strong>$231,000</strong>에 달했다.</span></p>
+    <p><span class="sent" data-sid="ts5">일부 투자자들은 TimeCredit의 시장과 기술에 대해 더 깊이 이해하기 위한 추가적인 논의를 요청하며 투자 결정을 미뤘다. Sagnia는 목표액 $150만 달러의 절반에도 못 미치는 상황에서 어려운 결정에 직면했다.</span></p>
+    <p><span class="sent" data-sid="ts6">Sagnia의 어드바이저들은 자금 조달은 단거리 경주가 아닌 마라톤이며, 모멘텀과 관심이 쌓이면서 수개월이 걸리는 것이 정상이라고 조언했다. 조기에 중단하면 핵심 마일스톤 달성에 필요한 런웨이가 부족해지고, 몇 달 후에는 현금이 급하고 협상력도 떨어진 상태가 될 수 있었다.</span></p>
+    <p><span class="sent" data-sid="ts7">Sagnia와 Shabahang은 재무 모델과 제품 타임라인을 다시 검토했다. Sagnia가 자금 조달에서 방향을 전환해 제품 개발에 전념해야 할까? 현재의 자금으로 필요한 개발 인력을 채용할 수 있을까? 런치 파트너에게 어떻게 납품하고, 다음 라운드는 언제 시작해야 할까? 두 창업자의 신뢰는 쌓인 만큼 빠르게 시험대에 올랐다.</span></p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="copyright-footer">
+  Copyright &copy; Harvard Business School Publishing. Educational Fair Use only. Not for commercial use or redistribution.<br>
+  Gyehyu K &bull; KAIST IMMS &bull; BIZ.60010 Venture Capital Spring 2026 &bull;
+  <a href="mailto:gyehyukim@kaist.ac.kr">gyehyukim@kaist.ac.kr</a>
+</div>
+
+<div id="tip">
+  <div class="t-title" id="tip-title"></div>
+  <div class="t-label">일반 정의</div>
+  <div id="tip-common"></div>
+  <div class="t-label">VC 맥락</div>
+  <div id="tip-vc" style="color:#a0c8ff"></div>
+</div>
+
+<button id="ask-btn" onclick="openChat()">&#128172; AI에게 질문</button>
+
+<div id="chat-popup">
+  <div id="chat-hdr">
+    <span id="chat-title">&#128172; 케이스 Q&amp;A</span>
+    <span id="chat-snippet"></span>
+    <button class="ccbtn" id="chat-min-btn" onclick="toggleChatMin()" title="최소화">&#9660;</button>
+    <button class="ccbtn" onclick="closeChat()" title="닫기">&#x2715;</button>
+  </div>
+  <div id="chat-ctx"></div>
+  <div id="chat-msgs"></div>
+  <div id="chat-foot">
+    <textarea id="chat-input" placeholder="이 문장에 대해 질문하세요...&#10;(Ctrl+Enter: 전송)"></textarea>
+    <button id="chat-send" onclick="sendChat()">전송</button>
+  </div>
+</div>
+
+<div id="ai-panel">
+  <div id="ai-panel-header">
+    <span class="ai-label">AI 설명</span>
+    <span id="ai-term"></span>
+    <span id="ai-model-tag"></span>
+    <button id="ai-close" onclick="closeAI()">&#x2715;</button>
+  </div>
+  <div id="ai-body"></div>
+</div>
+
+<script>
+/* ── Password gate ── */
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+if (sessionStorage.getItem(AUTH_KEY) === AUTH_VAL) {
+  document.getElementById('pw-gate').style.display = 'none';
+}
+function checkPw() {
+  const v = document.getElementById('pw-input').value.trim();
+  if (v === AUTH_VAL) {
+    sessionStorage.setItem(AUTH_KEY, AUTH_VAL);
+    document.getElementById('pw-gate').style.display = 'none';
+  } else {
+    document.getElementById('pw-error').textContent = '비밀번호가 틀렸습니다.';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+
+/* ── Terms dictionary ── */
+const TERMS = {
+  "t-llm": { title: "LLM (Large Language Model)", common: "방대한 텍스트 데이터로 학습된 AI 언어 모델. GPT, Claude 등이 대표적.", vc: "AI 스타트업 투자 테제의 핵심. LLM 기반 B2B SaaS는 높은 마진과 빠른 확장성으로 VC의 선호 카테고리. 단, 환각(Hallucination) 리스크와 데이터 보안 요건이 Enterprise 판매의 장벽." },
+  "t-vc": { title: "VC (Venture Capital)", common: "고위험·고수익을 추구하는 스타트업 전문 투자 펀드.", vc: "LP(유한책임파트너)의 자금을 모아 초기·성장 기업에 투자. 10년 내 펀드 청산 구조. 포트폴리오 중 소수의 홈런으로 손실을 커버하는 멱함수 수익 분포(Power Law)를 추구." },
+  "t-mvp": { title: "MVP (Minimum Viable Product)", common: "핵심 기능만 갖춘 최소 기능 제품. 시장 검증을 위한 첫 출시물.", vc: "VC는 MVP를 통해 Product-Market Fit(PMF) 가능성을 평가. MVP 없이 자금을 조달하려면 창업자의 도메인 전문성과 팀 역량이 핵심 설득 요소." },
+  "t-lease": { title: "Lease Accounting (리스 회계)", common: "기업이 자산을 임차할 때 적용하는 회계 기준. 운영리스·금융리스 분류 및 재무제표 처리를 규정.", vc: "ASC 842(미국)·IFRS 16(국제) 도입으로 기업들이 리스를 재무제표에 계상해야 함. 처리 복잡성이 높아 외부 컨설팅·소프트웨어 수요 증가 → TimeCredit의 시장 기회." },
+  "t-asc842": { title: "ASC 842", common: "미국 회계기준위원회(FASB)가 2016년 도입한 리스 회계 기준. 운영리스도 재무상태표에 계상 의무화.", vc: "상장·비상장 미국 기업 대부분에 적용. 준수 비용이 크고 메모 작성이 복잡 → SaaS 자동화 솔루션의 PMF 근거." },
+  "t-ifrs16": { title: "IFRS 16", common: "국제회계기준위원회(IASB)가 2016년 도입한 리스 회계 기준. ASC 842의 국제 표준 버전.", vc: "140개국 이상에서 적용. 글로벌 확장 시 TimeCredit의 TAM(전체 주소 가능 시장)을 확대하는 요소." },
+  "t-hallucination": { title: "Hallucination (환각)", common: "LLM이 사실이 아닌 정보를 자신감 있게 생성하는 현상.", vc: "회계·법률 등 고정밀 도메인에서 가장 큰 Enterprise 도입 장벽. RAG(검색 증강 생성), Fine-tuning, Human-in-the-loop 등으로 완화. 투자자들이 B2B AI 스타트업 실사 시 핵심 기술 리스크로 검토." },
+  "t-soc2": { title: "SOC 2", common: "AICPA가 개발한 서비스 조직 보안 인증 프레임워크. 보안·가용성·기밀성 등 5개 신뢰 서비스 기준 감사.", vc: "Enterprise SaaS 판매의 필수 관문. SOC 2 Type II 인증 없이는 대기업 고객 계약이 사실상 불가능. 인증 획득에 6~18개월, 비용 수만 달러 소요 → 초기 스타트업의 진입 장벽." },
+  "t-drf": { title: "Dorm Room Fund", common: "학생 창업자를 위한 초기 단계 VC 펀드. First Round Capital이 지원.", vc: "재학 중인 창업자에게 $20K~$50K 투자. 학생 파트너가 심사. 엘리트 대학 네트워크(하버드, MIT, 스탠퍼드 등) 활용. Pre-seed 단계에서 검증 효과가 있어 후속 투자 유치에 레버리지." },
+  "t-safe": { title: "SAFE (Simple Agreement for Future Equity)", common: "Y Combinator가 개발한 단순 미래 주식 취득 계약. 이자와 만기 없는 전환 증권.", vc: "Pre-seed·Seed 단계에서 가장 널리 사용. 밸류에이션 캡(Valuation Cap)과 할인율(Discount Rate)이 핵심 조건. 주식 발행 없이 자금 조달 → 빠른 클로징, 낮은 법무비용." }
+};
+
+document.querySelectorAll('.term').forEach(el => {
+  const tid = el.dataset.tid;
+  const data = TERMS[tid];
+  if (!data) return;
+  el.addEventListener('mouseenter', e => {
+    document.getElementById('tip-title').textContent = data.title;
+    document.getElementById('tip-common').textContent = data.common;
+    document.getElementById('tip-vc').textContent = data.vc;
+    const tip = document.getElementById('tip');
+    tip.style.display = 'block';
+    positionTip(tip, e);
+  });
+  el.addEventListener('mousemove', e => positionTip(document.getElementById('tip'), e));
+  el.addEventListener('mouseleave', () => { document.getElementById('tip').style.display = 'none'; });
+});
+function positionTip(tip, e) {
+  let x = e.clientX + 16, y = e.clientY + 16;
+  if (x + 360 > window.innerWidth) x = e.clientX - 370;
+  if (y + tip.offsetHeight > window.innerHeight) y = e.clientY - tip.offsetHeight - 10;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+
+/* ── Sentence highlight ── */
+let locked = null;
+document.querySelectorAll('.sent').forEach(el => {
+  el.addEventListener('mouseenter', () => { if (!locked) mirrorHover(el.dataset.sid, true); });
+  el.addEventListener('mouseleave', () => { if (!locked) mirrorHover(el.dataset.sid, false); });
+  el.addEventListener('click', () => {
+    if (locked === el.dataset.sid) { locked = null; clearAll(); return; }
+    clearAll(); locked = el.dataset.sid; mirrorSelect(locked); updateAskBtn();
+  });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { locked = null; clearAll(); } });
+function mirrorHover(sid, on) { document.querySelectorAll(`[data-sid="${sid}"]`).forEach(e => e.classList.toggle('h-on', on)); }
+function mirrorSelect(sid) { document.querySelectorAll(`[data-sid="${sid}"]`).forEach(e => e.classList.add('on')); }
+function clearAll() { document.querySelectorAll('.sent,.term').forEach(e => e.classList.remove('on','h-on')); updateAskBtn(); }
+
+/* ── AI mode detection ── */
+let appMode = 'static';
+let termsData = {};
+
+async function detectMode() {
+  try {
+    const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(2000) });
+    if (r.ok) { appMode = 'local'; document.getElementById('model-display').textContent = 'AI: qwen3.5:2b'; document.getElementById('model-display').style.background = '#0e4f1a'; return; }
+  } catch(_) {}
+  appMode = 'static';
+  document.getElementById('model-display').textContent = '사전 모드';
+  document.getElementById('model-display').style.background = '#1a3a6c';
+}
+detectMode();
+
+/* ── Double-click AI ── */
+let aiAbort = null;
+document.addEventListener('dblclick', e => {
+  const word = window.getSelection().toString().trim() || getWordAt(e);
+  if (!word || word.length < 2) return;
+  openAI(word, e.target.closest('.bi-row')?.querySelector('.cell')?.textContent?.slice(0,300) || '');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && window.getSelection().toString().trim()) {
+    openAI(window.getSelection().toString().trim(), '');
+  }
+});
+function getWordAt(e) {
+  const r = document.caretRangeFromPoint?.(e.clientX, e.clientY);
+  if (!r) return '';
+  r.expand('word');
+  return r.toString().trim().replace(/[^a-zA-Z가-힣\-]/g,'');
+}
+
+function openAI(word, ctx) {
+  document.getElementById('ai-term').textContent = word;
+  document.getElementById('ai-body').textContent = '...';
+  document.getElementById('ai-panel').classList.add('open');
+  if (aiAbort) { aiAbort.abort(); }
+  if (appMode === 'local') openAI_local(word, ctx);
+  else openAI_static(word);
+}
+function closeAI() { document.getElementById('ai-panel').classList.remove('open'); if (aiAbort) aiAbort.abort(); }
+
+function openAI_static(word) {
+  const key = word.toLowerCase().trim();
+  let entry = termsData[key];
+  if (!entry) entry = Object.entries(termsData).find(([k]) => k.includes(key) || key.includes(k))?.[1];
+  if (entry) {
+    document.getElementById('ai-body').innerHTML = `<strong>[일반]</strong> ${entry.common || ''}<br><br><strong>[VC 맥락]</strong> ${entry.context || entry.vc || ''}`;
+  } else {
+    document.getElementById('ai-body').textContent = '이 단어는 사전에 등록되지 않았습니다. Ollama를 실행하면 실시간 AI 설명이 가능합니다.';
+  }
+}
+
+async function openAI_local(word, ctx) {
+  aiAbort = new AbortController();
+  const body = JSON.stringify({ model:'qwen3.5:2b', think:false, prompt:`You are a VC and startup expert. Explain the term "${word}" in Korean, briefly: 1) general definition 2) VC/startup context. Context: "${ctx.slice(0,200)}". Be concise.`, stream:true });
+  try {
+    const r = await fetch('http://localhost:11434/api/generate', { method:'POST', body, headers:{'Content-Type':'application/json'}, signal: aiAbort.signal });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    document.getElementById('ai-body').textContent = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try { const j = JSON.parse(line); document.getElementById('ai-body').textContent += j.response || ''; } catch(_){}
+      });
+    }
+  } catch(err) { if (err.name !== 'AbortError') document.getElementById('ai-body').textContent = '연결 오류. Ollama가 실행 중인지 확인하세요.'; }
+}
+
+fetch('../terms.json').then(r=>r.json()).then(d=>{ termsData=d; }).catch(()=>{});
+
+/* ── Ask-AI button ── */
+let chatContext = '';
+let chatHistory = [];
+let chatMinimized = false;
+const currentModel = 'qwen3.5:2b';
+
+function showStaticHelp() {
+  const promptText =
+    'I\'m reading the HBS case "TimeCredit" (9-824-073).\n' +
+    'The following sentence is from the case:\n\n"' + chatContext + '"\n\n' +
+    'Please explain what this means in the context of venture capital investing. Answer in Korean.';
+
+  const d = document.createElement('div');
+  d.className = 'cmsg help';
+  d.innerHTML =
+    '<h4>Ollama 로컬 AI 설치 (5분)</h4>' +
+    '<ol>' +
+    '<li><a href="https://ollama.com" target="_blank">ollama.com</a> 다운로드 &amp; 설치</li>' +
+    '<li>터미널: <code>ollama pull qwen3.5:2b</code></li>' +
+    '<li>실행: <code>OLLAMA_ORIGINS=* ollama serve</code></li>' +
+    '<li>이 페이지 새로고침 → 배지가 초록으로 변경되면 준비 완료</li>' +
+    '</ol>' +
+    '<h4>대안: ChatGPT / Claude에 직접 질문</h4>' +
+    '<div class="prompt-box" id="static-prompt">' + escHtml(promptText) + '</div>' +
+    '<button class="copy-btn" id="copy-prompt-btn" onclick="copyPrompt()">프롬프트 복사</button>';
+
+  document.getElementById('chat-msgs').appendChild(d);
+  scrollChat();
+}
+
+function copyPrompt() {
+  const el = document.getElementById('static-prompt');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = document.getElementById('copy-prompt-btn');
+    btn.textContent = '복사됨!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '프롬프트 복사'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function updateAskBtn() {
+  const btn = document.getElementById('ask-btn');
+  if (!locked) { btn.style.display = 'none'; return; }
+  const enNodes = document.querySelectorAll(`.cell.en [data-sid="${locked}"]`);
+  const krNodes = document.querySelectorAll(`.cell.kr [data-sid="${locked}"]`);
+  const nodes = enNodes.length ? enNodes : krNodes;
+  chatContext = Array.from(nodes).map(n => n.textContent.trim()).join(' ');
+  btn.style.display = 'flex';
+}
+
+function openChat() {
+  const popup = document.getElementById('chat-popup');
+  document.getElementById('chat-ctx').textContent = chatContext;
+  document.getElementById('chat-snippet').textContent =
+    chatContext.length > 44 ? chatContext.slice(0, 44) + '\u2026' : chatContext;
+  popup.classList.add('open');
+  popup.classList.remove('minimized');
+  chatMinimized = false;
+  document.getElementById('chat-min-btn').textContent = '\u25BC';
+  if (chatHistory.length === 0) addSysMsg('선택된 문장을 바탕으로 자유롭게 질문하세요.');
+  document.getElementById('chat-input').focus();
+}
+
+function closeChat() {
+  document.getElementById('chat-popup').classList.remove('open');
+  chatHistory = [];
+  document.getElementById('chat-msgs').innerHTML = '';
+}
+
+function toggleChatMin() {
+  chatMinimized = !chatMinimized;
+  document.getElementById('chat-popup').classList.toggle('minimized', chatMinimized);
+  document.getElementById('chat-min-btn').textContent = chatMinimized ? '\u25B2' : '\u25BC';
+}
+
+function addSysMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'cmsg sys'; d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d); scrollChat();
+}
+
+function addMsg(role, text) {
+  chatHistory.push({ role, text });
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + role; d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d); scrollChat();
+  return d;
+}
+
+function scrollChat() { const m = document.getElementById('chat-msgs'); m.scrollTop = m.scrollHeight; }
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg('user', text);
+  input.value = '';
+  sendBtn.disabled = true;
+
+  if (appMode !== 'local') {
+    showStaticHelp();
+    sendBtn.disabled = false; return;
+  }
+
+  const typingEl = addMsg('ai', '\u25CC');
+  const sysPrompt = '당신은 벤처 캐피탈(VC)과 HBS 케이스 분석 전문가입니다. 한국어로 간결하게 답하세요.\n\n선택 문장: "' + chatContext.slice(0, 300) + '"';
+  const messages = [
+    { role: 'system', content: sysPrompt },
+    ...chatHistory.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text })),
+    { role: 'user', content: text },
+  ];
+
+  let buf = '';
+  try {
+    const r = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: currentModel, think: false, messages, stream: true }),
+    });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    typingEl.textContent = '';
+    while (true) {
+      const { done, value } = await reader.read(); if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try { const j = JSON.parse(line); if (j.message?.content) { buf += j.message.content; typingEl.textContent = buf; scrollChat(); } } catch(_) {}
+      });
+    }
+    chatHistory[chatHistory.length - 1] = { role: 'ai', text: buf };
+  } catch (err) { typingEl.textContent = '오류: ' + err.message; }
+  sendBtn.disabled = false;
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); sendChat(); }
+});
+
+(function initDrag() {
+  const popup = document.getElementById('chat-popup');
+  const hdr = document.getElementById('chat-hdr');
+  let dragging = false, ox = 0, oy = 0;
+  hdr.addEventListener('mousedown', e => {
+    if (e.target.closest('.ccbtn')) return;
+    dragging = true;
+    const r = popup.getBoundingClientRect();
+    ox = e.clientX - r.left; oy = e.clientY - r.top; e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const x = Math.max(0, Math.min(e.clientX - ox, window.innerWidth - popup.offsetWidth));
+    const y = Math.max(0, Math.min(e.clientY - oy, window.innerHeight - 60));
+    popup.style.right = 'auto'; popup.style.bottom = 'auto';
+    popup.style.left = x + 'px'; popup.style.top = y + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+})();
+</script>
+</body>
+</html>

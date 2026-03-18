@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Navigating the Jagged Frontier + Machines of Loving Grace — AI 전략 독서 자료</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; font-size: 14px; line-height: 1.75; background: #f5f5f5; color: #222; padding-bottom: 260px; }
+
+header { background: #0f2540; color: #eee; padding: 14px 32px; display: flex; align-items: center; gap: 20px; }
+header h1 { font-size: 17px; }
+header .sub { font-size: 11px; color: #99b4cc; }
+
+.help-bar { background: #1a3a5c; color: #aaa; font-size: 11px; padding: 5px 32px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.help-bar kbd { background: #2a4a6c; color: #eee; padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 10px; }
+.model-badge { margin-left: auto; background: #0e4f1a; color: #6eff8a; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-family: monospace; }
+.back-btn { margin-left: auto; font-size: 11px; color: #99b4cc; text-decoration: none; padding: 4px 12px; border: 1px solid #2a4a6c; border-radius: 5px; white-space: nowrap; }
+.back-btn:hover { color: #fff; border-color: #58a6ff; background: rgba(88,166,255,.08); }
+
+/* ── Reading tabs ── */
+.reading-tabs { background: #112c4a; border-bottom: 2px solid #1e4a78; padding: 0 28px; display: flex; gap: 0; }
+.tab-btn {
+  background: none; border: none; border-bottom: 3px solid transparent;
+  color: #99b4cc; font-size: 12px; font-family: Georgia, serif;
+  padding: 10px 20px; cursor: pointer; letter-spacing: 0.3px;
+  transition: color .15s, border-color .15s;
+}
+.tab-btn:hover { color: #cce0ff; }
+.tab-btn.active { color: #7ec8ff; border-bottom-color: #7ec8ff; font-weight: bold; }
+
+/* ── Bilingual layout (Reading 1) ── */
+.lang-bar { display: grid; grid-template-columns: 1fr 1fr; background: #1a3a5c; border-bottom: 2px solid #2a5080; }
+.lang-bar div { padding: 5px 32px; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #99b4cc; }
+.lang-bar .kr { border-left: 1px solid #2a4a6c; }
+
+.section-divider { background: #e8eef4; padding: 7px 28px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #2a5080; border-bottom: 1px solid #ccd8e4; }
+
+.container { max-width: 1500px; margin: 0 auto; }
+.bi-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ddd; }
+.cell { padding: 20px 28px; }
+.cell.en { background: #fff; border-right: 1px solid #ddd; }
+.cell.kr { background: #f6f8fc; }
+
+.cell h2 { font-size: 13px; font-weight: bold; color: #0f2540; margin-bottom: 12px; padding-bottom: 5px; border-bottom: 2px solid #0f2540; text-transform: uppercase; letter-spacing: 0.5px; }
+.cell h3 { font-size: 12px; font-weight: bold; color: #2a5080; margin: 14px 0 6px; }
+.cell p { margin-bottom: 10px; }
+.cell blockquote { margin: 10px 0; padding: 8px 14px; border-left: 3px solid #5580aa; color: #444; font-style: italic; background: rgba(15,37,64,.04); font-size: 13px; }
+
+/* ── Single-column layout (Reading 2) ── */
+#reading-2 .container-single { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+.mono-section { border-bottom: 1px solid #ddd; padding: 24px 0; }
+.mono-section h2 { font-size: 13px; font-weight: bold; color: #0f2540; margin-bottom: 12px; padding-bottom: 5px; border-bottom: 2px solid #0f2540; text-transform: uppercase; letter-spacing: 0.5px; }
+.mono-section p { margin-bottom: 10px; background: #fff; padding: 16px 20px; border: 1px solid #ddd; border-radius: 4px; }
+.info-bar { background: #1e3a5c; color: #99b4cc; font-size: 11px; padding: 7px 28px; border-bottom: 1px solid #2a4a6c; font-style: italic; letter-spacing: 0.3px; }
+
+/* ── Term / Sentence interactive ── */
+.sent { cursor: pointer; border-radius: 2px; transition: background 0.1s; }
+.term { cursor: pointer; border-radius: 2px; transition: background 0.1s; border-bottom: 1px dotted #5580aa; }
+.sent.h-on, .term.h-on { background: rgba(255,215,0,0.38); }
+.sent.on, .term.on { background: rgba(60,130,255,0.22); outline: 1px solid rgba(60,130,255,0.4); }
+
+/* ── Tooltip ── */
+#tip { position: fixed; display: none; z-index: 9999; max-width: 340px; background: #0f2540; color: #eee; border-radius: 6px; padding: 12px 16px; font-size: 12px; line-height: 1.55; box-shadow: 0 4px 20px rgba(0,0,0,0.4); pointer-events: none; }
+#tip .t-title { font-size: 13px; font-weight: bold; color: #7ec8ff; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid #2a4a6c; }
+#tip .t-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7a99bb; margin: 6px 0 2px; }
+
+/* ── AI panel (bottom) ── */
+#ai-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+  background: #07192e; border-top: 2px solid #2a4a6c;
+  transform: translateY(100%); transition: transform 0.25s ease;
+  display: flex; flex-direction: column; max-height: 55vh;
+}
+#ai-panel.open { transform: translateY(0); }
+#ai-panel-header { display: flex; align-items: center; gap: 12px; padding: 8px 20px; background: #0f2540; flex-shrink: 0; }
+#ai-panel-header .ai-label { font-size: 11px; font-weight: bold; color: #7ec8ff; text-transform: uppercase; letter-spacing: 1px; }
+#ai-term { font-size: 13px; color: #a0c8ff; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ai-model-tag { font-size: 10px; color: #6eff8a; background: #0e4f1a; padding: 2px 8px; border-radius: 8px; font-family: monospace; }
+#ai-close { background: none; border: none; color: #888; font-size: 18px; cursor: pointer; line-height: 1; padding: 0 4px; }
+#ai-close:hover { color: #fff; }
+#ai-body { padding: 16px 24px; overflow-y: auto; flex: 1; font-size: 13px; line-height: 1.7; color: #dde8f4; }
+#ai-body strong { color: #7ec8ff; }
+#ai-body em { color: #a0c8ff; }
+
+/* ── Footer ── */
+#copyright-footer { background: #0f2540; color: #667; font-size: 10px; text-align: center; padding: 10px 32px; line-height: 1.7; }
+#copyright-footer a { color: #4a7aaa; text-decoration: none; }
+
+/* ── Ask AI button ── */
+#ask-btn {
+  position: fixed; right: 28px; bottom: 28px; z-index: 700;
+  display: none; align-items: center; gap: 7px;
+  background: #1a6abf; color: #fff; border: none; border-radius: 20px;
+  padding: 9px 18px; font-size: 13px; cursor: pointer;
+  box-shadow: 0 3px 16px rgba(0,0,0,.4); transition: background .15s;
+}
+#ask-btn:hover { background: #2280df; }
+
+/* ── Chat popup ── */
+#chat-popup {
+  position: fixed; z-index: 950; width: 400px; min-width: 260px;
+  background: #071929; border: 1px solid #2a4a6c; border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.55);
+  display: none; flex-direction: column;
+  bottom: 80px; right: 28px; max-height: 72vh; overflow: hidden;
+}
+#chat-popup.open { display: flex; }
+#chat-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; background: #0f2540;
+  border-radius: 12px 12px 0 0; cursor: grab; user-select: none; flex-shrink: 0;
+}
+#chat-hdr:active { cursor: grabbing; }
+#chat-title { font-size: 12px; font-weight: bold; color: #7ec8ff; flex: 1; }
+#chat-snippet { font-size: 10px; color: #7a99aa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.ccbtn { background: none; border: none; color: #667; font-size: 14px; cursor: pointer; padding: 0 4px; line-height: 1; }
+.ccbtn:hover { color: #ccc; }
+#chat-ctx {
+  background: rgba(88,166,255,.06); border-bottom: 1px solid #2a4a6c;
+  padding: 8px 14px; font-size: 11px; color: #7a9aaa; font-style: italic;
+  flex-shrink: 0; line-height: 1.5; max-height: 68px;
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+#chat-msgs {
+  flex: 1; overflow-y: auto; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 8px; min-height: 100px;
+}
+.cmsg { max-width: 94%; font-size: 12px; line-height: 1.6; padding: 8px 11px; border-radius: 10px; word-break: break-word; }
+.cmsg.user { background: #1a3a5c; color: #cce0ff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.cmsg.ai   { background: #0f2540; color: #dde8f4; align-self: flex-start; border-bottom-left-radius: 3px; }
+.cmsg.sys  { color: #4a6a8a; font-size: 10px; align-self: center; background: none; padding: 0; font-style: italic; }
+.cmsg strong { color: #7ec8ff; }
+#chat-foot {
+  display: flex; gap: 8px; padding: 10px 12px;
+  border-top: 1px solid #2a4a6c; flex-shrink: 0;
+  background: #071929; border-radius: 0 0 12px 12px;
+}
+#chat-input {
+  flex: 1; background: #0f2540; border: 1px solid #2a4a6c;
+  border-radius: 8px; color: #dde8f4; font-size: 12px;
+  padding: 7px 10px; resize: none; height: 58px; font-family: inherit; outline: none;
+}
+#chat-input:focus { border-color: #58a6ff; }
+#chat-send {
+  background: #1a6abf; color: #fff; border: none; border-radius: 8px;
+  padding: 0 14px; cursor: pointer; font-size: 12px; align-self: flex-end; height: 34px;
+}
+#chat-send:hover { background: #2280df; }
+#chat-send:disabled { background: #1a2a3a; color: #445; cursor: default; }
+#chat-popup.minimized #chat-msgs,
+#chat-popup.minimized #chat-foot,
+#chat-popup.minimized #chat-ctx { display: none; }
+#chat-popup.minimized { border-radius: 12px; }
+.cmsg.help { background: #071929; border: 1px solid #2a4a6c; align-self: stretch; }
+.cmsg.help h4 { color: #7ec8ff; font-size: 11px; margin-bottom: 6px; }
+.cmsg.help ol { padding-left: 16px; margin: 4px 0 10px; color: #99bbdd; font-size: 11px; line-height: 1.8; }
+.cmsg.help a { color: #58a6ff; }
+.cmsg.help code { background: #030d18; color: #6eff8a; padding: 1px 5px; border-radius: 3px; font-size: 10px; font-family: monospace; }
+.prompt-box { background: #030d18; border: 1px solid #2a4060; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #99bbdd; font-family: monospace; line-height: 1.6; margin: 6px 0; white-space: pre-wrap; word-break: break-all; }
+.copy-btn { background: #1a6abf; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11px; cursor: pointer; margin-top: 4px; }
+.copy-btn:hover { background: #2280df; }
+.copy-btn.copied { background: #0e4f1a; color: #6eff8a; }
+
+/* ── Password gate ── */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #07192e;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+}
+#pw-gate h2 { color: #7ec8ff; font-size: 22px; letter-spacing: 1px; }
+#pw-gate .pw-sub { color: #556; font-size: 12px; }
+#pw-gate input { padding: 10px 18px; border-radius: 8px; border: 1px solid #2a4a6c; background: #0f2540; color: #eee; font-size: 15px; width: 260px; text-align: center; outline: none; }
+#pw-gate input:focus { border-color: #7ec8ff; }
+#pw-gate button { padding: 10px 32px; background: #1a6abf; color: #fff; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+#pw-gate button:hover { background: #2280df; }
+#pw-gate .pw-error { color: #ff6b6b; font-size: 12px; min-height: 18px; }
+</style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <h2>AI Evolution Reader</h2>
+  <span class="pw-sub">KAIST BIZ.60010 — AI Strategy &amp; Management</span>
+  <input type="password" id="pw-input" placeholder="비밀번호 입력" autofocus>
+  <button onclick="checkPw()">확인</button>
+  <div class="pw-error" id="pw-error"></div>
+  <a href="../" style="margin-top:16px;font-size:11px;color:#556;text-decoration:none;">&#8592; Hub로 돌아가기</a>
+</div>
+
+<header>
+  <div>
+    <h1>Navigating the Jagged Frontier + Machines of Loving Grace</h1>
+    <div class="sub">Dell'Acqua et al. (2023) + Dario Amodei (2024) &nbsp;|&nbsp; 영한 대조 (Reading 1) + 영문 원본 (Reading 2)</div>
+  </div>
+  <a class="back-btn" href="../">&#8592; Hub</a>
+</header>
+
+<div class="help-bar">
+  <span><kbd>hover</kbd> 문장·용어 &rarr; 양방향 하이라이트</span>
+  <span><kbd>click</kbd> 파란색 고정 선택</span>
+  <span><kbd>Esc</kbd> 전체 해제</span>
+  <span><kbd>점선 밑줄</kbd> 사전 해설 팝업</span>
+  <span><kbd>더블클릭</kbd> 임의 단어 &rarr; AI 설명</span>
+  <span class="model-badge" id="model-display">모델 확인 중...</span>
+</div>
+
+<div class="reading-tabs">
+  <button class="tab-btn active" onclick="showReading(1)">Reading 1: Navigating the Jagged Frontier</button>
+  <button class="tab-btn" onclick="showReading(2)">Reading 2: Machines of Loving Grace</button>
+</div>
+
+<!-- =====================================================================
+     READING 1: Navigating the Jagged Technological Frontier
+     Dell'Acqua, McFowland, Mollick, Lifshitz-Assaf, Kellogg,
+     Rajendran, Krayer, Candelon & Lakhani (2023)
+     ===================================================================== -->
+<div id="reading-1">
+
+<div class="lang-bar">
+  <div>English (Original)</div>
+  <div class="kr">한국어 번역 (Korean)</div>
+</div>
+
+<div class="container">
+
+<!-- Abstract -->
+<div class="section-divider">Abstract / 초록</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Abstract</h2>
+    <p><span class="sent" data-sid="a1">Large language models (LLMs) have generated enormous interest in how humans will use AI to perform tasks.</span> <span class="sent" data-sid="a2">We conducted a field experiment with 758 consultants at BCG to study AI's impact on knowledge worker performance using realistic, complex, knowledge-intensive tasks.</span> <span class="sent" data-sid="a3">We propose that AI's capabilities create a '<span class="term" data-tid="t-jf">jagged technological frontier</span>' — within this frontier, some tasks are easily accomplished by AI, while others that appear similar in difficulty lie outside current AI capabilities.</span></p>
+    <p><span class="sent" data-sid="a4">For 18 realistic consulting tasks inside the frontier, consultants using AI completed 12.2% more tasks, were 25.1% faster, and produced significantly higher quality output (40%+ higher) than the control group.</span> <span class="sent" data-sid="a5">All skill levels benefited from AI augmentation, with below-average performers gaining 43% and above-average performers gaining 17%.</span> <span class="sent" data-sid="a6">However, for tasks outside the frontier, AI-using consultants were 19 percentage points less likely to reach correct solutions.</span> <span class="sent" data-sid="a7">Two distinct human-AI integration patterns emerged: '<span class="term" data-tid="t-centaur">Centaurs</span>' (dividing tasks between human and AI) and '<span class="term" data-tid="t-cyborg">Cyborgs</span>' (fully integrating AI into their workflow).</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>초록</h2>
+    <p><span class="sent" data-sid="a1">대규모 언어 모델(LLM)의 공개 출시는 인간이 다양한 작업을 수행하는 데 AI를 어떻게 활용할 것인지에 대한 엄청난 관심을 불러일으켰습니다.</span> <span class="sent" data-sid="a2">글로벌 컨설팅 기업 BCG와 공동으로 758명의 컨설턴트를 대상으로 현장 실험을 진행했습니다. AI의 능력이 지식 근로자 성과에 미치는 영향을 현실적이고 복잡한 지식집약적 과제를 통해 연구했습니다.</span> <span class="sent" data-sid="a3">AI의 능력이 '<span class="term" data-tid="t-jf">들쭉날쭉한 기술의 최전선(jagged technological frontier)</span>'을 만들어낸다고 제안합니다. 이 최전선 내부에서는 AI가 일부 작업을 쉽게 수행하지만, 비슷해 보이는 난이도의 다른 작업들은 현재 AI의 능력 밖에 놓여 있습니다.</span></p>
+    <p><span class="sent" data-sid="a4">최전선 내부의 18개 현실적 컨설팅 작업에서, AI 사용 컨설턴트들은 12.2% 더 많은 작업을 완료했고, 25.1% 더 빨랐으며, 품질이 40% 이상 높았습니다.</span> <span class="sent" data-sid="a5">모든 기술 수준의 컨설턴트가 혜택을 받았으며, 평균 이하 그룹은 43%, 평균 이상 그룹은 17% 상승했습니다.</span> <span class="sent" data-sid="a6">그러나 최전선 외부 작업에서는 AI 사용 컨설턴트가 올바른 해결책을 도출할 확률이 19%포인트 더 낮았습니다.</span> <span class="sent" data-sid="a7">두 가지 뚜렷한 패턴이 나타났습니다: '<span class="term" data-tid="t-centaur">켄타우로스(Centaurs)</span>' — 인간과 AI에게 작업을 분리·위임, '<span class="term" data-tid="t-cyborg">사이보그(Cyborgs)</span>' — AI와 작업 흐름을 완전히 통합.</span></p>
+  </div>
+</div>
+
+<!-- Inside the Frontier -->
+<div class="section-divider">Key Findings — Inside the Frontier / 핵심 발견: 최전선 내부</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Inside the Frontier</h2>
+    <p><span class="sent" data-sid="if1">GPT-4 dramatically boosted performance on creative, analytical, and writing tasks.</span> <span class="sent" data-sid="if2">With GPT + Overview (prompt engineering training): +42.5% quality score (from baseline 4.1 to +1.75 pts). With GPT Only: +38% quality score.</span></p>
+    <p><span class="sent" data-sid="if3">Task completion rate rose by 12.2% on average (control group: 82%, GPT + Overview: ~93%, GPT Only: ~91%).</span> <span class="sent" data-sid="if4">Speed improved by 25.1% across all task types within the frontier.</span></p>
+    <p><span class="sent" data-sid="if5">All skill levels benefited, but lower-skilled workers gained most: bottom 50% gained 43% vs. top 50% gained 17% — AI acts as a leveler.</span> <span class="sent" data-sid="if6">This supports a '<span class="term" data-tid="t-skilleq">skill-equalizing</span>' effect of AI augmentation, compressing the performance gap between novices and experts on frontier tasks.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>최전선 내부</h2>
+    <p><span class="sent" data-sid="if1">GPT-4는 창의적·분석적·글쓰기 작업에서 성과를 극적으로 향상시켰습니다.</span> <span class="sent" data-sid="if2">GPT + 개요(프롬프트 엔지니어링 교육 포함): 품질 점수 +42.5%(기준선 4.1점 대비 +1.75점). GPT 단독: +38%.</span></p>
+    <p><span class="sent" data-sid="if3">과제 완료율 평균 12.2% 향상(통제 집단: 82%, GPT + 개요: ~93%, GPT 단독: ~91%).</span> <span class="sent" data-sid="if4">속도는 최전선 내 모든 작업 유형에서 25.1% 향상되었습니다.</span></p>
+    <p><span class="sent" data-sid="if5">모든 기술 수준이 혜택을 보았으나, 하위 기술 근로자가 가장 많이 수혜: 하위 50%는 43% 향상 vs. 상위 50%는 17% 향상 &rarr; AI는 '기술 평준화' 효과를 보임.</span> <span class="sent" data-sid="if6">이는 AI 증강의 '<span class="term" data-tid="t-skilleq">기술 평준화(skill-equalizing)</span>' 효과를 지지하며, 최전선 과제에서 초보자와 전문가 간 성과 격차를 좁힙니다.</span></p>
+  </div>
+</div>
+
+<!-- Outside the Frontier -->
+<div class="section-divider">Key Findings — Outside the Frontier / 핵심 발견: 최전선 외부</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Outside the Frontier</h2>
+    <p><span class="sent" data-sid="of1">For tasks deliberately placed beyond AI capabilities (requiring complex business analysis with potential for AI errors), consultants using AI were 19 percentage points less likely to reach the correct solution compared to those without AI.</span></p>
+    <p><span class="sent" data-sid="of2">This '<span class="term" data-tid="t-autobias">automation bias</span>' effect — over-trusting AI output even when it is wrong — poses a serious risk.</span> <span class="sent" data-sid="of3">Consultants who blindly followed AI recommendations performed worse than those who worked independently.</span></p>
+    <p><span class="sent" data-sid="of4">The finding underscores a key danger of AI adoption: humans may fail to apply critical judgment precisely when it matters most, because AI output creates an illusion of completeness and confidence that is difficult to override.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>최전선 외부</h2>
+    <p><span class="sent" data-sid="of1">AI 능력의 한계 바깥에 있는 작업(AI가 오류를 일으키도록 설계된 복잡한 비즈니스 분석)에서는, AI를 사용한 컨설턴트가 올바른 해결책을 도출할 확률이 AI를 사용하지 않은 컨설턴트보다 19%포인트 더 낮았습니다.</span></p>
+    <p><span class="sent" data-sid="of2">'<span class="term" data-tid="t-autobias">자동화 편향(automation bias)</span>' 효과 — AI 결과물이 틀렸을 때조차 맹목적으로 신뢰하는 경향 — 이 심각한 위험을 초래합니다.</span> <span class="sent" data-sid="of3">AI 권고를 맹목적으로 따른 컨설턴트들은 독립적으로 작업한 컨설턴트들보다 더 나쁜 성과를 보였습니다.</span></p>
+    <p><span class="sent" data-sid="of4">이 발견은 AI 도입의 핵심 위험을 강조합니다: AI 결과물이 완전성과 자신감의 환상을 만들어내기 때문에, 가장 중요한 순간에 인간이 비판적 판단을 적용하지 못할 수 있습니다.</span></p>
+  </div>
+</div>
+
+<!-- Centaurs and Cyborgs -->
+<div class="section-divider">Centaurs and Cyborgs / 켄타우로스와 사이보그</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Centaurs and Cyborgs</h2>
+    <p><span class="sent" data-sid="cc1">Two distinct patterns of human-AI collaboration emerged.</span></p>
+    <p><span class="sent" data-sid="cc2"><strong>CENTAURS</strong> (like the mythological half-human, half-horse) divide and delegate tasks strategically: they identify which tasks lie inside the frontier and assign those to AI, while retaining tasks that require human judgment outside the frontier themselves.</span> <span class="sent" data-sid="cc3">They operate by separating human and AI work streams.</span></p>
+    <p><span class="sent" data-sid="cc4"><strong>CYBORGS</strong> fully integrate AI into every step of their workflow, interacting with AI continuously throughout each task rather than delegating discrete portions.</span></p>
+    <p><span class="sent" data-sid="cc5">Both approaches yield performance gains, but the optimal strategy depends on the specific task and the individual's ability to identify frontier boundaries.</span> <span class="sent" data-sid="cc6">Neither pattern is universally superior — the key skill is knowing which mode to adopt for which task.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>켄타우로스와 사이보그</h2>
+    <p><span class="sent" data-sid="cc1">인간-AI 협업의 두 가지 뚜렷한 패턴이 나타났습니다.</span></p>
+    <p><span class="sent" data-sid="cc2"><strong>켄타우로스(Centaurs,</strong> 반인반마의 신화 속 생물처럼) — 전략적으로 작업을 분리하고 위임합니다: 최전선 내부 작업은 AI에게, 인간적 판단이 필요한 최전선 외부 작업은 본인이 직접 수행합니다.</span> <span class="sent" data-sid="cc3">인간과 AI의 작업 흐름을 분리해서 운영합니다.</span></p>
+    <p><span class="sent" data-sid="cc4"><strong>사이보그(Cyborgs)</strong> — AI를 모든 작업 단계에 완전히 통합합니다. 이산적인 부분을 위임하기보다 각 작업 전반에 걸쳐 AI와 지속적으로 상호작용합니다.</span></p>
+    <p><span class="sent" data-sid="cc5">두 방식 모두 성과 향상을 가져오지만, 최적 전략은 특정 작업과 개인의 최전선 경계 파악 능력에 따라 다릅니다.</span> <span class="sent" data-sid="cc6">어느 패턴도 보편적으로 우월하지 않습니다 — 핵심 역량은 어떤 작업에 어떤 모드를 적용할지 아는 것입니다.</span></p>
+  </div>
+</div>
+
+<!-- Implications -->
+<div class="section-divider">Implications / 시사점</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Implications</h2>
+    <p><span class="sent" data-sid="im1">Key takeaways for organizations and individuals:</span></p>
+    <p><span class="sent" data-sid="im2">(1) AI creates an uneven capability landscape — the same AI will dramatically help on some tasks while actively harming performance on others.</span></p>
+    <p><span class="sent" data-sid="im3">(2) Understanding where the frontier lies requires experimentation; it is not intuitive even for experts.</span></p>
+    <p><span class="sent" data-sid="im4">(3) <span class="term" data-tid="t-prompteng">Prompt engineering</span> and AI literacy training significantly improve outcomes — the GPT + Overview group consistently outperformed GPT Only.</span></p>
+    <p><span class="sent" data-sid="im5">(4) AI is a powerful leveler of skill gaps, but over-reliance creates new risks of uncritical acceptance of flawed outputs.</span></p>
+    <p><span class="sent" data-sid="im6">(5) As AI capabilities rapidly evolve, the frontier expands — strategies must continuously adapt. Today's outside-frontier task may be tomorrow's inside-frontier task.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>시사점</h2>
+    <p><span class="sent" data-sid="im1">조직과 개인을 위한 핵심 시사점:</span></p>
+    <p><span class="sent" data-sid="im2">(1) AI는 불균등한 능력 지형을 만들어낸다 — 동일한 AI가 어떤 작업은 극적으로 도움을 주고, 다른 작업은 오히려 성과를 저하시킨다.</span></p>
+    <p><span class="sent" data-sid="im3">(2) 최전선의 위치를 파악하는 것은 실험이 필요하며, 전문가조차 직관적으로 알 수 없다.</span></p>
+    <p><span class="sent" data-sid="im4">(3) <span class="term" data-tid="t-prompteng">프롬프트 엔지니어링(Prompt Engineering)</span>과 AI 리터러시 교육이 성과를 유의미하게 향상시킨다 — GPT + 개요 그룹이 일관되게 GPT 단독 그룹을 앞섰다.</span></p>
+    <p><span class="sent" data-sid="im5">(4) AI는 기술 격차를 강력하게 평준화하지만, 과잉 의존은 결함 있는 결과물을 무비판적으로 수용하는 새로운 위험을 만든다.</span></p>
+    <p><span class="sent" data-sid="im6">(5) AI 능력이 빠르게 진화하면서 최전선이 확장되므로, 전략도 지속적으로 적응해야 한다. 오늘의 최전선 외부 작업이 내일은 최전선 내부 작업이 될 수 있다.</span></p>
+  </div>
+</div>
+
+</div><!-- /container -->
+</div><!-- /reading-1 -->
+
+
+<!-- =====================================================================
+     READING 2: Machines of Loving Grace
+     Dario Amodei (October 2024)
+     ===================================================================== -->
+<div id="reading-2" style="display:none">
+
+<div class="info-bar">한국어 번역 준비 중 &mdash; English only &nbsp;|&nbsp; Korean translation in progress</div>
+
+<div class="container-single" style="max-width:860px;margin:0 auto;padding:0 28px;">
+
+<!-- Introduction -->
+<div class="section-divider">Introduction</div>
+<div class="mono-section">
+  <h2>Introduction</h2>
+  <p><span class="sent" data-sid="m-i1">I think and talk a lot about the risks of powerful AI. The company I'm the CEO of, Anthropic, does a lot of research on how to reduce these risks.</span> <span class="sent" data-sid="m-i2">Because of this, people sometimes draw the conclusion that I'm a pessimist or 'doomer' who thinks AI will be mostly bad or dangerous. I don't think that at all.</span> <span class="sent" data-sid="m-i3">In fact, one of my main reasons for focusing on risks is that they're the only thing standing between us and what I see as a fundamentally positive future.</span></p>
+  <p><span class="sent" data-sid="m-i4">I think that most people are underestimating just how radical the upside of AI could be, just as I think most people are underestimating how bad the risks could be.</span> <span class="sent" data-sid="m-i5">In this essay I try to sketch out what that upside might look like — what a world with powerful AI might look like if everything goes right.</span></p>
+</div>
+
+<!-- What is Powerful AI -->
+<div class="section-divider">What is Powerful AI?</div>
+<div class="mono-section">
+  <h2>What is Powerful AI?</h2>
+  <p><span class="sent" data-sid="m-p1">The AI I'm imagining is not the <span class="term" data-tid="t-robai">robotic AI of science fiction</span>. Think of it as a 'brilliant friend who happens to have the knowledge of a doctor, lawyer, financial advisor, and expert in whatever you need.'</span> <span class="sent" data-sid="m-p2">As a friend, they give real information based on your specific situation rather than overly cautious advice driven by fear of liability or a worry that it'll overwhelm you.</span></p>
+  <p><span class="sent" data-sid="m-p3">Unlike seeing a professional in a formal context, this friend will often speak frankly, help you understand your situation in full, and actually engage with your problem — while also knowing when to refer you to someone else.</span> <span class="sent" data-sid="m-p4">People with access to such friends are very lucky, and that's what AI can be for everyone.</span></p>
+  <p><span class="sent" data-sid="m-p5">I believe that many instances of such AI, working autonomously, are likely to be more like a '<span class="term" data-tid="t-cognilab">country of geniuses</span>' that could compress decades of scientific progress into just a few years.</span></p>
+</div>
+
+<!-- Biology and Health -->
+<div class="section-divider">Biology and Health</div>
+<div class="mono-section">
+  <h2>Biology and Health</h2>
+  <p><span class="sent" data-sid="m-b1">Millions of people die every year from cancer, heart disease, and other diseases that we think of as 'solved' but aren't.</span> <span class="sent" data-sid="m-b2">AI has the potential to compress 50–100 years of scientific progress into 5–10 years.</span></p>
+  <p><span class="sent" data-sid="m-b3">Concretely, I mean to actually defeat diseases that have plagued us for millennia — <span class="term" data-tid="t-alzheimer">Alzheimer's</span>, many forms of cancer, all infectious diseases we currently lack adequate treatments for.</span> <span class="sent" data-sid="m-b4">AI could also turn mental health care from the current state (barely functional for most people) to a genuine system that actually improves human well-being at scale.</span></p>
+</div>
+
+<!-- Economic Development -->
+<div class="section-divider">Economic Development</div>
+<div class="mono-section">
+  <h2>Economic Development</h2>
+  <p><span class="sent" data-sid="m-e1">AI-driven economic growth could lift billions out of poverty.</span> <span class="sent" data-sid="m-e2">I think there's a real chance that, in the near term, AI could lift up much of the rest of the world so that they're closer to living the way people in developed countries live today.</span></p>
+  <p><span class="sent" data-sid="m-e3">The economic gains from AI could be very large, potentially raising global economic growth rates significantly and enabling people in lower-income countries to access education, healthcare, and economic opportunity that was previously out of reach.</span></p>
+</div>
+
+<!-- Peace and Governance -->
+<div class="section-divider">Peace and Governance</div>
+<div class="mono-section">
+  <h2>Peace and Governance</h2>
+  <p><span class="sent" data-sid="m-g1">I am cautiously optimistic that AI could also have a significant positive impact on reducing conflict and improving governance.</span> <span class="sent" data-sid="m-g2">AI systems could help identify the precursors to conflict, mediate disputes, and analyze large amounts of data to find the underlying causes of tension.</span></p>
+  <p><span class="sent" data-sid="m-g3">Good governance and democratic institutions could potentially be strengthened if AI helps people access better information and if AI helps governments make better decisions.</span> <span class="sent" data-sid="m-g4">This is speculative, but the potential is real and worth pursuing carefully.</span></p>
+</div>
+
+<!-- The Core Tension -->
+<div class="section-divider">The Core Tension</div>
+<div class="mono-section">
+  <h2>The Core Tension</h2>
+  <p><span class="sent" data-sid="m-c1">To sum up, I believe that the risks of powerful AI are very real — but I also believe that its potential benefits are equally real, and that these benefits deserve more serious discussion.</span></p>
+  <p><span class="sent" data-sid="m-c2">The most important thing we can do is develop AI carefully enough that the benefits actually materialize, while working hard to prevent the risks from derailing this fundamentally positive future.</span> <span class="sent" data-sid="m-c3">Powerful AI is coming regardless. The question is whether we can land in a world where it's genuinely beneficial.</span></p>
+  <p><span class="sent" data-sid="m-c4">The challenge — and the hope — is that we shape the trajectory of this technology deliberately, with both eyes open to the risks and the rewards. That is what it means to navigate the future of <span class="term" data-tid="t-agi">transformative AI</span>.</span></p>
+</div>
+
+</div><!-- /container-single -->
+</div><!-- /reading-2 -->
+
+
+<div id="copyright-footer">
+  Reading 1: Dell'Acqua et al. (2023) "Navigating the Jagged Technological Frontier" &mdash; BCG/Harvard field experiment. Educational fair use only.<br>
+  Reading 2: Dario Amodei (2024) "Machines of Loving Grace" &mdash; <a href="https://darioamodei.com/machines-of-loving-grace" target="_blank">darioamodei.com</a>. Educational fair use only.<br>
+  Gyehyu K &bull; KAIST IMMS &bull; BIZ.60010 AI Strategy &amp; Management Spring 2026 &bull;
+  <a href="mailto:gyehyukim@kaist.ac.kr">gyehyukim@kaist.ac.kr</a>
+</div>
+
+<div id="tip">
+  <div class="t-title" id="tip-title"></div>
+  <div class="t-label">일반 정의</div>
+  <div id="tip-common"></div>
+  <div class="t-label">AI 전략 맥락</div>
+  <div id="tip-vc" style="color:#a0c8ff"></div>
+</div>
+
+<button id="ask-btn" onclick="openChat()">&#128172; AI에게 질문</button>
+
+<div id="chat-popup">
+  <div id="chat-hdr">
+    <span id="chat-title">&#128172; 리딩 Q&amp;A</span>
+    <span id="chat-snippet"></span>
+    <button class="ccbtn" id="chat-min-btn" onclick="toggleChatMin()" title="최소화">&#9660;</button>
+    <button class="ccbtn" onclick="closeChat()" title="닫기">&#x2715;</button>
+  </div>
+  <div id="chat-ctx"></div>
+  <div id="chat-msgs"></div>
+  <div id="chat-foot">
+    <textarea id="chat-input" placeholder="이 문장에 대해 질문하세요...&#10;(Ctrl+Enter: 전송)"></textarea>
+    <button id="chat-send" onclick="sendChat()">전송</button>
+  </div>
+</div>
+
+<div id="ai-panel">
+  <div id="ai-panel-header">
+    <span class="ai-label">AI 설명</span>
+    <span id="ai-term"></span>
+    <span id="ai-model-tag"></span>
+    <button id="ai-close" onclick="closeAI()">&#x2715;</button>
+  </div>
+  <div id="ai-body"></div>
+</div>
+
+<script>
+/* ── Password gate ── */
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+if (sessionStorage.getItem(AUTH_KEY) === AUTH_VAL) {
+  document.getElementById('pw-gate').style.display = 'none';
+}
+function checkPw() {
+  const v = document.getElementById('pw-input').value.trim();
+  if (v === AUTH_VAL) {
+    sessionStorage.setItem(AUTH_KEY, AUTH_VAL);
+    document.getElementById('pw-gate').style.display = 'none';
+  } else {
+    document.getElementById('pw-error').textContent = '비밀번호가 틀렸습니다.';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+
+/* ── Reading tab switch ── */
+function showReading(n) {
+  document.getElementById('reading-1').style.display = n === 1 ? '' : 'none';
+  document.getElementById('reading-2').style.display = n === 2 ? '' : 'none';
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === n - 1);
+  });
+  locked = null; clearAll();
+}
+
+/* ── Terms dictionary ── */
+const TERMS_LOCAL = {
+  "t-jf": {
+    title: "Jagged Technological Frontier (들쭉날쭉한 기술 최전선)",
+    common: "AI가 능숙하게 수행하는 작업과 그렇지 못한 작업 사이의 불규칙한 경계선. 겉보기에 비슷한 난이도의 과제 간에도 AI 성과가 극적으로 다를 수 있음.",
+    vc: "Dell'Acqua et al. (2023)의 핵심 개념. AI 전략 수립 시 '어떤 업무를 AI에 위임할 것인가'를 판단하는 틀. 최전선은 AI 모델 업그레이드마다 이동하므로 지속적 재평가가 필요."
+  },
+  "t-centaur": {
+    title: "Centaur (켄타우로스) 협업 패턴",
+    common: "인간과 AI의 작업을 전략적으로 분리·위임하는 협업 방식. 반인반마 신화 속 존재에서 유래.",
+    vc: "최전선 내부 과제는 AI에게, 외부 과제는 인간이 처리. 체스 세계에서 '켄타우로스 체스'(인간+컴퓨터 팀)에서 차용한 개념. 조직 설계 시 역할 분담 기준으로 활용."
+  },
+  "t-cyborg": {
+    title: "Cyborg (사이보그) 협업 패턴",
+    common: "AI를 모든 작업 흐름에 완전히 통합하는 협업 방식. 작업 단위 위임보다 지속적 공동 작업.",
+    vc: "프롬프트 엔지니어링 역량이 높을수록 효과적. 켄타우로스 대비 더 높은 AI 리터러시 요구. 창의적·반복적 작업에서 특히 효과적."
+  },
+  "t-autobias": {
+    title: "Automation Bias (자동화 편향)",
+    common: "자동화 시스템의 결과물을 과도하게 신뢰하거나, 오류가 있음에도 이를 수용하는 인지 편향.",
+    vc: "AI가 틀린 경우에도 인간이 AI를 따르는 현상. Dell'Acqua 연구에서 최전선 외부 과제 성과 저하(-19%p)의 핵심 원인. 고위험 의사결정(의료·법률·금융)에서 특히 위험."
+  },
+  "t-skilleq": {
+    title: "Skill-Equalizing Effect (기술 평준화 효과)",
+    common: "AI 도구 사용 시 초보자와 전문가 간 성과 격차가 줄어드는 현상.",
+    vc: "하위 50% 컨설턴트가 43% 향상 vs 상위 50%가 17% 향상. 인재 접근성이 낮은 중소기업에 AI가 더 큰 레버리지를 제공. 단, 전문가의 변별력이 감소하는 부작용도 존재."
+  },
+  "t-prompteng": {
+    title: "Prompt Engineering (프롬프트 엔지니어링)",
+    common: "AI 모델로부터 원하는 결과를 얻기 위해 입력 문장(프롬프트)을 설계·최적화하는 기술.",
+    vc: "GPT + Overview 그룹이 GPT Only 그룹 대비 일관되게 우수한 성과. AI 리터러시의 핵심 구성 요소. 기업 AI 교육 투자의 핵심 ROI 요소."
+  },
+  "t-robai": {
+    title: "Robotic AI of Science Fiction",
+    common: "SF 영화·소설의 로봇 AI — 인간 형태, 단일 자아, 세계 정복 등의 고정관념.",
+    vc: "Amodei는 이와 달리 '지식 전문가 친구'로서의 AI를 상정. 현재 LLM 기반 AI의 실제 가치는 지식 접근성 민주화에 있음."
+  },
+  "t-cognilab": {
+    title: "Country of Geniuses (천재들의 나라)",
+    common: "Amodei의 비유: 수천 개의 AI 인스턴스가 동시에 자율적으로 작동하는 상태를 '천재 과학자 수천 명이 동시에 일하는 국가'에 비유.",
+    vc: "기술 가속의 핵심 메타포. AI가 단순 도구를 넘어 독립적 인지 노동자로 기능할 경우 R&D 생산성의 비선형적 증가를 암시. AGI 전환점 논의의 핵심 사고 실험."
+  },
+  "t-alzheimer": {
+    title: "Alzheimer's Disease (알츠하이머)",
+    common: "가장 흔한 치매 원인 질환. 현재 근본적 치료법 없음. 전 세계 5,500만 명 이상에게 영향.",
+    vc: "Amodei가 AI 의료 혁신의 상징으로 제시. 신약 개발 사이클(10~15년)을 AI가 수년으로 단축 가능하다는 주장의 근거. 헬스케어 AI 스타트업의 핵심 TAM."
+  },
+  "t-agi": {
+    title: "Transformative AI / AGI (범용 인공지능)",
+    common: "인간 수준 이상의 범용 지능을 가진 AI 시스템. 특정 작업이 아닌 모든 지적 과제를 수행 가능.",
+    vc: "Anthropic의 핵심 연구 목표이자 위험 대상. Amodei는 'powerful AI'를 AGI보다 넓게 정의. VC 투자 시 AGI 전환점 도달 시점과 기업가치 다이내믹이 핵심 변수."
+  }
+};
+
+document.querySelectorAll('.term').forEach(el => {
+  const tid = el.dataset.tid;
+  const data = TERMS_LOCAL[tid];
+  if (!data) return;
+  el.addEventListener('mouseenter', e => {
+    document.getElementById('tip-title').textContent = data.title;
+    document.getElementById('tip-common').textContent = data.common;
+    document.getElementById('tip-vc').textContent = data.vc;
+    const tip = document.getElementById('tip');
+    tip.style.display = 'block';
+    positionTip(tip, e);
+  });
+  el.addEventListener('mousemove', e => positionTip(document.getElementById('tip'), e));
+  el.addEventListener('mouseleave', () => { document.getElementById('tip').style.display = 'none'; });
+});
+function positionTip(tip, e) {
+  let x = e.clientX + 16, y = e.clientY + 16;
+  if (x + 360 > window.innerWidth) x = e.clientX - 370;
+  if (y + tip.offsetHeight > window.innerHeight) y = e.clientY - tip.offsetHeight - 10;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+
+/* ── Sentence highlight ── */
+let locked = null;
+document.querySelectorAll('.sent').forEach(el => {
+  el.addEventListener('mouseenter', () => { if (!locked) mirrorHover(el.dataset.sid, true); });
+  el.addEventListener('mouseleave', () => { if (!locked) mirrorHover(el.dataset.sid, false); });
+  el.addEventListener('click', () => {
+    if (locked === el.dataset.sid) { locked = null; clearAll(); return; }
+    clearAll(); locked = el.dataset.sid; mirrorSelect(locked); updateAskBtn();
+  });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { locked = null; clearAll(); } });
+function mirrorHover(sid, on) { document.querySelectorAll(`[data-sid="${sid}"]`).forEach(e => e.classList.toggle('h-on', on)); }
+function mirrorSelect(sid) { document.querySelectorAll(`[data-sid="${sid}"]`).forEach(e => e.classList.add('on')); }
+function clearAll() { document.querySelectorAll('.sent,.term').forEach(e => e.classList.remove('on','h-on')); updateAskBtn(); }
+
+/* ── AI mode detection ── */
+let appMode = 'static';
+let termsData = {};
+
+async function detectMode() {
+  try {
+    const r = await fetch('/api/explain', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({word:'test',context:''}), signal: AbortSignal.timeout(2000) });
+    if (r.ok) {
+      appMode = 'server';
+      document.getElementById('model-display').textContent = 'AI: Server';
+      document.getElementById('model-display').style.background = '#0e4f1a';
+      return;
+    }
+  } catch(_) {}
+  try {
+    const r2 = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(2000) });
+    if (r2.ok) {
+      appMode = 'local';
+      document.getElementById('model-display').textContent = 'AI: Local (Ollama)';
+      document.getElementById('model-display').style.background = '#0e4f1a';
+      return;
+    }
+  } catch(_) {}
+  appMode = 'static';
+  document.getElementById('model-display').textContent = '사전 모드';
+  document.getElementById('model-display').style.background = '#1a3a6c';
+}
+detectMode();
+
+/* ── Double-click AI ── */
+let aiAbort = null;
+document.addEventListener('dblclick', e => {
+  const word = window.getSelection().toString().trim() || getWordAt(e);
+  if (!word || word.length < 2) return;
+  const ctx = e.target.closest('.bi-row,.mono-section')?.textContent?.slice(0, 300) || '';
+  openAI(word, ctx);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && window.getSelection().toString().trim()) {
+    openAI(window.getSelection().toString().trim(), '');
+  }
+});
+function getWordAt(e) {
+  const r = document.caretRangeFromPoint?.(e.clientX, e.clientY);
+  if (!r) return '';
+  r.expand('word');
+  return r.toString().trim().replace(/[^a-zA-Z가-힣\-]/g,'');
+}
+
+function openAI(word, ctx) {
+  document.getElementById('ai-term').textContent = word;
+  document.getElementById('ai-body').textContent = '...';
+  document.getElementById('ai-panel').classList.add('open');
+  if (aiAbort) { aiAbort.abort(); }
+  if (appMode === 'server') openAI_server(word, ctx);
+  else if (appMode === 'local') openAI_local(word, ctx);
+  else openAI_static(word);
+}
+function closeAI() { document.getElementById('ai-panel').classList.remove('open'); if (aiAbort) aiAbort.abort(); }
+
+function openAI_static(word) {
+  const key = word.toLowerCase().trim();
+  let entry = termsData[key];
+  if (!entry) entry = Object.entries(termsData).find(([k]) => k.includes(key) || key.includes(k))?.[1];
+  if (entry) {
+    document.getElementById('ai-body').innerHTML = `<strong>[일반]</strong> ${entry.common || ''}<br><br><strong>[AI 전략 맥락]</strong> ${entry.context || entry.vc || ''}`;
+  } else {
+    const localKey = Object.keys(TERMS_LOCAL).find(k => {
+      const t = TERMS_LOCAL[k].title.toLowerCase();
+      return t.includes(key) || key.includes(t.split(' ')[0].toLowerCase());
+    });
+    if (localKey) {
+      const d = TERMS_LOCAL[localKey];
+      document.getElementById('ai-body').innerHTML = `<strong>[일반]</strong> ${d.common}<br><br><strong>[AI 전략 맥락]</strong> ${d.vc}`;
+    } else {
+      document.getElementById('ai-body').textContent = '이 단어는 사전에 등록되지 않았습니다. 서버나 Ollama가 실행 중이면 실시간 AI 설명이 가능합니다.';
+    }
+  }
+}
+
+async function openAI_server(word, ctx) {
+  aiAbort = new AbortController();
+  try {
+    const r = await fetch('/api/explain', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ word, context: ctx }),
+      signal: aiAbort.signal
+    });
+    if (!r.ok) throw new Error('Server error');
+    const data = await r.json();
+    document.getElementById('ai-body').textContent = data.explanation || data.text || JSON.stringify(data);
+  } catch(err) {
+    if (err.name !== 'AbortError') {
+      appMode = 'static';
+      openAI_static(word);
+    }
+  }
+}
+
+async function openAI_local(word, ctx) {
+  aiAbort = new AbortController();
+  const sysPrompt = 'You are an AI strategy and management expert. Explain terms related to AI adoption, human-AI collaboration, and technology management. Answer in Korean, concisely.';
+  const body = JSON.stringify({ model:'qwen3.5:2b', think:false, prompt:`${sysPrompt}\n\nExplain "${word}" in Korean: 1) general definition 2) AI strategy/management context. Context: "${ctx.slice(0,200)}". Be concise.`, stream:true });
+  try {
+    const r = await fetch('http://localhost:11434/api/generate', { method:'POST', body, headers:{'Content-Type':'application/json'}, signal: aiAbort.signal });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    document.getElementById('ai-body').textContent = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try { const j = JSON.parse(line); document.getElementById('ai-body').textContent += j.response || ''; } catch(_){}
+      });
+    }
+  } catch(err) { if (err.name !== 'AbortError') document.getElementById('ai-body').textContent = '연결 오류. Ollama가 실행 중인지 확인하세요.'; }
+}
+
+fetch('../terms.json').then(r=>r.json()).then(d=>{ termsData=d; }).catch(()=>{});
+
+/* ── Ask-AI button ── */
+let chatContext = '';
+let chatHistory = [];
+let chatMinimized = false;
+const currentModel = 'qwen3.5:2b';
+
+function showStaticHelp() {
+  const promptText =
+    'I\'m reading two AI papers: "Navigating the Jagged Technological Frontier" (Dell\'Acqua et al., 2023) and "Machines of Loving Grace" (Dario Amodei, 2024).\n' +
+    'The following passage is from these readings:\n\n"' + chatContext + '"\n\n' +
+    'Please explain what this means in the context of AI strategy and management. Answer in Korean.';
+
+  const d = document.createElement('div');
+  d.className = 'cmsg help';
+  d.innerHTML =
+    '<h4>Ollama 로컬 AI 설치 (5분)</h4>' +
+    '<ol>' +
+    '<li><a href="https://ollama.com" target="_blank">ollama.com</a> 다운로드 &amp; 설치</li>' +
+    '<li>터미널: <code>ollama pull qwen3.5:2b</code></li>' +
+    '<li>실행: <code>OLLAMA_ORIGINS=* ollama serve</code></li>' +
+    '<li>이 페이지 새로고침 &rarr; 배지가 초록으로 변경되면 준비 완료</li>' +
+    '</ol>' +
+    '<h4>대안: ChatGPT / Claude에 직접 질문</h4>' +
+    '<div class="prompt-box" id="static-prompt">' + escHtml(promptText) + '</div>' +
+    '<button class="copy-btn" id="copy-prompt-btn" onclick="copyPrompt()">프롬프트 복사</button>';
+
+  document.getElementById('chat-msgs').appendChild(d);
+  scrollChat();
+}
+
+function copyPrompt() {
+  const el = document.getElementById('static-prompt');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = document.getElementById('copy-prompt-btn');
+    btn.textContent = '복사됨!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '프롬프트 복사'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function updateAskBtn() {
+  const btn = document.getElementById('ask-btn');
+  if (!locked) { btn.style.display = 'none'; return; }
+  const enNodes = document.querySelectorAll(`.cell.en [data-sid="${locked}"], .mono-section [data-sid="${locked}"]`);
+  const krNodes = document.querySelectorAll(`.cell.kr [data-sid="${locked}"]`);
+  const nodes = enNodes.length ? enNodes : krNodes;
+  chatContext = Array.from(nodes).map(n => n.textContent.trim()).join(' ');
+  btn.style.display = 'flex';
+}
+
+function openChat() {
+  const popup = document.getElementById('chat-popup');
+  document.getElementById('chat-ctx').textContent = chatContext;
+  document.getElementById('chat-snippet').textContent =
+    chatContext.length > 44 ? chatContext.slice(0, 44) + '\u2026' : chatContext;
+  popup.classList.add('open');
+  popup.classList.remove('minimized');
+  chatMinimized = false;
+  document.getElementById('chat-min-btn').textContent = '\u25BC';
+  if (chatHistory.length === 0) addSysMsg('선택된 문장을 바탕으로 자유롭게 질문하세요.');
+  document.getElementById('chat-input').focus();
+}
+
+function closeChat() {
+  document.getElementById('chat-popup').classList.remove('open');
+  chatHistory = [];
+  document.getElementById('chat-msgs').innerHTML = '';
+}
+
+function toggleChatMin() {
+  chatMinimized = !chatMinimized;
+  document.getElementById('chat-popup').classList.toggle('minimized', chatMinimized);
+  document.getElementById('chat-min-btn').textContent = chatMinimized ? '\u25B2' : '\u25BC';
+}
+
+function addSysMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'cmsg sys'; d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d); scrollChat();
+}
+
+function addMsg(role, text) {
+  chatHistory.push({ role, text });
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + role; d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d); scrollChat();
+  return d;
+}
+
+function scrollChat() { const m = document.getElementById('chat-msgs'); m.scrollTop = m.scrollHeight; }
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg('user', text);
+  input.value = '';
+  sendBtn.disabled = true;
+
+  if (appMode === 'server') {
+    const typingEl = addMsg('ai', '\u25CC');
+    try {
+      const r = await fetch('/api/explain', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ word: text, context: chatContext.slice(0,300), chat: true,
+          history: chatHistory.slice(0,-1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text }))
+        })
+      });
+      if (!r.ok) throw new Error('Server error');
+      const data = await r.json();
+      const reply = data.explanation || data.text || JSON.stringify(data);
+      typingEl.textContent = reply;
+      chatHistory[chatHistory.length - 1] = { role: 'ai', text: reply };
+    } catch(err) { typingEl.textContent = '오류: ' + err.message; }
+    sendBtn.disabled = false; return;
+  }
+
+  if (appMode !== 'local') {
+    showStaticHelp();
+    sendBtn.disabled = false; return;
+  }
+
+  const typingEl = addMsg('ai', '\u25CC');
+  const sysPrompt = 'You are an AI strategy and management expert. Answer questions about the papers "Navigating the Jagged Technological Frontier" (Dell\'Acqua et al., 2023) and "Machines of Loving Grace" (Dario Amodei, 2024). Answer in Korean concisely.\n\nSelected passage: "' + chatContext.slice(0, 300) + '"';
+  const messages = [
+    { role: 'system', content: sysPrompt },
+    ...chatHistory.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text })),
+    { role: 'user', content: text },
+  ];
+
+  let buf = '';
+  try {
+    const r = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: currentModel, think: false, messages, stream: true }),
+    });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    typingEl.textContent = '';
+    while (true) {
+      const { done, value } = await reader.read(); if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try { const j = JSON.parse(line); if (j.message?.content) { buf += j.message.content; typingEl.textContent = buf; scrollChat(); } } catch(_) {}
+      });
+    }
+    chatHistory[chatHistory.length - 1] = { role: 'ai', text: buf };
+  } catch (err) { typingEl.textContent = '오류: ' + err.message; }
+  sendBtn.disabled = false;
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); sendChat(); }
+});
+
+(function initDrag() {
+  const popup = document.getElementById('chat-popup');
+  const hdr = document.getElementById('chat-hdr');
+  let dragging = false, ox = 0, oy = 0;
+  hdr.addEventListener('mousedown', e => {
+    if (e.target.closest('.ccbtn')) return;
+    dragging = true;
+    const r = popup.getBoundingClientRect();
+    ox = e.clientX - r.left; oy = e.clientY - r.top; e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const x = Math.max(0, Math.min(e.clientX - ox, window.innerWidth - popup.offsetWidth));
+    const y = Math.max(0, Math.min(e.clientY - oy, window.innerHeight - 60));
+    popup.style.right = 'auto'; popup.style.bottom = 'auto';
+    popup.style.left = x + 'px'; popup.style.top = y + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+})();
+</script>
+</body>
+</html>

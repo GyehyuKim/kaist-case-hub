@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Manna — Marshall Brain | 영한 대조</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, serif; font-size: 14px; line-height: 1.75; background: #f5f5f5; color: #222; padding-bottom: 260px; }
+
+header { background: #0f2540; color: #eee; padding: 14px 32px; display: flex; align-items: center; gap: 20px; }
+header h1 { font-size: 18px; }
+header .sub { font-size: 11px; color: #99b4cc; }
+
+.help-bar { background: #1a3a5c; color: #aaa; font-size: 11px; padding: 5px 32px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.help-bar kbd { background: #2a4a6c; color: #eee; padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 10px; }
+.model-badge { margin-left: auto; background: #0e4f1a; color: #6eff8a; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-family: monospace; }
+.back-btn { margin-left: auto; font-size: 11px; color: #99b4cc; text-decoration: none; padding: 4px 12px; border: 1px solid #2a4a6c; border-radius: 5px; white-space: nowrap; }
+.back-btn:hover { color: #fff; border-color: #58a6ff; background: rgba(88,166,255,.08); }
+
+.lang-bar { display: grid; grid-template-columns: 1fr 1fr; background: #1a3a5c; border-bottom: 2px solid #2a5080; }
+.lang-bar div { padding: 5px 32px; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; color: #99b4cc; }
+.lang-bar .kr { border-left: 1px solid #2a4a6c; }
+
+.section-divider { background: #e8eef4; padding: 7px 28px; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #2a5080; border-bottom: 1px solid #ccd8e4; }
+
+.container { max-width: 1500px; margin: 0 auto; }
+.bi-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid #ddd; }
+.cell { padding: 20px 28px; }
+.cell.en { background: #fff; border-right: 1px solid #ddd; }
+.cell.kr { background: #f6f8fc; }
+
+.cell h2 { font-size: 13px; font-weight: bold; color: #0f2540; margin-bottom: 12px; padding-bottom: 5px; border-bottom: 2px solid #0f2540; text-transform: uppercase; letter-spacing: 0.5px; }
+.cell h3 { font-size: 12px; font-weight: bold; color: #2a5080; margin: 14px 0 6px; }
+.cell p { margin-bottom: 10px; }
+.cell blockquote { margin: 10px 0; padding: 8px 14px; border-left: 3px solid #5580aa; color: #444; font-style: italic; background: rgba(15,37,64,.04); font-size: 13px; }
+.cell table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+.cell th { background: #0f2540; color: #fff; padding: 5px 8px; text-align: left; font-weight: normal; font-size: 11px; }
+.cell td { padding: 5px 8px; border-bottom: 1px solid #e0e8f0; vertical-align: top; }
+.cell tr:nth-child(even) td { background: #f0f4f8; }
+.cell tr.total td { font-weight: bold; border-top: 2px solid #0f2540; background: #dce8f0; }
+.cell .note { font-size: 11px; color: #888; margin-top: 4px; }
+
+.sent { cursor: pointer; border-radius: 2px; transition: background 0.1s; }
+.term { cursor: pointer; border-radius: 2px; transition: background 0.1s; border-bottom: 1px dotted #5580aa; }
+.sent.h-on, .term.h-on { background: rgba(255,215,0,0.38); }
+.sent.on, .term.on { background: rgba(60,130,255,0.22); outline: 1px solid rgba(60,130,255,0.4); }
+
+#tip { position: fixed; display: none; z-index: 9999; max-width: 340px; background: #0f2540; color: #eee; border-radius: 6px; padding: 12px 16px; font-size: 12px; line-height: 1.55; box-shadow: 0 4px 20px rgba(0,0,0,0.4); pointer-events: none; }
+#tip .t-title { font-size: 13px; font-weight: bold; color: #7ec8ff; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid #2a4a6c; }
+#tip .t-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7a99bb; margin: 6px 0 2px; }
+
+#ai-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+  background: #07192e; border-top: 2px solid #2a4a6c;
+  transform: translateY(100%); transition: transform 0.25s ease;
+  display: flex; flex-direction: column; max-height: 55vh;
+}
+#ai-panel.open { transform: translateY(0); }
+#ai-panel-header { display: flex; align-items: center; gap: 12px; padding: 8px 20px; background: #0f2540; flex-shrink: 0; }
+#ai-panel-header .ai-label { font-size: 11px; font-weight: bold; color: #7ec8ff; text-transform: uppercase; letter-spacing: 1px; }
+#ai-term { font-size: 13px; color: #a0c8ff; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ai-model-tag { font-size: 10px; color: #6eff8a; background: #0e4f1a; padding: 2px 8px; border-radius: 8px; font-family: monospace; }
+#ai-close { background: none; border: none; color: #888; font-size: 18px; cursor: pointer; line-height: 1; padding: 0 4px; }
+#ai-close:hover { color: #fff; }
+#ai-body { padding: 16px 24px; overflow-y: auto; flex: 1; font-size: 13px; line-height: 1.7; color: #dde8f4; }
+#ai-body strong { color: #7ec8ff; }
+#ai-body em { color: #a0c8ff; }
+
+#copyright-footer { background: #0f2540; color: #667; font-size: 10px; text-align: center; padding: 10px 32px; line-height: 1.7; }
+#copyright-footer a { color: #4a7aaa; text-decoration: none; }
+
+/* Ask AI button */
+#ask-btn {
+  position: fixed; right: 28px; bottom: 28px; z-index: 700;
+  display: none; align-items: center; gap: 7px;
+  background: #1a6abf; color: #fff; border: none; border-radius: 20px;
+  padding: 9px 18px; font-size: 13px; cursor: pointer;
+  box-shadow: 0 3px 16px rgba(0,0,0,.4); transition: background .15s;
+}
+#ask-btn:hover { background: #2280df; }
+
+/* Chat popup */
+#chat-popup {
+  position: fixed; z-index: 950; width: 400px; min-width: 260px;
+  background: #071929; border: 1px solid #2a4a6c; border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.55);
+  display: none; flex-direction: column;
+  bottom: 80px; right: 28px; max-height: 72vh; overflow: hidden;
+}
+#chat-popup.open { display: flex; }
+#chat-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; background: #0f2540;
+  border-radius: 12px 12px 0 0; cursor: grab; user-select: none; flex-shrink: 0;
+}
+#chat-hdr:active { cursor: grabbing; }
+#chat-title { font-size: 12px; font-weight: bold; color: #7ec8ff; flex: 1; }
+#chat-snippet { font-size: 10px; color: #7a99aa; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+.ccbtn { background: none; border: none; color: #667; font-size: 14px; cursor: pointer; padding: 0 4px; line-height: 1; }
+.ccbtn:hover { color: #ccc; }
+#chat-ctx {
+  background: rgba(88,166,255,.06); border-bottom: 1px solid #2a4a6c;
+  padding: 8px 14px; font-size: 11px; color: #7a9aaa; font-style: italic;
+  flex-shrink: 0; line-height: 1.5; max-height: 68px;
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+}
+#chat-msgs {
+  flex: 1; overflow-y: auto; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 8px; min-height: 100px;
+}
+.cmsg { max-width: 94%; font-size: 12px; line-height: 1.6; padding: 8px 11px; border-radius: 10px; word-break: break-word; }
+.cmsg.user { background: #1a3a5c; color: #cce0ff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.cmsg.ai   { background: #0f2540; color: #dde8f4; align-self: flex-start; border-bottom-left-radius: 3px; }
+.cmsg.sys  { color: #4a6a8a; font-size: 10px; align-self: center; background: none; padding: 0; font-style: italic; }
+.cmsg strong { color: #7ec8ff; }
+#chat-foot {
+  display: flex; gap: 8px; padding: 10px 12px;
+  border-top: 1px solid #2a4a6c; flex-shrink: 0;
+  background: #071929; border-radius: 0 0 12px 12px;
+}
+#chat-input {
+  flex: 1; background: #0f2540; border: 1px solid #2a4a6c;
+  border-radius: 8px; color: #dde8f4; font-size: 12px;
+  padding: 7px 10px; resize: none; height: 58px; font-family: inherit; outline: none;
+}
+#chat-input:focus { border-color: #58a6ff; }
+#chat-send {
+  background: #1a6abf; color: #fff; border: none; border-radius: 8px;
+  padding: 0 14px; cursor: pointer; font-size: 12px; align-self: flex-end; height: 34px;
+}
+#chat-send:hover { background: #2280df; }
+#chat-send:disabled { background: #1a2a3a; color: #445; cursor: default; }
+#chat-popup.minimized #chat-msgs,
+#chat-popup.minimized #chat-foot,
+#chat-popup.minimized #chat-ctx { display: none; }
+#chat-popup.minimized { border-radius: 12px; }
+.cmsg.help { background: #071929; border: 1px solid #2a4a6c; align-self: stretch; }
+.cmsg.help h4 { color: #7ec8ff; font-size: 11px; margin-bottom: 6px; }
+.cmsg.help ol { padding-left: 16px; margin: 4px 0 10px; color: #99bbdd; font-size: 11px; line-height: 1.8; }
+.cmsg.help a { color: #58a6ff; }
+.cmsg.help code { background: #030d18; color: #6eff8a; padding: 1px 5px; border-radius: 3px; font-size: 10px; font-family: monospace; }
+.prompt-box { background: #030d18; border: 1px solid #2a4060; border-radius: 6px; padding: 8px 10px; font-size: 11px; color: #99bbdd; font-family: monospace; line-height: 1.6; margin: 6px 0; white-space: pre-wrap; word-break: break-all; }
+.copy-btn { background: #1a6abf; color: #fff; border: none; border-radius: 6px; padding: 4px 12px; font-size: 11px; cursor: pointer; margin-top: 4px; }
+.copy-btn:hover { background: #2280df; }
+.copy-btn.copied { background: #0e4f1a; color: #6eff8a; }
+
+/* Password gate */
+#pw-gate {
+  position: fixed; inset: 0; z-index: 9000;
+  background: #07192e;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+}
+#pw-gate h2 { color: #7ec8ff; font-size: 22px; letter-spacing: 1px; }
+#pw-gate .pw-sub { color: #556; font-size: 12px; }
+#pw-gate input { padding: 10px 18px; border-radius: 8px; border: 1px solid #2a4a6c; background: #0f2540; color: #eee; font-size: 15px; width: 260px; text-align: center; outline: none; }
+#pw-gate input:focus { border-color: #7ec8ff; }
+#pw-gate button { padding: 10px 32px; background: #1a6abf; color: #fff; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; }
+#pw-gate button:hover { background: #2280df; }
+#pw-gate .pw-error { color: #ff6b6b; font-size: 12px; min-height: 18px; }
+
+/* Contrast table section */
+.contrast-section { background: #eef2f8; border-bottom: 1px solid #ccd8e4; }
+.contrast-section .bi-row { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<div id="pw-gate">
+  <h2>Manna — Marshall Brain</h2>
+  <span class="pw-sub">KAIST AI Evolution — 수업 자료</span>
+  <input type="password" id="pw-input" placeholder="비밀번호 입력" autofocus>
+  <button onclick="checkPw()">확인</button>
+  <div class="pw-error" id="pw-error"></div>
+  <a href="../" style="margin-top:16px;font-size:11px;color:#556;text-decoration:none;">&#8592; Hub로 돌아가기</a>
+</div>
+
+<header>
+  <h1>Manna &#8212; Marshall Brain</h1>
+  <span class="sub">Marshall Brain (2003) | AI 자동화 SF | 영한 대조</span>
+  <a class="back-btn" href="../">&#8592; Hub</a>
+</header>
+
+<div class="help-bar">
+  <span><kbd>hover</kbd> 문장 &#8594; 양방향 하이라이트</span>
+  <span><kbd>click</kbd> 파란색 고정 선택</span>
+  <span><kbd>Esc</kbd> 전체 해제</span>
+  <span><kbd>점선 밑줄</kbd> 사전 해설 팝업</span>
+  <span><kbd>더블클릭</kbd> 임의 단어 &#8594; AI 설명</span>
+  <span class="model-badge" id="model-display">모델 확인 중...</span>
+</div>
+
+<div class="lang-bar">
+  <div>English (Original)</div>
+  <div class="kr">한국어 번역 (Korean)</div>
+</div>
+
+<div class="container">
+
+<!-- Chapter 1 -->
+<div class="section-divider">Chapter 1 &#8212; The Arrival of Manna (2010)</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 1 &#8212; The Arrival of Manna</h2>
+    <p><span class="sent" data-sid="c1s1">May 17, 2010. At a Burger-G restaurant in Cary, North Carolina, a new management software called <span class="term" data-tid="t-manna">Manna</span> is installed.</span> <span class="sent" data-sid="c1s2">The narrator, a 15-year-old part-time worker, experiences it for the first time.</span> <span class="sent" data-sid="c1s3">Manna connects to cash registers and time clocks, monitoring demand and staffing in real time.</span> <span class="sent" data-sid="c1s4">It issues second-by-second instructions to employees through headsets &#8212; they become "the eyes and hands of a robot."</span> <span class="sent" data-sid="c1s5">His father's warning: "Yesterday, people controlled computers. Now computers control people."</span> <span class="sent" data-sid="c1s6">Manna doubles worker productivity, boosts customer satisfaction, and cuts management costs.</span> <span class="sent" data-sid="c1s7">Burger-G rolls it out nationally in 2011.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>1장 &#8212; Manna의 등장</h2>
+    <p><span class="sent" data-sid="c1s1">2010년 5월 17일. 노스캐롤라이나 Cary의 Burger-G 레스토랑에 새로운 관리 소프트웨어 'Manna'가 설치된다.</span> <span class="sent" data-sid="c1s2">화자(15세 알바생)는 처음으로 Manna를 경험한다.</span> <span class="sent" data-sid="c1s3">Manna는 금전등록기&#183;타임클락과 연동해 수요&#183;인력을 실시간 파악하고, 헤드셋을 통해 직원 개개인에게 초 단위 지시를 내린다.</span> <span class="sent" data-sid="c1s4">직원은 '로봇의 눈과 손' 역할로 전락한다.</span> <span class="sent" data-sid="c1s5">아버지의 경고: "어제까지는 사람이 컴퓨터를 통제했다. 이제는 컴퓨터가 사람을 통제한다."</span> <span class="sent" data-sid="c1s6">직원 생산성 2배&#8593;, 고객만족도&#8593;, 관리비용 절감 &#8594; 2011년 전국 배포.</span></p>
+  </div>
+</div>
+
+<!-- Chapter 2 -->
+<div class="section-divider">Chapter 2 &#8212; Manna's Expansion and Labor Market Takeover (2010s)</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 2 &#8212; Manna's Expansion</h2>
+    <p><span class="sent" data-sid="c2s1">Manna spreads rapidly to all fast-food chains, supermarkets, construction sites, hospitals, and airports.</span> <span class="sent" data-sid="c2s2">Version 2.0 adds employee scheduling and phone/email integration.</span> <span class="sent" data-sid="c2s3">Version 3.0 enables automatic termination &#8212; a security guard escorts the employee out while Manna reads the termination notice and demands a signature.</span> <span class="sent" data-sid="c2s4">Version 4.0 automates outsourcing: within 10 seconds, it bids, contracts, and schedules external workers.</span> <span class="sent" data-sid="c2s5">A shared <span class="term" data-tid="t-blacklist">blacklist</span> across all Manna-using companies makes re-employment impossible.</span> <span class="sent" data-sid="c2s6">Workers are deliberately scheduled to never encounter each other &#8212; human interaction is eliminated.</span> <span class="sent" data-sid="c2s7">Every Manna-managed company pays only minimum wage, leaving no room for negotiation.</span> <span class="sent" data-sid="c2s8">Society stratifies: (1) blacklisted &#8212; unemployable, (2) unemployed &#8212; desperately job-seeking, (3) Manna workers &#8212; minimum wage, (4) doctors, lawyers, executives, politicians &#8212; no headsets.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>2장 &#8212; Manna의 확산</h2>
+    <p><span class="sent" data-sid="c2s1">Manna는 모든 패스트푸드, 마트, 건설현장, 병원, 공항 등으로 급속 확산된다.</span> <span class="sent" data-sid="c2s2">v2.0은 직원 스케줄링 + 전화&#183;이메일 연동.</span> <span class="sent" data-sid="c2s3">v3.0은 자동 해고(보안요원 동반, Manna가 낭독 후 서명 강요).</span> <span class="sent" data-sid="c2s4">v4.0은 외주 자동 발주(10초 내 입찰&#183;계약&#183;스케줄링) + <span class="term" data-tid="t-blacklist">블랙리스트</span> 공유.</span> <span class="sent" data-sid="c2s5">직원 동선은 절대 마주치지 않게 설계 &#8594; 인간 간 교류 제거.</span> <span class="sent" data-sid="c2s6">모든 Manna 기업이 최저임금만 지급 &#8594; 협상 불가.</span> <span class="sent" data-sid="c2s7">사회 계층화: &#9312; 블랙리스트(취업 불가) &#9313; 실직자 &#9314; Manna 하 최저임금 노동자 &#9315; 의사&#183;변호사&#183;경영진&#183;정치인(헤드셋 없음).</span></p>
+  </div>
+</div>
+
+<!-- Chapter 3 -->
+<div class="section-divider">Chapter 3 &#8212; Robot Revolution and Computer Vision (2016&#8211;2030)</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 3 &#8212; Robot Revolution</h2>
+    <p><span class="sent" data-sid="c3s1">Robotics hardware (locomotion, dexterity) is complete, but autonomous operation requires vision.</span> <span class="sent" data-sid="c3s2">In 2016, <span class="term" data-tid="t-vbrain">VBrain</span> &#8212; 1,000 game consoles linked together &#8212; achieves human-brain-level processing.</span> <span class="sent" data-sid="c3s3">Autonomous bipedal robots navigate buildings; self-driving vehicles debut.</span> <span class="sent" data-sid="c3s4">By 2023, a custom 10-petaop vision chip causes robot prices to collapse, triggering explosive adoption: delivery, cleaning, cooking, construction, welding, landscaping, trucking, taxi, and security robots proliferate.</span> <span class="sent" data-sid="c3s5">Following a 2012 terrorist incident, all airline pilots are replaced by robots by 2015.</span> <span class="sent" data-sid="c3s6">By 2030, every large retail, fast-food, and construction job has been roboticized.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>3장 &#8212; 로봇 혁명</h2>
+    <p><span class="sent" data-sid="c3s1">로봇의 하드웨어(움직임&#183;손)는 완성됐으나 자율 작동에는 시각(vision)이 부재.</span> <span class="sent" data-sid="c3s2">2016년 <span class="term" data-tid="t-vbrain">VBrain</span>(게임 콘솔 1,000대 연결)이 인간 뇌 수준 처리능력 달성 &#8594; 자율 보행 로봇&#183;자율주행차 시연.</span> <span class="sent" data-sid="c3s3">2023년 10 petaop 커스텀 비전 칩 &#8594; 로봇 가격 폭락 &#8594; 폭발적 보급(배달&#183;청소&#183;요리&#183;건설&#183;용접&#183;조경&#183;트럭&#183;택시&#183;보안 로봇).</span> <span class="sent" data-sid="c3s4">2012년 테러 사건 후 2015년까지 항공 조종사 전원 로봇 교체.</span> <span class="sent" data-sid="c3s5">2030년까지 대형 유통&#183;패스트푸드&#183;건설 전 직종 로봇 교체 완료.</span></p>
+  </div>
+</div>
+
+<!-- Chapter 4 -->
+<div class="section-divider">Chapter 4 &#8212; Terrafoam: Dystopian America (2040s&#8211;2050)</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 4 &#8212; Terrafoam</h2>
+    <p><span class="sent" data-sid="c4s1"><span class="term" data-tid="t-terrafoam">Terrafoam</span>: a government welfare facility housing benefit recipients at minimal cost.</span> <span class="sent" data-sid="c4s2">A 417&#215;417&#215;417-foot windowless concrete cube &#8212; everything painted brown.</span> <span class="sent" data-sid="c4s3">Initially houses 76,800 people; later doubled to 153,600.</span> <span class="sent" data-sid="c4s4">Robots deliver three meals daily (15-minute rotations) and handle cleaning.</span> <span class="sent" data-sid="c4s5">It is effectively a prison: stepping outside the perimeter triggers an immediate robot sedation injection.</span> <span class="sent" data-sid="c4s6">America in 2050: extreme wealth concentration, collapsed democracy, third-world-style authoritarianism.</span> <span class="sent" data-sid="c4s7">Every public space monitored by cameras and microphones &#8212; any discussion of civil disobedience leads to immediate arrest.</span> <span class="sent" data-sid="c4s8">Elections are a formality; only the wealthy can run.</span> <span class="sent" data-sid="c4s9">The narrator, a former teacher, is automatically assigned to Terrafoam after the Education Department is roboticized.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>4장 &#8212; 테라폼</h2>
+    <p><span class="sent" data-sid="c4s1"><span class="term" data-tid="t-terrafoam">테라폼(Terrafoam)</span>: 복지 수혜자를 수용하는 초저비용 대형 집단 시설.</span> <span class="sent" data-sid="c4s2">417&#215;417&#215;417피트 정육면체, 창문 없음, 모든 것이 갈색.</span> <span class="sent" data-sid="c4s3">최초 76,800명 &#8594; 이후 153,600명으로 2배 증원.</span> <span class="sent" data-sid="c4s4">로봇이 하루 3회 식사 제공(15분 교대), 청소 담당.</span> <span class="sent" data-sid="c4s5">사실상 감옥 &#8212; 범위를 벗어나면 로봇이 주사로 즉시 제압.</span> <span class="sent" data-sid="c4s6">미국 2050년: 부의 초극단 집중, 민주주의 붕괴, 사실상 제3세계 독재.</span> <span class="sent" data-sid="c4s7">모든 공공장소 카메라&#183;마이크&#183;도청 &#8594; 시민 불복종 논의 즉시 구금.</span> <span class="sent" data-sid="c4s8">선거는 형식적, 부유층 후보만 진출 가능.</span> <span class="sent" data-sid="c4s9">화자(전직 교사)는 교육부가 로봇화되며 해고 &#8594; Manna가 자동으로 테라폼 배정.</span></p>
+  </div>
+</div>
+
+<!-- Chapter 5 -->
+<div class="section-divider">Chapter 5 &#8212; The Australia Project: An Offer</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 5 &#8212; The Australia Project</h2>
+    <p><span class="sent" data-sid="c5s1">Linda and Cynthia visit the narrator's room inside Terrafoam.</span> <span class="sent" data-sid="c5s2">They represent <span class="term" data-tid="t-4gc">4GC, Inc.</span> &#8212; a "Fourth Generation Civilization" project founded by Eric Renson using $1 trillion.</span> <span class="sent" data-sid="c5s3">Renson acquired 1.5 million square miles of Australian interior ($250 billion) plus factories, mines, and natural resources.</span> <span class="sent" data-sid="c5s4">The entire nation of Australia eventually joins.</span> <span class="sent" data-sid="c5s5">The core idea: robots + renewable energy + recycled resources = everything is free.</span> <span class="sent" data-sid="c5s6">This applies the <span class="term" data-tid="t-opensource">open-source software</span> model to the physical world.</span> <span class="sent" data-sid="c5s7">Funding: one share per person ($1,000 each) &#215; 1 billion people = $1 trillion.</span> <span class="sent" data-sid="c5s8">A credit system distributes 1,000 credits per person per week.</span> <span class="sent" data-sid="c5s9">The <span class="term" data-tid="t-nineprinc">Nine Principles</span>: (1) Everyone is equal, (2) Everything is reused, (3) Nothing is anonymous, (4) Nothing is owned, (5) Tell the truth, (6) Do no harm, (7) Obey the rules, (8) Live your life, (9) Better and better.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>5장 &#8212; 호주 프로젝트</h2>
+    <p><span class="sent" data-sid="c5s1">Linda와 Cynthia가 테라폼 내 화자의 방을 찾아온다.</span> <span class="sent" data-sid="c5s2">이들은 Eric Renson이 1조 달러로 설립한 <span class="term" data-tid="t-4gc">'4세대 문명(4GC, Inc.)'</span> 프로젝트 대표자.</span> <span class="sent" data-sid="c5s3">호주 내륙 1.5백만 평방마일 매입($2,500억) + 각종 자원&#183;공장&#183;광산 확보.</span> <span class="sent" data-sid="c5s4">이후 호주 국민 전체 합류 &#8594; 대륙 전체가 프로젝트 영토.</span> <span class="sent" data-sid="c5s5">핵심 아이디어: 로봇 + 재생에너지 + 재활용 자원 = 모든 것이 무료.</span> <span class="sent" data-sid="c5s6"><span class="term" data-tid="t-opensource">오픈소스 소프트웨어</span> 모델을 물질 세계에 적용.</span> <span class="sent" data-sid="c5s7">1인 1주($1,000) &#215; 10억 명 = 1조 달러. 크레딧 시스템: 1인당 주 1,000 크레딧 지급.</span> <span class="sent" data-sid="c5s8"><span class="term" data-tid="t-nineprinc">9가지 핵심 원칙</span>: &#9312; 모두가 평등 &#9313; 모든 것이 재활용 &#9314; 익명 없음 &#9315; 소유 없음 &#9316; 진실 말하기 &#9317; 해 끼치지 않기 &#9318; 규칙 준수 &#9319; 자신의 삶 살기 &#9320; 더 나아지기.</span></p>
+  </div>
+</div>
+
+<!-- Chapter 6 -->
+<div class="section-divider">Chapter 6 &#8212; Arrival in Australia and Orientation</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 6 &#8212; Arrival in Australia</h2>
+    <p><span class="sent" data-sid="c6s1">The journey: a 3-hour bus ride, then a plane (1,000 passengers, full first-class), then autonomous capsule vehicles.</span> <span class="sent" data-sid="c6s2">Accommodation: a 70-story atrium hotel surrounded by forests, parks, lakes, and bike paths.</span> <span class="sent" data-sid="c6s3">The city features giant glass domes and skyscrapers of varied shapes &#8212; a completely different urban design philosophy.</span> <span class="sent" data-sid="c6s4">Six-week orientation covers credit usage, housing, legal systems, voting, and robot culture.</span> <span class="sent" data-sid="c6s5">Key metaphor: Australia is "a luxury cruise ship you never have to leave."</span> <span class="sent" data-sid="c6s6">Creativity flourishes: fashion designers, musicians, and scientists pursue what they genuinely want to do.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>6장 &#8212; 호주 도착</h2>
+    <p><span class="sent" data-sid="c6s1">이동: 3시간 버스 &#8594; 비행기(1,000명 수용, 완전 일등석) &#8594; 자율주행 캡슐카.</span> <span class="sent" data-sid="c6s2">거주 환경: 70층 아트리움 호텔 + 숲&#183;공원&#183;호수&#183;자전거 도로가 어우러진 도시.</span> <span class="sent" data-sid="c6s3">거대한 유리 돔, 다양한 모양의 고층빌딩 &#8212; 전혀 다른 도시 설계 철학.</span> <span class="sent" data-sid="c6s4">오리엔테이션 6주: 크레딧 사용법, 주거, 법 체계, 투표, 로봇 문화.</span> <span class="sent" data-sid="c6s5">핵심 비유: 호주 = '영원히 승선한 럭셔리 크루즈 선.'</span> <span class="sent" data-sid="c6s6">패션 디자이너&#183;음악가&#183;과학자들이 진정 원하는 일을 자유롭게 추구.</span></p>
+  </div>
+</div>
+
+<!-- Chapter 7 -->
+<div class="section-divider">Chapter 7 &#8212; The Vertebrane System</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 7 &#8212; Vertebrane</h2>
+    <p><span class="sent" data-sid="c7s1"><span class="term" data-tid="t-vertebrane">Vertebrane</span>: three vertebrae are replaced, embedding a computer interface across the entire nervous system.</span> <span class="sent" data-sid="c7s2">It connects directly to visual, auditory, tactile, taste, and olfactory nerves &#8212; and even controls muscles (enabling automatic exercise while the mind disconnects).</span> <span class="sent" data-sid="c7s3">Features: phone calls, search, AR navigation, translation, fully immersive movies, complete virtual space (VS) experiences, lifelong memory recording, and automatic physical exercise.</span> <span class="sent" data-sid="c7s4">Refs (robot referees) monitor and enforce community rules.</span></p>
+    <h3>Manna vs. Vertebrane</h3>
+    <table>
+      <tr><th>Dimension</th><th>Manna (Dystopia)</th><th>Vertebrane (Utopia)</th></tr>
+      <tr><td>Controller</td><td>Corporation</td><td>Yourself</td></tr>
+      <tr><td>Purpose</td><td>Labor exploitation</td><td>Life enrichment</td></tr>
+      <tr><td>Can you refuse?</td><td>No (termination/blacklist)</td><td>Anytime</td></tr>
+      <tr><td>Ownership</td><td>Wealthy elite</td><td>Everyone equally</td></tr>
+    </table>
+  </div>
+  <div class="cell kr">
+    <h2>7장 &#8212; Vertebrane 시스템</h2>
+    <p><span class="sent" data-sid="c7s1"><span class="term" data-tid="t-vertebrane">Vertebrane</span>: 척추 3개를 교체해 모든 신경에 컴퓨터 인터페이스를 심는 기술.</span> <span class="sent" data-sid="c7s2">시각&#183;청각&#183;촉각&#183;미각&#183;후각 신경에 직접 연결 + 근육 제어까지 가능(뇌가 분리되어도 몸이 자동 운동).</span> <span class="sent" data-sid="c7s3">기능: 전화&#183;검색&#183;AR 네비게이션&#183;번역&#183;완전 몰입형 영화&#183;가상공간(VS) 완전 체험&#183;전 생애 기록 저장&#183;자동 운동.</span> <span class="sent" data-sid="c7s4">Refs(심판 로봇)가 규칙 위반 감시&#183;제지.</span></p>
+    <h3>Manna vs. Vertebrane 비교</h3>
+    <table>
+      <tr><th>항목</th><th>Manna (디스토피아)</th><th>Vertebrane (유토피아)</th></tr>
+      <tr><td>통제 주체</td><td>시스템(회사)</td><td>사용자 본인</td></tr>
+      <tr><td>목적</td><td>노동 착취&#183;효율화</td><td>삶의 풍요&#183;자유</td></tr>
+      <tr><td>거부 가능 여부</td><td>불가(해고&#183;블랙리스트)</td><td>언제든 가능</td></tr>
+      <tr><td>소유 구조</td><td>부유층 기업</td><td>모두가 평등하게 공유</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Chapter 8 -->
+<div class="section-divider">Chapter 8 &#8212; Life in Australia and Humanity's Choice</div>
+<div class="bi-row">
+  <div class="cell en">
+    <h2>Chapter 8 &#8212; Humanity's Choice</h2>
+    <p><span class="sent" data-sid="c8s1">Two lifestyles emerge.</span> <span class="sent" data-sid="c8s2"><span class="term" data-tid="t-vites">Vites</span>: live primarily in virtual space, eventually choosing to have only their brain stored in a 2.5-liter rack unit (a voluntary, permanent choice).</span> <span class="sent" data-sid="c8s3"><span class="term" data-tid="t-peas">Peas</span>: center their lives in the physical world, using Vertebrane only as a supplementary tool.</span> <span class="sent" data-sid="c8s4">The narrator chooses a 18th-century Williamsburg-style simple community &#8212; building homes by hand, growing food, crafting and trading goods.</span> <span class="sent" data-sid="c8s5">"Technology brought us back 300 years" &#8212; the paradox of total freedom.</span> <span class="sent" data-sid="c8s6">Conclusion: every human can now design their own version of paradise.</span> <span class="sent" data-sid="c8s7">The central question the novel poses: technology is not neutral &#8212; the same robotic technology is an instrument of exploitation under Manna, but a tool of liberation under the Australia Project.</span> <span class="sent" data-sid="c8s8">What determines the outcome is who owns the robots.</span></p>
+  </div>
+  <div class="cell kr">
+    <h2>8장 &#8212; 인류의 선택</h2>
+    <p><span class="sent" data-sid="c8s1">두 가지 삶의 방식이 등장한다.</span> <span class="sent" data-sid="c8s2"><span class="term" data-tid="t-vites">Vites</span>: 가상세계에서 삶을 영위, 결국 뇌만 2.5리터 랙에 보관(자발적 선택).</span> <span class="sent" data-sid="c8s3"><span class="term" data-tid="t-peas">Peas</span>: 물리 세계 중심 생활, Vertebrane은 보조 도구로만 사용.</span> <span class="sent" data-sid="c8s4">화자의 선택: 18세기 윌리엄스버그 스타일의 소박한 공동체 &#8212; 집을 직접 짓고, 음식을 직접 기르고, 공예품 제작&#183;거래.</span> <span class="sent" data-sid="c8s5">'기술이 우리를 300년 전으로 데려다줬다' &#8212; 완전한 자유가 가져온 역설.</span> <span class="sent" data-sid="c8s6">결론: 모든 인간이 자신만의 '천국'을 설계할 수 있게 된 사회.</span> <span class="sent" data-sid="c8s7">소설의 핵심 질문: 기술은 중립적이지 않다 &#8212; 같은 로봇 기술이 Manna에서는 착취 도구, 호주에서는 해방 도구.</span> <span class="sent" data-sid="c8s8">결과를 결정하는 것은 누가 로봇을 소유하느냐다.</span></p>
+  </div>
+</div>
+
+<!-- Core Contrast Section -->
+<div class="section-divider">&#54952;&#49901; &#45824;&#48708; &#44396;&#51312; (Core Contrast) &#8212; Dystopian USA vs. Utopian Australia</div>
+<div class="bi-row contrast-section">
+  <div class="cell en">
+    <h2>Core Contrast</h2>
+    <table>
+      <tr><th></th><th>Dystopian USA</th><th>Utopian Australia</th></tr>
+      <tr><td>Who owns tech</td><td>Wealthy elite</td><td>1 billion shareholders</td></tr>
+      <tr><td>Labor</td><td>Forced, minimum wage, blacklist</td><td>None (robots do it)</td></tr>
+      <tr><td>Housing</td><td>Terrafoam (prison-welfare)</td><td>Free choice, unlimited options</td></tr>
+      <tr><td>Surveillance</td><td>Control &amp; suppression</td><td>Fair enforcement (Refs)</td></tr>
+      <tr><td>AI's role</td><td>Humans as spare parts</td><td>Unleashing human potential</td></tr>
+      <tr><td>Economy</td><td>Extreme wealth concentration</td><td>Perfect equality (credits)</td></tr>
+    </table>
+  </div>
+  <div class="cell kr">
+    <h2>핵심 대비 구조</h2>
+    <table>
+      <tr><th></th><th>디스토피아 미국</th><th>유토피아 호주</th></tr>
+      <tr><td>기술 소유</td><td>소수 부유층</td><td>10억 명 주주</td></tr>
+      <tr><td>노동</td><td>강제 노동, 최저임금, 블랙리스트</td><td>없음 (로봇이 대신)</td></tr>
+      <tr><td>주거</td><td>테라폼 (감옥형 복지시설)</td><td>자유 선택, 무한 옵션</td></tr>
+      <tr><td>감시</td><td>통제&#183;억압 목적</td><td>공정한 규칙 집행 (Refs)</td></tr>
+      <tr><td>AI의 역할</td><td>인간을 부품으로 소모</td><td>인간 잠재력 해방</td></tr>
+      <tr><td>경제</td><td>극단적 부의 집중</td><td>완전 평등 (크레딧)</td></tr>
+    </table>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="copyright-footer">
+  Marshall Brain, <em>Manna</em> (2003). Educational use only. Not for commercial redistribution.<br>
+  Gyehyu K &bull; KAIST IMMS &bull; AI Evolution Spring 2026 &bull;
+  <a href="mailto:gyehyukim@kaist.ac.kr">gyehyukim@kaist.ac.kr</a>
+</div>
+
+<div id="tip">
+  <div class="t-title" id="tip-title"></div>
+  <div class="t-label">일반 정의</div>
+  <div id="tip-common"></div>
+  <div class="t-label">AI/자동화 맥락</div>
+  <div id="tip-vc" style="color:#a0c8ff"></div>
+</div>
+
+<button id="ask-btn" onclick="openChat()">&#128172; AI에게 질문</button>
+
+<div id="chat-popup">
+  <div id="chat-hdr">
+    <span id="chat-title">&#128172; Manna Q&amp;A</span>
+    <span id="chat-snippet"></span>
+    <button class="ccbtn" id="chat-min-btn" onclick="toggleChatMin()" title="최소화">&#9660;</button>
+    <button class="ccbtn" onclick="closeChat()" title="닫기">&#x2715;</button>
+  </div>
+  <div id="chat-ctx"></div>
+  <div id="chat-msgs"></div>
+  <div id="chat-foot">
+    <textarea id="chat-input" placeholder="이 문장에 대해 질문하세요...&#10;(Ctrl+Enter: 전송)"></textarea>
+    <button id="chat-send" onclick="sendChat()">전송</button>
+  </div>
+</div>
+
+<div id="ai-panel">
+  <div id="ai-panel-header">
+    <span class="ai-label">AI 설명</span>
+    <span id="ai-term"></span>
+    <span id="ai-model-tag"></span>
+    <button id="ai-close" onclick="closeAI()">&#x2715;</button>
+  </div>
+  <div id="ai-body"></div>
+</div>
+
+<script>
+/* Password gate */
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+if (sessionStorage.getItem(AUTH_KEY) === AUTH_VAL) {
+  document.getElementById('pw-gate').style.display = 'none';
+}
+function checkPw() {
+  const v = document.getElementById('pw-input').value.trim();
+  if (v === AUTH_VAL) {
+    sessionStorage.setItem(AUTH_KEY, AUTH_VAL);
+    document.getElementById('pw-gate').style.display = 'none';
+  } else {
+    document.getElementById('pw-error').textContent = '비밀번호가 틀렸습니다.';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+
+/* Terms dictionary */
+const TERMS = {
+  "t-manna": { title: "Manna", common: "Marshall Brain의 2003년 SF 소설에 등장하는 AI 관리 소프트웨어. 레스토랑 운영 최적화에서 시작해 사회 전반의 노동 통제로 확산된다.", vc: "AI 기반 자동화가 노동자에 대한 실시간 지휘·통제 시스템으로 작동할 때의 극단적 시나리오. 오늘날 Amazon 물류창고의 노동자 모니터링 시스템과 유사한 구조." },
+  "t-blacklist": { title: "블랙리스트 (Shared Blacklist)", common: "Manna를 사용하는 모든 기업이 공유하는 해고 직원 명단. 일단 등재되면 어느 Manna 운영 사업체에도 취업 불가.", vc: "플랫폼 독점(Platform Monopoly)이 노동시장 전체를 통제하는 메커니즘. 현실의 긱 이코노미에서도 유사한 평점 기반 배제 구조가 존재한다." },
+  "t-vbrain": { title: "VBrain", common: "소설 속 2016년에 등장하는 컴퓨팅 플랫폼. 게임 콘솔 1,000대를 병렬 연결해 인간 뇌 수준의 처리 능력을 구현, 로봇의 자율 시각 인식을 가능하게 한다.", vc: "오늘날의 분산 GPU 클러스터 및 대규모 AI 추론 인프라의 예언적 묘사. 컴퓨팅 비용 하락이 로봇화를 가속화한다는 경제적 논리를 예시." },
+  "t-terrafoam": { title: "Terrafoam", common: "소설 속 미국 정부가 운영하는 초저비용 대형 복지 수용시설. 창문 없는 거대한 콘크리트 정육면체로, 수십만 명을 최소한의 비용으로 수용한다.", vc: "기술 실업(Technological Unemployment)이 사회 안전망 붕괴 및 통제 사회로 이어지는 극단적 결과. UBI(기본소득)의 왜곡된 반대급부." },
+  "t-4gc": { title: "4GC, Inc. (Fourth Generation Civilization)", common: "소설 속 Eric Renson이 설립한 유토피아 프로젝트. 1조 달러를 모아 호주 대륙을 구입하고, 로봇 노동과 재생에너지로 모든 것이 무료인 사회를 건설한다.", vc: "오픈소스 경제 모델의 물리적 구현. 기술이 소수가 아닌 다수의 소유가 될 때 어떤 사회가 가능한지를 보여주는 사고 실험." },
+  "t-opensource": { title: "오픈소스 모델 (Open-Source Model)", common: "소프트웨어의 소스코드를 공개하고 누구나 사용·수정·배포할 수 있도록 하는 개발 방식. Linux, Android 등이 대표적.", vc: "소설에서는 오픈소스 원리를 물리적 생산 수단(로봇, 공장, 자원)에 적용. 공유 경제와 협동조합 모델의 극단적 확장으로 볼 수 있다." },
+  "t-nineprinc": { title: "9가지 원칙 (Nine Principles)", common: "호주 프로젝트가 채택한 사회 운영 기본 원칙. 평등·재활용·투명성·비소유·진실·무해·준법·자율·발전을 핵심 가치로 한다.", vc: "탈자본주의 사회 설계의 철학적 기반. 소유권 부재(Nothing is owned)와 완전 투명성(Nothing is anonymous)이 현대 법·경제 체계와 근본적으로 충돌하는 지점." },
+  "t-vertebrane": { title: "Vertebrane", common: "소설 속 호주 프로젝트에서 개발된 신경 인터페이스 기술. 척추 3개를 교체해 모든 감각신경과 운동신경에 컴퓨터를 연결한다.", vc: "Neuralink 등 BCI(Brain-Computer Interface) 기술의 극단적 진화 버전. Manna와 동일한 신체 개입 기술이지만 통제권이 시스템이 아닌 개인에게 있다는 점이 결정적 차이." },
+  "t-vites": { title: "Vites (Virtual People)", common: "호주 프로젝트 내에서 가상 공간을 주된 생활 공간으로 선택한 사람들. 최종적으로 뇌만 물리적으로 보존하는 완전 가상화를 선택하기도 한다.", vc: "디지털 트윈·메타버스의 극단적 형태. 인간 정체성과 의식의 물리적 기반에 대한 철학적 질문을 제기한다." },
+  "t-peas": { title: "Peas (Physical People)", common: "호주 프로젝트 내에서 물리적 세계를 중심으로 생활하는 사람들. Vertebrane을 보조 도구로만 사용하며 실제 공동체 생활을 선택한다.", vc: "기술이 충분히 발전해도 인간은 물리적 연결과 실제 경험을 선호할 수 있다는 반론. 기술 결정론에 대한 인본주의적 대안." }
+};
+
+document.querySelectorAll('.term').forEach(el => {
+  const tid = el.dataset.tid;
+  const data = TERMS[tid];
+  if (!data) return;
+  el.addEventListener('mouseenter', e => {
+    document.getElementById('tip-title').textContent = data.title;
+    document.getElementById('tip-common').textContent = data.common;
+    document.getElementById('tip-vc').textContent = data.vc;
+    const tip = document.getElementById('tip');
+    tip.style.display = 'block';
+    positionTip(tip, e);
+  });
+  el.addEventListener('mousemove', e => positionTip(document.getElementById('tip'), e));
+  el.addEventListener('mouseleave', () => { document.getElementById('tip').style.display = 'none'; });
+});
+function positionTip(tip, e) {
+  let x = e.clientX + 16, y = e.clientY + 16;
+  if (x + 360 > window.innerWidth) x = e.clientX - 370;
+  if (y + tip.offsetHeight > window.innerHeight) y = e.clientY - tip.offsetHeight - 10;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+
+/* Sentence highlight */
+let locked = null;
+document.querySelectorAll('.sent').forEach(el => {
+  el.addEventListener('mouseenter', () => { if (!locked) mirrorHover(el.dataset.sid, true); });
+  el.addEventListener('mouseleave', () => { if (!locked) mirrorHover(el.dataset.sid, false); });
+  el.addEventListener('click', () => {
+    if (locked === el.dataset.sid) { locked = null; clearAll(); return; }
+    clearAll(); locked = el.dataset.sid; mirrorSelect(locked); updateAskBtn();
+  });
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { locked = null; clearAll(); } });
+function mirrorHover(sid, on) { document.querySelectorAll(`[data-sid="${sid}"]`).forEach(e => e.classList.toggle('h-on', on)); }
+function mirrorSelect(sid) { document.querySelectorAll(`[data-sid="${sid}"]`).forEach(e => e.classList.add('on')); }
+function clearAll() { document.querySelectorAll('.sent,.term').forEach(e => e.classList.remove('on','h-on')); updateAskBtn(); }
+
+/* AI mode detection */
+let appMode = 'static';
+let termsData = {};
+
+async function detectMode() {
+  try {
+    const r = await fetch('/api/explain', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ word: '__ping__', context: '' }),
+      signal: AbortSignal.timeout(2000)
+    });
+    if (r.ok) {
+      const j = await r.json();
+      appMode = 'server';
+      document.getElementById('model-display').textContent = 'AI: ' + (j.model || 'server');
+      document.getElementById('model-display').style.background = '#0e4f1a';
+      return;
+    }
+  } catch(_) {}
+  try {
+    const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(2000) });
+    if (r.ok) { appMode = 'local'; document.getElementById('model-display').textContent = 'AI: qwen3.5:2b'; document.getElementById('model-display').style.background = '#0e4f1a'; return; }
+  } catch(_) {}
+  appMode = 'static';
+  document.getElementById('model-display').textContent = '사전 모드';
+  document.getElementById('model-display').style.background = '#1a3a6c';
+}
+detectMode();
+
+/* Double-click AI */
+let aiAbort = null;
+document.addEventListener('dblclick', e => {
+  const word = window.getSelection().toString().trim() || getWordAt(e);
+  if (!word || word.length < 2) return;
+  openAI(word, e.target.closest('.bi-row')?.querySelector('.cell')?.textContent?.slice(0,300) || '');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && window.getSelection().toString().trim()) {
+    openAI(window.getSelection().toString().trim(), '');
+  }
+});
+function getWordAt(e) {
+  const r = document.caretRangeFromPoint?.(e.clientX, e.clientY);
+  if (!r) return '';
+  r.expand('word');
+  return r.toString().trim().replace(/[^a-zA-Z가-힣\-]/g,'');
+}
+
+function openAI(word, ctx) {
+  document.getElementById('ai-term').textContent = word;
+  document.getElementById('ai-body').textContent = '...';
+  document.getElementById('ai-panel').classList.add('open');
+  if (aiAbort) { aiAbort.abort(); }
+  if (appMode === 'server') openAI_server(word, ctx);
+  else if (appMode === 'local') openAI_local(word, ctx);
+  else openAI_static(word);
+}
+function closeAI() { document.getElementById('ai-panel').classList.remove('open'); if (aiAbort) aiAbort.abort(); }
+
+function openAI_static(word) {
+  const key = word.toLowerCase().trim();
+  let entry = termsData[key];
+  if (!entry) entry = Object.entries(termsData).find(([k]) => k.includes(key) || key.includes(k))?.[1];
+  if (entry) {
+    document.getElementById('ai-body').innerHTML = `<strong>[일반]</strong> ${entry.common || ''}<br><br><strong>[AI/자동화 맥락]</strong> ${entry.context || entry.vc || ''}`;
+  } else {
+    document.getElementById('ai-body').textContent = '이 단어는 사전에 등록되지 않았습니다. 서버 또는 Ollama를 실행하면 실시간 AI 설명이 가능합니다.';
+  }
+}
+
+async function openAI_server(word, ctx) {
+  aiAbort = new AbortController();
+  try {
+    const r = await fetch('/api/explain', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ word, context: ctx.slice(0, 200) }),
+      signal: aiAbort.signal
+    });
+    const j = await r.json();
+    document.getElementById('ai-model-tag').textContent = j.model || '';
+    document.getElementById('ai-body').textContent = '';
+    if (j.stream) {
+      const reader = new Response(j.stream).body.getReader();
+      // fallback: just show text
+    }
+    document.getElementById('ai-body').innerHTML = j.explanation || j.text || JSON.stringify(j);
+  } catch(err) {
+    if (err.name !== 'AbortError') document.getElementById('ai-body').textContent = '서버 연결 오류.';
+  }
+}
+
+async function openAI_server_stream(word, ctx) {
+  aiAbort = new AbortController();
+  try {
+    const r = await fetch('/api/explain', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ word, context: ctx.slice(0, 200) }),
+      signal: aiAbort.signal
+    });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    document.getElementById('ai-body').textContent = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try {
+          const j = JSON.parse(line);
+          if (j.model) document.getElementById('ai-model-tag').textContent = j.model;
+          document.getElementById('ai-body').textContent += j.text || j.response || '';
+        } catch(_){}
+      });
+    }
+  } catch(err) { if (err.name !== 'AbortError') document.getElementById('ai-body').textContent = '서버 연결 오류.'; }
+}
+
+async function openAI_local(word, ctx) {
+  aiAbort = new AbortController();
+  const sysPrompt = '당신은 AI, 자동화, 사회 변화 분야 전문가입니다. 한국어로 간결하게 답하세요.';
+  const body = JSON.stringify({ model:'qwen3.5:2b', think:false, prompt:`${sysPrompt}\n\n용어 "${word}"를 설명하세요: 1) 일반 정의 2) AI/자동화/사회 변화 맥락. 문맥: "${ctx.slice(0,200)}". 간결하게.`, stream:true });
+  try {
+    const r = await fetch('http://localhost:11434/api/generate', { method:'POST', body, headers:{'Content-Type':'application/json'}, signal: aiAbort.signal });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    document.getElementById('ai-body').textContent = '';
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try { const j = JSON.parse(line); document.getElementById('ai-body').textContent += j.response || ''; } catch(_){}
+      });
+    }
+  } catch(err) { if (err.name !== 'AbortError') document.getElementById('ai-body').textContent = '연결 오류. Ollama가 실행 중인지 확인하세요.'; }
+}
+
+fetch('../terms.json').then(r=>r.json()).then(d=>{ termsData=d; }).catch(()=>{});
+
+/* Detect server-side AI (streaming) on load */
+(async function detectServerMode() {
+  try {
+    const r = await fetch('/api/explain', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ word: '__ping__', context: '' }),
+      signal: AbortSignal.timeout(2000)
+    });
+    if (r.ok) {
+      appMode = 'server';
+      // Switch to streaming version
+      window.openAI_server = openAI_server_stream;
+      document.getElementById('model-display').textContent = 'AI: server';
+      document.getElementById('model-display').style.background = '#0e4f1a';
+    }
+  } catch(_) {}
+})();
+
+/* Ask-AI button */
+let chatContext = '';
+let chatHistory = [];
+let chatMinimized = false;
+const currentModel = 'qwen3.5:2b';
+
+function showStaticHelp() {
+  const promptText =
+    'I am reading the SF novella "Manna" (2003) by Marshall Brain.\n' +
+    'The following sentence is from the story:\n\n"' + chatContext + '"\n\n' +
+    'Please explain what this means in the context of AI automation and social change. Answer in Korean.';
+
+  const d = document.createElement('div');
+  d.className = 'cmsg help';
+  d.innerHTML =
+    '<h4>Ollama 로컬 AI 설치 (5분)</h4>' +
+    '<ol>' +
+    '<li><a href="https://ollama.com" target="_blank">ollama.com</a> 다운로드 &amp; 설치</li>' +
+    '<li>터미널: <code>ollama pull qwen3.5:2b</code></li>' +
+    '<li>실행: <code>OLLAMA_ORIGINS=* ollama serve</code></li>' +
+    '<li>이 페이지 새로고침 &rarr; 배지가 초록으로 변경되면 준비 완료</li>' +
+    '</ol>' +
+    '<h4>대안: ChatGPT / Claude에 직접 질문</h4>' +
+    '<div class="prompt-box" id="static-prompt">' + escHtml(promptText) + '</div>' +
+    '<button class="copy-btn" id="copy-prompt-btn" onclick="copyPrompt()">프롬프트 복사</button>';
+
+  document.getElementById('chat-msgs').appendChild(d);
+  scrollChat();
+}
+
+function copyPrompt() {
+  const el = document.getElementById('static-prompt');
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    const btn = document.getElementById('copy-prompt-btn');
+    btn.textContent = '복사됨!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '프롬프트 복사'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function updateAskBtn() {
+  const btn = document.getElementById('ask-btn');
+  if (!locked) { btn.style.display = 'none'; return; }
+  const enNodes = document.querySelectorAll(`.cell.en [data-sid="${locked}"]`);
+  const krNodes = document.querySelectorAll(`.cell.kr [data-sid="${locked}"]`);
+  const nodes = enNodes.length ? enNodes : krNodes;
+  chatContext = Array.from(nodes).map(n => n.textContent.trim()).join(' ');
+  btn.style.display = 'flex';
+}
+
+function openChat() {
+  const popup = document.getElementById('chat-popup');
+  document.getElementById('chat-ctx').textContent = chatContext;
+  document.getElementById('chat-snippet').textContent =
+    chatContext.length > 44 ? chatContext.slice(0, 44) + '\u2026' : chatContext;
+  popup.classList.add('open');
+  popup.classList.remove('minimized');
+  chatMinimized = false;
+  document.getElementById('chat-min-btn').textContent = '\u25BC';
+  if (chatHistory.length === 0) addSysMsg('선택된 문장을 바탕으로 자유롭게 질문하세요.');
+  document.getElementById('chat-input').focus();
+}
+
+function closeChat() {
+  document.getElementById('chat-popup').classList.remove('open');
+  chatHistory = [];
+  document.getElementById('chat-msgs').innerHTML = '';
+}
+
+function toggleChatMin() {
+  chatMinimized = !chatMinimized;
+  document.getElementById('chat-popup').classList.toggle('minimized', chatMinimized);
+  document.getElementById('chat-min-btn').textContent = chatMinimized ? '\u25B2' : '\u25BC';
+}
+
+function addSysMsg(text) {
+  const d = document.createElement('div');
+  d.className = 'cmsg sys'; d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d); scrollChat();
+}
+
+function addMsg(role, text) {
+  chatHistory.push({ role, text });
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + role; d.textContent = text;
+  document.getElementById('chat-msgs').appendChild(d); scrollChat();
+  return d;
+}
+
+function scrollChat() { const m = document.getElementById('chat-msgs'); m.scrollTop = m.scrollHeight; }
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg('user', text);
+  input.value = '';
+  sendBtn.disabled = true;
+
+  if (appMode === 'server') {
+    const typingEl = addMsg('ai', '\u25CC');
+    const sysPrompt = '당신은 AI, 자동화, 사회 변화 분야 전문가입니다. 한국어로 간결하게 답하세요.\n\n선택 문장: "' + chatContext.slice(0, 300) + '"';
+    try {
+      const r = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ word: text, context: chatContext.slice(0, 300), system: sysPrompt })
+      });
+      const reader = r.body.getReader(); const dec = new TextDecoder();
+      typingEl.textContent = '';
+      let buf = '';
+      while (true) {
+        const { done, value } = await reader.read(); if (done) break;
+        dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+          try { const j = JSON.parse(line); buf += j.text || j.response || ''; typingEl.textContent = buf; scrollChat(); } catch(_) {}
+        });
+      }
+      chatHistory[chatHistory.length - 1] = { role: 'ai', text: buf };
+    } catch (err) { typingEl.textContent = '오류: ' + err.message; }
+    sendBtn.disabled = false;
+    return;
+  }
+
+  if (appMode !== 'local') {
+    showStaticHelp();
+    sendBtn.disabled = false; return;
+  }
+
+  const typingEl = addMsg('ai', '\u25CC');
+  const sysPrompt = '당신은 AI, 자동화, 사회 변화 분야 전문가입니다. 한국어로 간결하게 답하세요.\n\n선택 문장: "' + chatContext.slice(0, 300) + '"';
+  const messages = [
+    { role: 'system', content: sysPrompt },
+    ...chatHistory.slice(0, -1).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.text })),
+    { role: 'user', content: text },
+  ];
+
+  let buf = '';
+  try {
+    const r = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: currentModel, think: false, messages, stream: true }),
+    });
+    const reader = r.body.getReader(); const dec = new TextDecoder();
+    typingEl.textContent = '';
+    while (true) {
+      const { done, value } = await reader.read(); if (done) break;
+      dec.decode(value).split('\n').filter(Boolean).forEach(line => {
+        try { const j = JSON.parse(line); if (j.message?.content) { buf += j.message.content; typingEl.textContent = buf; scrollChat(); } } catch(_) {}
+      });
+    }
+    chatHistory[chatHistory.length - 1] = { role: 'ai', text: buf };
+  } catch (err) { typingEl.textContent = '오류: ' + err.message; }
+  sendBtn.disabled = false;
+}
+
+document.getElementById('chat-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); sendChat(); }
+});
+
+(function initDrag() {
+  const popup = document.getElementById('chat-popup');
+  const hdr = document.getElementById('chat-hdr');
+  let dragging = false, ox = 0, oy = 0;
+  hdr.addEventListener('mousedown', e => {
+    if (e.target.closest('.ccbtn')) return;
+    dragging = true;
+    const r = popup.getBoundingClientRect();
+    ox = e.clientX - r.left; oy = e.clientY - r.top; e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const x = Math.max(0, Math.min(e.clientX - ox, window.innerWidth - popup.offsetWidth));
+    const y = Math.max(0, Math.min(e.clientY - oy, window.innerHeight - 60));
+    popup.style.right = 'auto'; popup.style.bottom = 'auto';
+    popup.style.left = x + 'px'; popup.style.top = y + 'px';
+  });
+  document.addEventListener('mouseup', () => { dragging = false; });
+})();
+</script>
+</body>
+</html>

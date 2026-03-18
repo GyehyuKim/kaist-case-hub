@@ -328,6 +328,7 @@ const COURSES = [
     desc: 'HBS VC 케이스 시리즈. 시드/시리즈 라운드, 텀시트, 밸류에이션, 엑싯 전략 등 벤처 투자의 전 과정을 다룹니다.',
     cases: 10,
     available: 2,
+    label: 'cases',
     status: 'active',
     url: 'venture-capital/',
   },
@@ -338,7 +339,8 @@ const COURSES = [
     desc: 'AI 기반 비즈니스 진화, 전략 및 실습. AI/자동화가 비즈니스 모델과 조직에 미치는 영향을 분석합니다.',
     cases: 2,
     available: 0,
-    status: 'coming',
+    label: 'articles',
+    status: 'active',
     url: 'ai-evolution/',
   },
 ];
@@ -349,7 +351,7 @@ function renderCourses() {
     const isActive = c.status === 'active';
     const cardClass = isActive ? 'course-card' : 'course-card coming';
     const badgeClass = isActive ? 'active' : 'soon';
-    const badgeText = isActive ? c.available + ' Available' : 'Coming Soon';
+    const badgeText = isActive ? (c.available > 0 ? c.available + ' Available' : 'In Progress') : 'Coming Soon';
     return '<a class="' + cardClass + '" href="' + c.url + '">' +
       '<span class="course-badge ' + badgeClass + '">' + badgeText + '</span>' +
       '<div class="course-id">' + c.id + '</div>' +
@@ -357,7 +359,7 @@ function renderCourses() {
       '<div class="course-prof">' + c.prof + '</div>' +
       '<div class="course-desc">' + c.desc + '</div>' +
       '<div class="course-footer">' +
-        '<span class="course-meta">' + c.cases + ' cases</span>' +
+        '<span class="course-meta">' + c.cases + ' ' + (c.label || 'cases') + '</span>' +
         '<span class="course-arrow">' + (isActive ? '&#8594;' : '...') + '</span>' +
       '</div>' +
     '</a>';

@@ -18,11 +18,10 @@ OLLAMA    = "http://localhost:11434/api/generate"
 PREFERRED = ["qwen3.5:2b", "qwen3.5:4b", "qwen3:1.7b", "qwen2.5:1.5b", "llama3.2:1b"]
 
 SYSTEM = (
-    "당신은 AI, 경영 전략, 기술 혁신 분야의 전문가입니다. "
-    "사용자가 제공하는 영어 단어/표현을 반드시 아래 형식 그대로 출력하세요.\n\n"
-    "- **일반적 의미:** (1문장)\n\n"
-    "- **맥락적 의미:** (문맥 기반 AI/경영 해석, 2문장 이내)\n\n"
-    "규칙: 두 항목 사이에 반드시 빈 줄 하나를 넣으세요. 전체 80단어 이내."
+    "반드시 아래 두 줄 형식만 출력하세요. 그 외 어떤 문장도 추가하지 마세요.\n\n"
+    "**일반적 의미:** (단어의 사전적 정의, 1문장)\n\n"
+    "**맥락적 의미:** (AI 전략/경영 관점 해석, 2문장 이내)\n\n"
+    "규칙: 분석, 요약, 질문, 표 금지. 전체 60단어 이내. 한국어만."
 )
 
 
@@ -75,7 +74,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         except Exception:
             self.send_response(400); self.end_headers(); return
 
-        text    = body.get("text", "").strip()
+        text    = (body.get("word") or body.get("text") or "").strip()
         context = body.get("context", "").strip()
         model   = body.get("model", pick_model())
 
@@ -87,8 +86,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             "model":   model,
             "system":  SYSTEM,
             "prompt":  prompt,
-            "stream":  True,
-            "options": {"temperature": 0.2, "num_predict": 450},
+            "stream":  False,
+            "options": {"temperature": 0.2, "num_predict": 250},
         }
         if is_qwen3(model):
             payload_dict["think"] = False
@@ -100,42 +99,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             headers={"Content-Type": "application/json"}
         )
 
-        self.send_response(200)
-        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
-        self.send_header("Cache-Control", "no-cache")
-        self.send_header("X-Accel-Buffering", "no")
-        self._cors()
-        self.end_headers()
-
-        def send(obj):
-            self.wfile.write(("data: " + json.dumps(obj, ensure_ascii=False) + "\n\n").encode())
-            self.wfile.flush()
-
-        send({"model": model})
-
         try:
             with urllib.request.urlopen(req, timeout=120) as resp:
-                for raw in resp:
-                    raw = raw.strip()
-                    if not raw:
-                        continue
-                    try:
-                        chunk = json.loads(raw)
-                    except Exception:
-                        continue
-                    tok = chunk.get("response", "")
-                    if tok:
-                        send({"token": tok})
-                    if chunk.get("done"):
-                        send({"done": True})
-                        break
+                data = json.loads(resp.read())
+            explanation = data.get("response", "").strip()
         except urllib.error.URLError as e:
-            send({"error": "Ollama 연결 실패: " + str(e) + ". Ollama가 실행 중인지 확인하세요."})
+            explanation = "Ollama 연결 실패: " + str(e)
         except Exception as e:
-            try:
-                send({"error": str(e)})
-            except Exception:
-                pass
+            explanation = str(e)
+
+        result = json.dumps({"explanation": explanation}, ensure_ascii=False).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(result)))
+        self._cors()
+        self.end_headers()
+        self.wfile.write(result)
 
     def log_message(self, fmt, *args):
         if self.path and self.path.startswith("/api"):

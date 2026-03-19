@@ -363,8 +363,8 @@ header .sub { font-size: 11px; color: #99b4cc; }
   <div class="cell kr">
     <h2>들어가며</h2>
     <p><span class="sent" data-sid="m-i1">저는 강력한 AI의 위험성에 대해 자주 생각하고 이야기합니다. 제가 CEO로 있는 앤트로픽은 이러한 위험을 줄이는 방법을 연구하고 있습니다.</span> <span class="sent" data-sid="m-i2">그래서 사람들은 종종 제가 AI가 대부분 나쁘거나 위험할 거라고 생각하는 비관론자 혹은 '둠어(doomer)'라는 결론을 내립니다. 저는 전혀 그렇게 생각하지 않습니다.</span> <span class="sent" data-sid="m-i3">사실 제가 위험성에 집중하는 가장 큰 이유는, 그것이 우리와 근본적으로 긍정적인 미래 사이에 놓인 유일한 장애물이기 때문입니다.</span></p>
-    <p><span class="sent" data-sid="m-i4">저는 대부분의 사람들이 AI의 긍정적 가능성이 얼마나 급진적일 수 있는지를 과소평가하고 있다고 생각합니다. 마찬가지로 위험 역시 과소평가되고 있습니다.</span> <span class="sent" data-sid="m-i5">이 에세이에서 저는 그 긍정적 가능성의 모습을 스케치해 보려 합니다 &mdash; 모든 것이 잘 풀렸을 때 강력한 AI가 있는 세상이 어떤 모습일지.</span></p>
-    <p><span class="sent" data-sid="m-i6">진정으로 영감을 주는 미래 비전이 필요합니다. 단순히 위험에 대응하는 계획만이 아닌. 강력한 AI의 많은 함의가 대립적이거나 위험하지만, 결국 우리가 싸워야 할 무언가 &mdash; 모두가 더 나아지는 포지티브섬(positive-sum) 결과 &mdash; 가 있어야 합니다.</span></p>
+    <p><span class="sent" data-sid="m-i4">저는 대부분의 사람들이 AI의 위험이 얼마나 클 수 있는지를 과소평가하는 것과 마찬가지로, AI의 긍정적 가능성이 얼마나 급진적일 수 있는지도 과소평가하고 있다고 생각합니다.</span> <span class="sent" data-sid="m-i5">이 에세이에서 저는 그 긍정적 가능성의 모습을 스케치해 보려 합니다 &mdash; 모든 것이 잘 풀렸을 때 강력한 AI가 있는 세상이 어떤 모습일지를.</span></p>
+    <p><span class="sent" data-sid="m-i6">진정으로 영감을 주는 미래 비전을 가져야 하며, 당장의 불을 끄기 위한 대책만으로는 부족합니다. 강력한 AI의 많은 함의가 대립적이거나 위험하지만, 결국 우리가 싸워야 할 무언가 &mdash; 모두가 더 나아지는 양의 합 게임(positive-sum) 결과 &mdash; 가 있어야 합니다.</span></p>
   </div>
 </div>
 
@@ -708,7 +708,7 @@ async function openAI_server(word, ctx) {
     });
     if (!r.ok) throw new Error('Server error');
     const data = await r.json();
-    document.getElementById('ai-body').textContent = data.explanation || data.text || JSON.stringify(data);
+    document.getElementById('ai-body').innerHTML = renderMd(data.explanation || data.text || '');
   } catch(err) {
     if (err.name !== 'AbortError') {
       appMode = 'static';
@@ -717,19 +717,30 @@ async function openAI_server(word, ctx) {
   }
 }
 
+function renderMd(text) {
+  const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return esc
+    .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
 async function openAI_local(word, ctx) {
   aiAbort = new AbortController();
-  const sysPrompt = 'You are an AI strategy and management expert. Explain terms related to AI adoption, human-AI collaboration, and technology management. Answer in Korean, concisely.';
-  const body = JSON.stringify({ model:'qwen3.5:2b', think:false, prompt:`${sysPrompt}\n\nExplain "${word}" in Korean: 1) general definition 2) AI strategy/management context. Context: "${ctx.slice(0,200)}". Be concise.`, stream:true });
+  const sys = '반드시 아래 두 줄 형식만 출력하세요. 그 외 어떤 문장도 추가하지 마세요.\n\n**일반적 의미:** (단어의 사전적 정의, 1문장)\n\n**맥락적 의미:** (AI 전략/경영 관점 해석, 2문장 이내)\n\n규칙: 분석, 요약, 질문, 표 금지. 전체 60단어 이내. 한국어만.';
+  const userPrompt = '단어: "' + word + '"' + (ctx ? '\n문맥: "' + ctx.slice(0,150) + '"' : '');
+  const body = JSON.stringify({ model:'qwen3.5:2b', think:false, system:sys, prompt:userPrompt, stream:true });
   try {
     const r = await fetch('http://localhost:11434/api/generate', { method:'POST', body, headers:{'Content-Type':'application/json'}, signal: aiAbort.signal });
     const reader = r.body.getReader(); const dec = new TextDecoder();
-    document.getElementById('ai-body').textContent = '';
+    const el = document.getElementById('ai-body');
+    el.innerHTML = '';
+    let buf = '';
     while (true) {
       const {done, value} = await reader.read();
       if (done) break;
       dec.decode(value).split('\n').filter(Boolean).forEach(line => {
-        try { const j = JSON.parse(line); document.getElementById('ai-body').textContent += j.response || ''; } catch(_){}
+        try { const j = JSON.parse(line); if (j.response) { buf += j.response; el.innerHTML = renderMd(buf); } } catch(_){}
       });
     }
   } catch(err) { if (err.name !== 'AbortError') document.getElementById('ai-body').textContent = '연결 오류. Ollama가 실행 중인지 확인하세요.'; }

@@ -148,8 +148,10 @@ body::before {
   </div>
 
   <main class="hub-main">
-    <div class="hub-section-title">Homework Readings -- 2 Articles</div>
-    <div class="cases-grid" id="cases-grid"></div>
+    <div class="hub-section-title">Homework Readings — 2 Articles</div>
+    <div class="cases-grid" id="hw-grid"></div>
+    <div class="hub-section-title" style="margin-top:40px;">Reference Articles</div>
+    <div class="cases-grid" id="ref-grid"></div>
   </main>
 
   <footer>
@@ -171,7 +173,7 @@ if (sessionStorage.getItem(AUTH_KEY) !== AUTH_VAL) {
   location.href = '../';
 }
 
-const CASES = [
+const HW_CASES = [
   {
     num: '01',
     title: 'Manna',
@@ -194,9 +196,41 @@ const CASES = [
   },
 ];
 
-function renderHub() {
-  var grid = document.getElementById('cases-grid');
-  grid.innerHTML = CASES.map(function(c) {
+const REF_CASES = [
+  {
+    num: 'R1',
+    title: 'Something Big Is Happening',
+    org: 'Matt Shumer',
+    desc: 'AI 스타트업 창업자가 비전문가 가족·친구에게 보내는 긴급 서한. GPT-5.3 Codex·Opus 4.6 출시 직후, AI가 이미 지식 노동을 대체하고 있다는 개인 경험과 사회적 함의. (2026.02)',
+    tags: ['AI Impact', 'Future of Work', 'Essay'],
+    session: 'Reference',
+    status: 'available',
+    url: 'something-big/',
+  },
+  {
+    num: 'R2',
+    title: 'Labor Market Impacts of AI',
+    org: 'Anthropic',
+    desc: 'AI가 노동 시장에 미치는 영향을 새로운 측정 방법으로 분석한 Anthropic 리포트.',
+    tags: ['Labor Market', 'AI Economics', 'Report'],
+    session: 'Reference',
+    status: 'coming',
+    url: 'labor-market/',
+  },
+  {
+    num: 'R3',
+    title: 'Nowcasting Economic Report',
+    org: '',
+    desc: 'AI 기반 실시간 경기 예측(Nowcasting) 방법론 리포트.',
+    tags: ['Nowcasting', 'Economics', 'Report'],
+    session: 'Reference',
+    status: 'coming',
+    url: 'nowcasting/',
+  },
+];
+
+function makeCards(cases) {
+  return cases.map(function(c) {
     var badgeClass = c.status === 'available' ? 'avail' : 'soon';
     var badgeText  = c.status === 'available' ? 'Available' : 'Coming Soon';
     var cardClass  = c.status === 'available' ? 'case-card' : 'case-card coming';
@@ -220,7 +254,8 @@ function renderHub() {
   }).join('');
 }
 
-renderHub();
+document.getElementById('hw-grid').innerHTML  = makeCards(HW_CASES);
+document.getElementById('ref-grid').innerHTML = makeCards(REF_CASES);
 </script>
 </body>
 </html>

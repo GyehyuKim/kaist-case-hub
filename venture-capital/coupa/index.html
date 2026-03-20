@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coupa Software — VC 케이스 리더</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 14px; background: #0d1117; color: #e6edf3; padding-bottom: 280px; }
+
+header { background: #161b22; border-bottom: 1px solid #30363d; color: #e6edf3; padding: 14px 32px; display: flex; align-items: center; gap: 20px; }
+header h1 { font-size: 18px; font-weight: 700; }
+header .sub { font-size: 11px; color: #8b949e; }
+.back-btn { margin-left: auto; font-size: 11px; color: #8b949e; text-decoration: none; padding: 4px 12px; border: 1px solid #30363d; border-radius: 6px; white-space: nowrap; }
+.back-btn:hover { color: #e6edf3; border-color: #58a6ff; background: rgba(88,166,255,.06); }
+
+.help-bar { background: #0d1117; border-bottom: 1px solid #21262d; color: #8b949e; font-size: 11px; padding: 5px 32px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+.help-bar kbd { background: #21262d; color: #c9d1d9; padding: 1px 6px; border-radius: 3px; font-family: monospace; font-size: 10px; border: 1px solid #30363d; }
+.model-badge { margin-left: auto; background: #0e4f1a; color: #6eff8a; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-family: monospace; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 28px 32px; }
+
+.page-block { margin-bottom: 28px; }
+.page-label {
+  font-size: 11px; font-weight: 700; color: #8b949e;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+}
+.page-label::after { content: ''; flex: 1; height: 1px; background: #21262d; }
+
+/* Exhibit image widget */
+.exhibit-wrap { width: 100%; }
+.exhibit-toolbar {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 8px 12px; background: #161b22;
+  border: 1px solid #30363d; border-bottom: none;
+  border-radius: 6px 6px 0 0; font-size: 11px; color: #8b949e;
+}
+.ex-label { font-weight: bold; color: #f0c040; margin-right: 4px; }
+.exhibit-toolbar label { display: flex; align-items: center; gap: 5px; }
+.exhibit-toolbar input[type=range] { width: 80px; accent-color: #58a6ff; }
+.ex-reset {
+  background: #21262d; color: #8b949e; border: 1px solid #30363d;
+  border-radius: 3px; padding: 2px 8px; cursor: pointer; font-size: 10px;
+}
+.ex-reset:hover { color: #e6edf3; }
+.ex-zoom-label { margin-left: auto; font-family: monospace; color: #6eff8a; font-size: 10px; }
+.exhibit-stage {
+  overflow: hidden; background: #010409;
+  border: 1px solid #30363d; border-top: none;
+  cursor: grab; position: relative; height: 700px;
+  display: flex; align-items: center; justify-content: center;
+}
+.exhibit-stage.dragging { cursor: grabbing; }
+.exhibit-img { max-width: none; max-height: none; transform-origin: center center; user-select: none; pointer-events: none; transition: filter 0.1s; }
+.exhibit-hint {
+  font-size: 10px; color: #8b949e; text-align: center;
+  padding: 4px; background: #161b22;
+  border: 1px solid #30363d; border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* AI panel */
+#ai-panel {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 800;
+  background: #0d1117; border-top: 2px solid #30363d;
+  transform: translateY(100%); transition: transform .25s ease;
+  display: flex; flex-direction: column; max-height: 50vh;
+}
+#ai-panel.open { transform: translateY(0); }
+#ai-panel-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 20px; background: #161b22; flex-shrink: 0;
+  border-bottom: 1px solid #30363d;
+}
+.ai-label { font-size: 11px; font-weight: bold; color: #f0c040; text-transform: uppercase; letter-spacing: 1px; }
+#ai-term { font-size: 13px; color: #58a6ff; font-style: italic; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ai-model-tag { font-size: 10px; color: #6eff8a; background: #0e4f1a; padding: 2px 8px; border-radius: 8px; font-family: monospace; }
+#ai-close { background: none; border: none; color: #8b949e; font-size: 18px; cursor: pointer; line-height: 1; padding: 0 4px; }
+#ai-close:hover { color: #e6edf3; }
+#ai-body { padding: 16px 24px; overflow-y: auto; flex: 1; font-size: 13px; line-height: 1.7; color: #c9d1d9; }
+#ai-body strong { color: #f0c040; }
+#ai-cursor { display: inline-block; width: 2px; height: 1em; background: #58a6ff; animation: blink .7s infinite; vertical-align: text-bottom; margin-left: 1px; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* Floating AI input */
+#ai-input-bar {
+  position: fixed; bottom: 20px; right: 20px; z-index: 500;
+  display: flex; gap: 8px; align-items: center;
+  background: #161b22; border: 1px solid #30363d;
+  border-radius: 8px; padding: 6px 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.6);
+}
+#ai-input {
+  background: transparent; border: none; outline: none;
+  color: #e6edf3; font-size: 12px; width: 180px;
+}
+#ai-input::placeholder { color: #8b949e; }
+#ai-submit {
+  background: #1f6feb; border: none; border-radius: 4px;
+  color: #fff; font-size: 11px; padding: 4px 10px; cursor: pointer;
+}
+#ai-submit:hover { background: #388bfd; }
+</style>
+</head>
+<body>
+
+<svg class="sharpen-defs" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="sh1"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="0 -0.3 0 -0.3 2.2 -0.3 0 -0.3 0"/></filter>
+    <filter id="sh2"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="0 -0.5 0 -0.5 3 -0.5 0 -0.5 0"/></filter>
+    <filter id="sh3"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="-0.1 -0.6 -0.1 -0.6 4.4 -0.6 -0.1 -0.6 -0.1"/></filter>
+    <filter id="sh4"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="-0.2 -0.8 -0.2 -0.8 5.6 -0.8 -0.2 -0.8 -0.2"/></filter>
+    <filter id="sh5"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="-0.3 -1.0 -0.3 -1.0 7.0 -1.0 -0.3 -1.0 -0.3"/></filter>
+  </defs>
+</svg>
+
+<header>
+  <h1>Coupa Software</h1>
+  <span class="sub">HBS Case &bull; Venture Capital</span>
+  <a class="back-btn" href="../">&#8592; Hub</a>
+</header>
+
+<div class="help-bar">
+  <span><kbd>스크롤</kbd> 확대/축소</span>
+  <span><kbd>드래그</kbd> 이동</span>
+  <span><kbd>더블클릭</kbd> 초기화</span>
+  <span>용어 설명 &rarr; 오른쪽 하단 입력창</span>
+  <span class="model-badge" id="model-display">모델 확인 중...</span>
+</div>
+
+<div class="container" id="pages-container"></div>
+
+<!-- AI explanation panel -->
+<div id="ai-panel">
+  <div id="ai-panel-header">
+    <span class="ai-label">AI 용어 설명</span>
+    <span id="ai-term"></span>
+    <span id="ai-model-tag">-</span>
+    <button id="ai-close">&#10005;</button>
+  </div>
+  <div id="ai-body"></div>
+</div>
+
+<!-- Floating term input -->
+<div id="ai-input-bar">
+  <input id="ai-input" type="text" placeholder="용어 입력 후 Enter...">
+  <button id="ai-submit">설명</button>
+</div>
+
+<script>
+const AUTH_KEY = 'kaist-case-auth';
+const AUTH_VAL = 'kaist2026';
+if (sessionStorage.getItem(AUTH_KEY) !== AUTH_VAL) { location.href = '../'; }
+
+// --- Page images ---
+const PAGES = [
+  'Screenshot 2026-03-20 020424.png',
+  'Screenshot 2026-03-20 020451.png',
+  'Screenshot 2026-03-20 020500.png',
+  'Screenshot 2026-03-20 020510.png',
+  'Screenshot 2026-03-20 020517.png',
+  'Screenshot 2026-03-20 020527.png',
+  'Screenshot 2026-03-20 020536.png',
+  'Screenshot 2026-03-20 020554.png',
+  'Screenshot 2026-03-20 020615.png',
+  'Screenshot 2026-03-20 020625.png',
+  'Screenshot 2026-03-20 020637.png',
+  'Screenshot 2026-03-20 020656.png',
+  'Screenshot 2026-03-20 020710.png',
+  'Screenshot 2026-03-20 020721.png',
+  'Screenshot 2026-03-20 020807.png',
+  'Screenshot 2026-03-20 020825.png',
+  'Screenshot 2026-03-20 020945.png',
+  'Screenshot 2026-03-20 021008.png',
+  'Screenshot 2026-03-20 021021.png',
+  'Screenshot 2026-03-20 021046.png',
+  'Screenshot 2026-03-20 021059.png',
+  'Screenshot 2026-03-20 021120.png',
+  'Screenshot 2026-03-20 021134.png',
+];
+
+// --- Render pages ---
+const container = document.getElementById('pages-container');
+PAGES.forEach((fname, i) => {
+  const id = i + 1;
+  container.insertAdjacentHTML('beforeend', `
+    <div class="page-block">
+      <div class="page-label">Page ${id} / ${PAGES.length}</div>
+      <div class="exhibit-wrap">
+        <div class="exhibit-toolbar">
+          <span class="ex-label">p.${id}</span>
+          <label>밝기 <input type="range" min="60" max="220" value="100" class="ex-bright" data-id="${id}"></label>
+          <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="${id}"></label>
+          <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="${id}"></label>
+          <button class="ex-reset" data-id="${id}">초기화</button>
+          <span class="ex-zoom-label" id="zoom-${id}">100%</span>
+        </div>
+        <div class="exhibit-stage" id="stage-${id}">
+          <img src="Captures/${fname}" class="exhibit-img" id="img-${id}" draggable="false">
+        </div>
+        <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+      </div>
+    </div>
+  `);
+});
+
+// --- Exhibit widget logic ---
+function initExhibit(id) {
+  const stage = document.getElementById('stage-' + id);
+  const img   = document.getElementById('img-'   + id);
+  const zoomLbl = document.getElementById('zoom-' + id);
+  let scale = 1, ox = 0, oy = 0;
+  let dragging = false, startX = 0, startY = 0, startOx = 0, startOy = 0;
+  const SHARP_FILTERS = [null,'sh1','sh2','sh3','sh4','sh5'];
+
+  function applyTransform() {
+    const bright   = stage.querySelector('.ex-bright[data-id="' + id + '"]')?.value || 100;
+    const contrast = stage.querySelector('.ex-contrast[data-id="' + id + '"]')?.value || 110;
+    const sharp    = parseInt(stage.querySelector('.ex-sharp[data-id="' + id + '"]')?.value || 0);
+    const f = SHARP_FILTERS[sharp];
+    img.style.filter  = `brightness(${bright}%) contrast(${contrast}%) ${f ? 'url(#' + f + ')' : ''}`;
+    img.style.transform = `translate(${ox}px,${oy}px) scale(${scale})`;
+    zoomLbl.textContent = Math.round(scale * 100) + '%';
+  }
+
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    const rect = stage.getBoundingClientRect();
+    const mx = e.clientX - rect.left - rect.width / 2;
+    const my = e.clientY - rect.top  - rect.height / 2;
+    const delta = e.deltaY < 0 ? 1.1 : 0.91;
+    ox = mx + (ox - mx) * delta;
+    oy = my + (oy - my) * delta;
+    scale = Math.max(0.25, Math.min(8, scale * delta));
+    applyTransform();
+  }, { passive: false });
+
+  stage.addEventListener('mousedown', e => {
+    dragging = true; startX = e.clientX; startY = e.clientY;
+    startOx = ox; startOy = oy;
+    stage.classList.add('dragging');
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    ox = startOx + e.clientX - startX;
+    oy = startOy + e.clientY - startY;
+    applyTransform();
+  });
+  window.addEventListener('mouseup', () => { dragging = false; stage.classList.remove('dragging'); });
+  stage.addEventListener('dblclick', () => { scale = 1; ox = 0; oy = 0; applyTransform(); });
+
+  // Toolbar controls
+  const toolbar = stage.previousElementSibling;
+  toolbar.querySelectorAll('input[type=range]').forEach(inp => inp.addEventListener('input', applyTransform));
+  toolbar.querySelector('.ex-reset').addEventListener('click', () => {
+    toolbar.querySelector('.ex-bright').value   = 100;
+    toolbar.querySelector('.ex-contrast').value = 110;
+    toolbar.querySelector('.ex-sharp').value    = 0;
+    scale = 1; ox = 0; oy = 0;
+    applyTransform();
+  });
+  applyTransform();
+}
+
+PAGES.forEach((_, i) => initExhibit(i + 1));
+
+// --- AI explain ---
+const aiPanel   = document.getElementById('ai-panel');
+const aiTerm    = document.getElementById('ai-term');
+const aiModelTag= document.getElementById('ai-model-tag');
+const aiBody    = document.getElementById('ai-body');
+const aiClose   = document.getElementById('ai-close');
+const aiInput   = document.getElementById('ai-input');
+const aiSubmit  = document.getElementById('ai-submit');
+
+document.getElementById('model-display').textContent = 'AI: 대기 중';
+window.addEventListener('load', async () => {
+  try {
+    const r = await fetch('http://localhost:11434/api/tags');
+    const d = await r.json();
+    const names = d.models?.map(m => m.name) || [];
+    const pref = ['qwen3.5:2b','qwen3.5:4b','qwen3:1.7b','qwen2.5:1.5b','llama3.2:1b'];
+    const m = pref.find(p => names.some(n => n === p || n.startsWith(p.split(':')[0])));
+    document.getElementById('model-display').textContent = m ? 'AI: ' + m : 'AI: offline';
+  } catch { document.getElementById('model-display').textContent = 'AI: offline'; }
+});
+
+function renderMd(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n\n/g, '<br><br>')
+    .replace(/\n/g, '<br>');
+}
+
+let abortCtrl = null;
+async function explain(term) {
+  if (!term.trim()) return;
+  if (abortCtrl) abortCtrl.abort();
+  abortCtrl = new AbortController();
+  aiTerm.textContent = term;
+  aiBody.innerHTML = '<span id="ai-cursor"></span>';
+  aiModelTag.textContent = '연결 중';
+  aiPanel.classList.add('open');
+
+  try {
+    const r = await fetch('http://localhost:8080/api/explain', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: term }),
+      signal: abortCtrl.signal,
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const reader = r.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '', textBuf = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let lines = buf.split('\n'); buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        try {
+          const obj = JSON.parse(line.slice(6));
+          if (obj.model) aiModelTag.textContent = obj.model;
+          if (obj.token) { textBuf += obj.token; aiBody.innerHTML = renderMd(textBuf) + '<span id="ai-cursor"></span>'; }
+          if (obj.done)  { aiBody.innerHTML = renderMd(textBuf); }
+          if (obj.error) { aiBody.innerHTML = '<span style="color:#ff7b72">' + obj.error + '</span>'; }
+        } catch {}
+      }
+    }
+  } catch (e) {
+    if (e.name !== 'AbortError') {
+      aiBody.innerHTML = '<span style="color:#ff7b72">서버 연결 실패 — server.py가 실행 중인지 확인하세요.</span>';
+    }
+  }
+}
+
+aiClose.addEventListener('click', () => { aiPanel.classList.remove('open'); if (abortCtrl) abortCtrl.abort(); });
+aiSubmit.addEventListener('click', () => { explain(aiInput.value); aiInput.value = ''; });
+aiInput.addEventListener('keydown', e => { if (e.key === 'Enter') { explain(aiInput.value); aiInput.value = ''; } });
+</script>
+</body>
+</html>

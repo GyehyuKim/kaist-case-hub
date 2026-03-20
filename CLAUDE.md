@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 ## Repository Purpose
 
 Multi-course case study hub for KAIST MBA Spring 2026. Serves bilingual (EN/KR) case viewers with AI term explanation via local Ollama.
@@ -16,6 +18,22 @@ Multi-course case study hub for KAIST MBA Spring 2026. Serves bilingual (EN/KR) 
 /ai-evolution/navigating/       Navigating the Jagged Frontier (pending)
 ```
 
+## Running Locally
+
+Each course has its own server. Run from the course directory:
+
+```bash
+# Venture Capital (port 8080)
+cd venture-capital && python server.py
+
+# AI Evolution (port 8081)
+cd ai-evolution && python server.py
+```
+
+The server auto-opens the browser. Static files are served from the same directory. Ollama must be running separately (`ollama serve`).
+
+For GitHub Pages (no server), viewers fall back to `openAI_local` — direct Ollama calls from the browser via `http://localhost:11434`.
+
 ## Key Conventions
 
 - **Self-contained HTML**: Each viewer is a single `index.html` with inline CSS/JS. No shared assets.
@@ -24,6 +42,18 @@ Multi-course case study hub for KAIST MBA Spring 2026. Serves bilingual (EN/KR) 
 - **server.py**: Per-course Ollama proxy. VC on port 8080, AI Evolution on port 8081.
 - **Captures/**: Per-case screenshot folders. Referenced via relative paths in viewers.
 - **Navigation**: Case viewer `<- Hub` links to `../` (course hub). Course hub logo links to `../` (top-level hub).
+
+## Case Viewer HTML Structure
+
+Each `index.html` case viewer is self-contained. Key structural elements:
+
+- **`.bi-row`**: Two-column grid (`1fr 1fr`) containing `.cell.en` and `.cell.kr` side by side
+- **`.sent[data-sid]`**: Wraps individual sentences. Hover/click highlights that element; matching `data-sid` values across EN/KR pair the sentences for synchronized highlighting
+- **`.cell.full`**: Full-width row (for exhibits/tables spanning both columns)
+- **`.exhibit-wrap`**: Zoomable image widget — contains `.exhibit-toolbar` (brightness/contrast/sharpness sliders), `.exhibit-stage` (pan+zoom canvas), `.exhibit-hint`
+- **`#ai-panel`**: Fixed bottom panel for AI word explanations; slides up on double-click/drag-select; shows streaming tokens from server
+
+**Multi-reading tab variant** (`navigating/index.html`): uses `.reading-tabs` / `.tab-btn` to switch between multiple readings within one viewer — a superset of the standard bilingual layout.
 
 ## Adding a New Case
 
@@ -56,13 +86,14 @@ These requirements apply to every case viewer's double-click word explanation fe
 - **No extras**: No "요약", no "질문 분석", no bullet lists beyond the two fixed items.
 
 ### Server (`server.py`) requirements
-- Accept both `word` and `text` keys from request body: `body.get("word") or body.get("text")`
-- Return plain JSON `{"explanation": "..."}`, NOT SSE streaming (clients call `r.json()`)
+- Accept `text` key from request body (and `context` for surrounding sentence)
+- Stream SSE (`Content-Type: text/event-stream`): first sends `{"model": "..."}`, then `{"token": "..."}` per token, finally `{"done": true}`
 - System prompt must enforce the two-section format above
+- For qwen3 models: set `"think": false` at top level of Ollama payload to disable reasoning tokens
 
 ### Client (`index.html`) requirements
-- `openAI_server`: calls `/api/explain`, uses `r.json()`, renders with `renderMd()`
-- `openAI_local` (Ollama fallback): uses separate `system` + `prompt` fields; same format instruction in `system`; streaming OK but buffer → `el.innerHTML = renderMd(buf)`
+- `openAI_server`: calls `/api/explain` with `fetch()`, reads streaming response via `r.body.getReader()`, buffers tokens, renders with `el.innerHTML = renderMd(buf)`
+- `openAI_local` (Ollama fallback): calls Ollama directly at `http://localhost:11434/api/generate` with separate `system` + `prompt` fields; streaming OK but buffer → `el.innerHTML = renderMd(buf)`
 - `renderMd(text)`: escape HTML first, then apply `**bold**` → `<strong>`, `\n\n` → `<br><br>`
 
 ## Deployment

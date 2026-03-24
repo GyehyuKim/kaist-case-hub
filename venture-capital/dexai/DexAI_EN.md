@@ -1,6 +1,6 @@
 DexAI
 
-“Thave good news and bad news,” attorney Meredith Grey said on an April 2023 afternoon. “You have two term sheets from two great firms, but they reflect today’s tough financing market.”
+“I have good news and bad news,” attorney Meredith Grey said on an April 2023 afternoon. “You have two term sheets from two great firms, but they reflect today’s tough financing market.”
 
 DexAI co-founders Elizabeth Evermore (“Betty”) and James L. Pond were driving in Evermore’s car and speaking with their attorney through speakerphone. They felt both exhausted and excited: after a lengthy fundraising process that involved contacting over 500 potential investors, two venture-capital ("VC") investors had offered term sheets. But they became concerned as Grey continued: “I just emailed you a summary. The economic terms are nearly identical, but there are some legal terms to note. Unfortunately, VCs have the leverage in this down market. After you get back to your office, print out the information and call me.”
 
@@ -16,7 +16,7 @@ Evermore and Pond met at Pennsylvania's West Reading Elementary Center when both
 
 ---
 
-Evermore went to a prestigious California university in the Bay Area on a full scholarship to study Electrical Engineering and Applied Mathematics. Pond matriculated at a research-oriented state university in Illinois and majored in Computer Science, a discipline for which his school was well- known.
+Evermore went to a prestigious California university in the Bay Area on a full scholarship to study Electrical Engineering and Applied Mathematics. Pond matriculated at a research-oriented state university in Illinois and majored in Computer Science, a discipline for which his school was well-known.
 
 The two reconnected at their five-year high school reunion in 2018. Both were surprised that they lived only a few miles from each other. Evermore was working on a PhD in Electrical Engineering at her Bay Area university. Her studies focused on the architectural advances of graphics processing units (“GPUs”). She worked on processors that had multiple “cores” and could conduct a very large number of simultaneous calculations. GPUs were used for several increasingly popular uses, such as video games, video editing and animation, cryptocurrency mining, and virtual reality.
 
@@ -40,7 +40,7 @@ In addition, Evermore wanted DexAI to have a novel pricing scheme: charge a smal
 
 Over the next few months, the Founders wrote multiple versions of a business plan, a PowerPoint presentation, a technical white paper, and a Product Requirements Document (“PRD”) for DexAI 1.0. The duo conducted field research, interviewed potential customers, funded cheap tests to codify the customer value proposition, and iterated on their documents as they learned new insights.
 
-With the help of Grey, a known and respected Menlo Park attorney who had her choice of clients, they incorporated DexAI in March of 2021. At the same time, Grey structured tax-efficient equity grants for the founders; they each received 50,000 shares of common stock at a value of $0,001 a share.* For vesting, she recommended a company buy back right and that started at 100% and lapsed to 0% in monthly increments over 48 months. For example, if a founder was no longer with the company after 12 months, DexAI would buy back 75% of that founder's total equity position.» Those shares could then be retired or re-sold. To discourage founders from leaving, the buy back price was “at cost,” or $0,001 a share. The founders also agreed to another feature: the buy back right fully lapsed to 0% if DexAI were acquired, merged, or went public. Grey referred to that as “a trigger for 100% acceleration of vesting,”
+With the help of Grey, a known and respected Menlo Park attorney who had her choice of clients, they incorporated DexAI in March of 2021. At the same time, Grey structured tax-efficient equity grants for the founders; they each received 50,000 shares of common stock at a value of $0.001 a share.* For vesting, she recommended a company buy back right and that started at 100% and lapsed to 0% in monthly increments over 48 months. For example, if a founder was no longer with the company after 12 months, DexAI would buy back 75% of that founder's total equity position.» Those shares could then be retired or re-sold. To discourage founders from leaving, the buy back price was “at cost,” or $0.001 a share. The founders also agreed to another feature: the buy back right fully lapsed to 0% if DexAI were acquired, merged, or went public. Grey referred to that as “a trigger for 100% acceleration of vesting,”
 
 Fundraising: Running the Gauntlet
 
@@ -50,9 +50,9 @@ The DexAI team started meeting with VCs in November of 2021 and found a great de
 
 not build out Evermore's advanced hardware architecture, but they did make material progress on the software side. The founders did much of the coding themselves through lengthy hackathons,
 
-The stock market and tech doldrums continued in 2022. From its peak in November of 2021 until December 2022, the NASDAQ declined 35%. One source calculated that 93,000 tech workers were laid off in 2022? One bright spot was that DexAI found ample technical talent willing to work on a project basis and for no equity. Throughout all this, the founders used their own platform to manage a list of over 500 prospective investors, sending out automated content to comment on VCs’ social media posts to try and elicit interest. Each outbound email and social media comment ended with “Automatically powered by DexAL”
+The stock market and tech doldrums continued in 2022. From its peak in November of 2021 until December 2022, the NASDAQ declined 35%. One source calculated that 93,000 tech workers were laid off in 2022? One bright spot was that DexAI found ample technical talent willing to work on a project basis and for no equity. Throughout all this, the founders used their own platform to manage a list of over 500 prospective investors, sending out automated content to comment on VCs’ social media posts to try and elicit interest. Each outbound email and social media comment ended with “Automatically powered by DexAI”
 
-ChatGPT launched on November 30, 2022. Soon thereafter VCs replied to DexAI's outbound emails and asked to “hear the pitch and see if I can be helpful.” Evermore said: “The Bay Area went from a web3-crypto party in 2021 to a deep freeze in 2022 to an Al hype-fest by January 2023. We weren’t ready for it”
+ChatGPT launched on November 30, 2022. Soon thereafter VCs replied to DexAI's outbound emails and asked to “hear the pitch and see if I can be helpful.” Evermore said: “The Bay Area went from a web3-crypto party in 2021 to a deep freeze in 2022 to an AI hype-fest by January 2023. We weren’t ready for it”
 
 As momentum increased, the founders decided to forego a $5 million seed round and instead ask for a $15 million Series A. Grey strongly backed that strategy. By early March 2023, Evermore and Pond had pitched 52 VCs and been invited to final round presentations at nine firms. Seven passed, citing that AI was interesting but seemed already crowded very quickly. Fortunately for DexAI, two very well-known VC firms offered term sheets: Cypress Venture Capital and Feline Capital.
 
@@ -64,11 +64,11 @@ Cypress Managing Partner Javier Rodriguez met with DexAI, pushed to a partners�
 
 Originally a hedge fund, Feline had successfully created a VC business starting in 2010. Its third VC fund was $5 billion. The firm’s investment approach was unique in that it invested in both public and private companies. In VC, the firm covered all stages, from seed to late-stage growth to initial public offerings.
 
-Partner Jane Corrigan met with DexAI and instantly “ got it,” given the firm's own use of Al. Feline employed many developers to “screen scrape” data from LinkedIn, Twitter, and other websites to find growth signals. Which companies posted a sudden jump in open job positions? Which firms had large increases in social media followers? The challenge: the technology went only so far, and there was a great deal of human intervention required to convert the data to actionable information. Brilliant and high-energy, Corrigan maintained a vigorous online presence with her Substack and social media posts. She too asked her CEOs to contact DexAI.
+Partner Jane Corrigan met with DexAI and instantly “ got it,” given the firm's own use of AI. Feline employed many developers to “screen scrape” data from LinkedIn, Twitter, and other websites to find growth signals. Which companies posted a sudden jump in open job positions? Which firms had large increases in social media followers? The challenge: the technology went only so far, and there was a great deal of human intervention required to convert the data to actionable information. Brilliant and high-energy, Corrigan maintained a vigorous online presence with her Substack and social media posts. She too asked her CEOs to contact DexAI.
 
 ---
 
-Ona late Friday afternoon in March of 2023, both Corrigan and Rodriguez independently texted the DexAI founders to expect term sheets within a few hours. Earlier that day, Grey had casually and separately mentioned to each that she thought highly of DexAI and that another well-known VC was interested. Evermore and Pond were ecstatic when the term sheets arrived as promised and immediately forwarded them to Grey, who quickly reviewed and summarized them. She called the DexAI founders, who were stuck together ina trafficjam. They agreed to speak again after the founders returned to their office.
+On a late Friday afternoon in March of 2023, both Corrigan and Rodriguez independently texted the DexAI founders to expect term sheets within a few hours. Earlier that day, Grey had casually and separately mentioned to each that she thought highly of DexAI and that another well-known VC was interested. Evermore and Pond were ecstatic when the term sheets arrived as promised and immediately forwarded them to Grey, who quickly reviewed and summarized them. She called the DexAI founders, who were stuck together in a traffic jam. They agreed to speak again after the founders returned to their office.
 
 Friday Night Frights
 
@@ -114,7 +114,7 @@ I any representation or warranty proves to have been false or misleading, the co
 
 Source: Casewriters.
 
-Exhibit2 Economic Terms
+Exhibit 2 Economic Terms
 
 Cypress
 
@@ -130,7 +130,7 @@ Ungranted employee option pool at closing:
 
 Founders’ ownership at closing:
 
-‘$45 million amount, $50 milion pre-money, $65 million post- money
+‘$45 million amount, $50 million pre-money, $65 million post- money
 
 Series A Preferred (non- participating)
 
@@ -140,7 +140,7 @@ Series A Preferred (non- participating)
 
 61.9%
 
-‘$45 million amount, $51 milion pre-money, $66 milion post- money
+‘$45 million amount, $51 million pre-money, $66 million post- money
 
 (Same as Cypress)
 
@@ -156,7 +156,7 @@ Source: Casewriters.
 
 ---
 
-Exhibit3 Control Terms
+Exhibit 3 Control Terms
 
 Cypress
 
@@ -206,7 +206,7 @@ debt security ‘+ Purchase or redeem or pay any dividend
 
 Source: Casewriters’ adaptation of
 
-‘ational Venture Capital Association's model term sheet, hitps://avca.org/wp-
+National Venture Capital Association’s model term sheet, https://nvca.org/wp-
 
 content/uploads/2019/06/NVCA-Model-Term-Sheet- doc, accessed June 2023.
 
@@ -226,7 +226,7 @@ Founders to own stock outright subject to ‘Company right to buy back at cost. 
 
 Buy back lapse triggers:
 
-‘Salelmerger/IPO:
+‘Sale/merger/IPO:
 
 ‘Termination for Cause:
 
@@ -256,7 +256,7 @@ In the event of a Founder's Termination for Cause, the Company shall have the ri
 
 In the event of a Founder's Termination without Cause by the Company, the ‘Company's buy back right will lapse an additional three months.
 
-In the event of a Founder's resignation for ‘Good Reason, the Company's buy back right wil apse an additional six months. “Good Reason’ shall be defined as:
+In the event of a Founder's resignation for ‘Good Reason, the Company's buy back right will lapse an additional six months. “Good Reason’ shall be defined as:
 
 ‘© Amaterial diminution in the Founder's authority, duties, or salary
 
@@ -264,13 +264,13 @@ In the event of a Founder's resignation for ‘Good Reason, the Company's buy ba
 
 Source
 
-Cascwriters’ adaptation of National Venture Capital Association's model term sheet, hitps://avca.org/wp-
+Cascwriters’ adaptation of National Venture Capital Association's model term sheet, https://nvca.org/wp-
 
 content/ uploads/2019/06/NVCA-Model-Term-Sheet- doc, accessed June 2023
 
 ---
 
-Exhibit 4b _ Incentive Terms: Employee Stock Options
+Exhibit 4b Incentive Terms: Employee Stock Options
 
 Cypress Feline
 
@@ -278,7 +278,7 @@ Cypress Feline
 
 Source: Casewriters.
 
-Exhibit5 Capitalization Tables
+Exhibit 5 Capitalization Tables
 
 Satna sal Sane al ety wma | 000 5008] 000 § 0% som s am ‘onton cot aos ames 180% noms 1508 we aos s am oom 125 § 5.0000 70% 3336) Taw 100.010 woos 5.01 $ 150mc0 _ rea0% 10005] swose $ sso00g00 00% 008)
 
@@ -294,13 +294,13 @@ Confidentiality: The Employee agrees to keep confidential all proprietary inform
 
 Legal and Equitable Remedies: Because the Company's remedies at law may be inadequate, the ‘Company shall have the right to enforce this Agreement and any of its provisions by injunction, specific performance, or other equitable relief.
 
-Source: Casewriters’ adaptation of Simuldocs.com template document, htps:/ www simuldocs com templates/ invention- assignment-agreement, accessed June 2023.
+Source: Casewriters’ adaptation of Simuldocs.com template document, https://www.simuldocs.com templates/ invention- assignment-agreement, accessed June 2023.
 
 ---
 
 Endnotes
 
-1 GPT-, bttps://chat opens com, ?model=gpt-t-brovsing, accessed June 2023. 2 Crunchbase, htps//news.crunchbase com statups/tech-ayotis/, accessed June 2023
+1 GPT-4, https://chat.openai.com, ?model=gpt-t-brovsing, accessed June 2023. 2 Crunchbase, https://news.crunchbase.com/startups/tech-layoffs/, accessed June 2023
 
 ---
 

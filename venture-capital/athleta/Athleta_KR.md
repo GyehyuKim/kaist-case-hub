@@ -26,7 +26,40 @@ Kerslake는 언제나 자신만의 회사를 차리는 꿈을 꿔왔다. 창업 
 
 ---
 
-[TABLE — Page 3: Table A 및 경쟁 환경 / 비즈니스 모델]
+표 A: 여성 스포츠 참여 현황 (1999년)
+
+| 종목 | 여성/전체 참여자 비율 |
+|------|----------------------|
+| 달리기(Running) | 49% |
+| 사이클링(Cycling) | 49% |
+| 수영(Swimming) | 55% |
+| 인라인 스케이팅(Inline Skating) | 56% |
+| 배낭여행(Backpacking) | 49% |
+| 피트니스/헬스장(Fitness/Gym) | 72% |
+
+출처: 회사 내부 자료.
+
+2000년, 여성은 스포츠 의류에 250억 달러를 지출했으며, 여성 의류 시장 전체 규모는 960억 달러를 넘었다.
+
+경쟁 환경
+
+여성 스포츠 용품을 판매하는 리테일러는 네 가지 범주로 나뉘었다(Athleta 경쟁사의 범주별 상세 목록은 Exhibit 2 참조):
+
+- 1군(Tier 1): 여성 시장에만 전문적으로 집중하는 여성 전문 스포츠 리테일러 (예: Lady Foot Locker, Title 9)
+
+- 2군(Tier 2): 특정 종목(예: 달리기, 사이클링)에 집중하며, 중고가 제품을 취급하고 고객에게 높은 수준의 전문성을 제공하는 전문 스포츠 용품 리테일러 (예: Fleet Feet, Recreation Equipment Incorporated)
+
+- 3군(Tier 3): 다양한 종목에 걸쳐 매우 폭넓고 깊은 상품 구성을 갖춘 대형 양판점 (예: Big 5, SportMart)
+
+- 4군(Tier 4): 제한된 범위의 스포츠 관련 제품을 취급하는 백화점 (예: Nordstrom, Macy's)
+
+비즈니스 모델
+
+Kerslake는 Athleta를 다양한 스포츠에 걸쳐 엄선된 최상위 제품과 탁월한 수준의 고객 서비스를 제공하는 프리미엄 여성 멀티채널 스포츠 리테일러로 구상했다.
+
+채널 전략
+
+Athleta는 우편 주문(카탈로그)과 온라인 채널을 통해 고객을 서비스하는 멀티채널 기업으로 출발했다. 여성 스포츠 용품 시장에서 전문성을 키운 뒤 2003년에 오프라인 매장을 출점할 계획이었다. 2001년 기준으로 Athleta 전체 매출의 70%는 카탈로그에서, 30%는 Athleta.com 웹사이트에서 발생했다. 많은 전문가들이 e커머스가 다른 채널의 매출을 잠식한다고 우려했지만, Athleta 경영진은
 
 ---
 
@@ -166,7 +199,21 @@ Kerslake는 Athleta를 위한 탄탄한 자금 조달 계획을 수립하고자 
 
 ---
 
-[EXHIBIT 1 — 경영진 약력 / 원본 이미지 참조]
+Exhibit 1: 경영진 약력
+
+Scott W. Kerslake(37)는 Athleta를 창업했으며 대표이사를 맡고 있다. Salomon Smith Barney(구 Smith Barney)에서의 투자 은행 경험과 리테일을 포함한 두 개 산업에서의 운영 경험을 보유하고 있다. 이전에는 Sapient Corporation의 경영 컨설턴트로, 샌프란시스코 사무소를 직원 3명에서 250명으로 2년여 만에 성장시키는 데 핵심적 역할을 했다. 이후 Sapient의 마케팅 디렉터를 역임하며 회사의 기업공개(IPO)를 성공적으로 이끌었다.
+
+Joe Teno(49)는 Athleta의 운영 담당 수석 부사장으로, 다이렉트 마케팅 및 리테일 분야에서 풍부한 운영 경험을 갖추고 있다. 가장 최근에는 직원 250명 규모의 1억 3,000만 달러 매출 다이렉트 메일 기업 Travelsmith에서 전체 운영을 총괄했다. 그 이전에는 L.L. Bean에서 13년간 품질관리·인사 디렉터, 신규 고객 확보 디렉터, 기업 예측·마케팅 운영·재고 계획 및 재고 처분 부문 시니어 매니저 등 다수의 고위 관리직을 역임했다.
+
+Nedis Della Chiesa(34)는 Athleta의 회계 책임자(Controller)다. 이전에 Robert Mondavi Corporation의 재무 보고 매니저로 재무제표·예측·SEC 보고서 작성을 담당했다. 그 이전에는 PricewaterhouseCoopers LLP의 감사 부문에서 근무했다. 또한 재무·회계 분야에서 풍부한 국제 경험을 보유하고 있으며 독일어에 능통하다.
+
+Elizabeth Howland(48)는 Athleta의 유통(카탈로그 배포) 디렉터다. 카탈로그 유통·마케팅·머천다이징·경영진 직책에서 20년의 경험을 보유하고 있다. 가장 최근에는 다이렉트 마케팅 업계 리스트 공급업체 Triplex Direct Marketing의 고객 서비스 부사장을 역임했다. Triplex 이전에는 Biobottoms에서 총괄 매니저, 전무이사, 마케팅 디렉터, 머천다이징 디렉터 대행 등 다수의 고위직을 맡았다. 또한 Gymboree에서 데이터베이스 마케팅 디렉터를 역임했다.
+
+Debbie Overton(41)은 Athleta의 재고 관리 및 보고를 담당하고 있다. 카탈로그·리테일 부문에서 재고 예측·계획·구매 분야 18년의 경험을 보유하고 있다. The Sharper Image에서 머천다이징 관리 매니저·매장 계획 매니저로 6년, Biobottoms에서 머천다이징 디렉터·시스템·보고·분석 매니저로 6년 근무했다. 매출 1,500만 달러에서 2억 달러 이상으로 고성장하는 기업의 운영 경험이 있으며, Athleta 합류 전에는 다수의 우편 주문 기업에 컨설팅을 제공했다.
+
+Lara Dittoe(31)는 Athleta의 제품 매니저로, 스포츠 용품 업계 10년 경력을 보유하고 있다. 시애틀의 여성 전문 러닝 스토어 체인 'Fast Lady Sports'를 운영한 경험이 있으며, 이후 태평양 북서부 지역에서 다수의 최상위 사이클링·아웃도어 제품 제조사를 대표했다.
+
+Kathy Frank(51)는 Athleta의 물류 운영을 담당하고 있다. 이행·물류·창고 운영 분야에서 25년 이상의 경험을 보유하고 있다. Koret of California에서 물류 부매니저로 10년, Biobottoms에서 물류 매니저로 10년 근무했다. 가장 최근에는 가정용품 전문 다이렉트 마케팅 기업(매출 1억 달러)인 Illuminations에서 카탈로그 물류 운영을 총괄했다.
 
 ---
 
@@ -178,7 +225,28 @@ Ellen Krimmel(42)은 Athleta의 고객 서비스 운영을 총괄한다. 가장 
 
 ---
 
-[EXHIBIT 2 — 여성 스포츠웨어 경쟁 구도 / 원본 이미지 참조]
+Exhibit 2: 여성 스포츠웨어 경쟁 구도
+
+| 1. 여성 전문 스포츠 리테일러 | 2. 전문 스포츠 용품 리테일러 |
+|------------------------------|------------------------------|
+| Athleta [C,O] | REI [R,C,O] |
+| Title 9 Sports [C,O] | EMS [R,O] |
+| Lady Footlocker [R] | Performance Bike [R,C,O] |
+| Road Runner Sports [C,O] | Colorado Cyclist [C,O] |
+
+| 3. 대형 양판점 | 4. 백화점 |
+|----------------|-----------|
+| Foot Locker [R] | Neiman Marcus [R,C,O] |
+| The Sports Authority [R,O] | Macy's [R,C,O] |
+| Gart Sports [R] | Nordstrom [R,C,O] |
+| Copeland's [R] | Robinson's-May Co. [R,C,O] |
+| Global Sports [O] | |
+| Hibbett Sports [R] | |
+| Sport Mart [R] | |
+
+R=오프라인 리테일러, O=온라인 리테일러, C=카탈로그 리테일러
+
+출처: 회사 내부 자료.
 
 ---
 

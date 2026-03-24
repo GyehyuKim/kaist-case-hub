@@ -2,13 +2,14 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Athleta — 영한 대조 + AI 용어 설명</title>
+<title>Athleta -- 영한 대조 + AI 용어 설명</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Georgia,serif;font-size:14px;line-height:1.75;background:#f5f5f5;color:#222;padding-bottom:260px}
 header{background:#1a1a2e;color:#eee;padding:14px 32px;display:flex;align-items:center;gap:20px}
 header h1{font-size:18px}
-.back-btn{margin-left:auto;font-size:11px;color:#aaa;text-decoration:none;padding:4px 12px;border:1px solid #444;border-radius:5px}
+header .sub{font-size:11px;color:#999}
+.back-btn{margin-left:auto;font-size:11px;color:#aaa;text-decoration:none;padding:4px 12px;border:1px solid #444;border-radius:5px;white-space:nowrap}
 .back-btn:hover{color:#fff;border-color:#58a6ff}
 .help-bar{background:#2d2d44;color:#aaa;font-size:11px;padding:5px 32px;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
 .help-bar kbd{background:#444;color:#eee;padding:1px 6px;border-radius:3px;font-family:monospace;font-size:10px}
@@ -16,54 +17,34 @@ header h1{font-size:18px}
 .lang-bar{display:grid;grid-template-columns:1fr 1fr;background:#2d2d44;border-bottom:2px solid #555}
 .lang-bar div{padding:5px 32px;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#aaa}
 .lang-bar .kr{border-left:1px solid #444}
+.section-divider{background:#e8e8f0;padding:7px 28px;font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;color:#666;border-bottom:1px solid #ddd}
 .container{max-width:1500px;margin:0 auto}
 .bi-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #ddd}
 .cell{padding:20px 28px}
 .cell.en{background:#fff;border-right:1px solid #ddd}
 .cell.kr{background:#f8f8fc}
 .cell.full{grid-column:1/-1;background:#111;padding:16px 28px}
+.cell h2{font-size:13px;font-weight:bold;color:#1a1a2e;margin-bottom:12px;padding-bottom:5px;border-bottom:2px solid #1a1a2e;text-transform:uppercase;letter-spacing:.5px}
 .cell h3{font-size:12px;font-weight:bold;color:#444;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.5px}
 .cell p{margin-bottom:10px}
 .cell blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid #888;color:#555;font-style:italic;background:rgba(0,0,0,.03);font-size:13px}
 .sent{cursor:pointer;border-radius:2px;transition:background .1s}
 .sent.h-on{background:rgba(255,215,0,.38)}
 .sent.on{background:rgba(60,130,255,.22);outline:1px solid rgba(60,130,255,.4)}
-
-/* ── Exhibit Image Enhancer ── */
-.exhibit-wrap { width: 100%; }
-.exhibit-toolbar {
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  padding: 8px 12px; background: #1a1a2e; border-radius: 6px 6px 0 0;
-  font-size: 11px; color: #ccc;
-}
-.ex-label { font-weight: bold; color: #ffd700; margin-right: 6px; }
-.exhibit-toolbar label { display: flex; align-items: center; gap: 5px; }
-.exhibit-toolbar input[type=range] { width: 80px; accent-color: #7ec8ff; }
-.ex-reset {
-  background: #2d2d44; color: #aaa; border: 1px solid #444;
-  border-radius: 3px; padding: 2px 8px; cursor: pointer; font-size: 10px;
-}
-.ex-reset:hover { color: #fff; background: #3a3a6a; }
-.ex-zoom-label { margin-left: auto; font-family: monospace; color: #6eff8a; }
-.exhibit-stage {
-  overflow: hidden; background: #111; border: 1px solid #333;
-  cursor: grab; position: relative; height: 640px;
-  display: flex; align-items: center; justify-content: center;
-}
-.exhibit-stage.dragging { cursor: grabbing; }
-.exhibit-img {
-  max-width: none; max-height: none;
-  transform-origin: center center;
-  user-select: none; pointer-events: none;
-  transition: filter 0.1s;
-}
-.exhibit-hint {
-  font-size: 10px; color: #888; text-align: center;
-  padding: 4px; background: #1a1a2e; border-radius: 0 0 6px 6px;
-}
-/* SVG sharpness filters (hidden) */
-svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-
+/* Exhibit image enhancer */
+.exhibit-wrap{width:100%}
+.exhibit-toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:8px 12px;background:#1a1a2e;border-radius:6px 6px 0 0;font-size:11px;color:#ccc}
+.ex-label{font-weight:bold;color:#ffd700;margin-right:6px}
+.exhibit-toolbar label{display:flex;align-items:center;gap:5px}
+.exhibit-toolbar input[type=range]{width:80px;accent-color:#7ec8ff}
+.ex-reset{background:#2d2d44;color:#aaa;border:1px solid #444;border-radius:3px;padding:2px 8px;cursor:pointer;font-size:10px}
+.ex-reset:hover{color:#fff;background:#3a3a6a}
+.ex-zoom-label{margin-left:auto;font-family:monospace;color:#6eff8a}
+.exhibit-stage{overflow:hidden;background:#111;border:1px solid #333;cursor:grab;position:relative;height:640px;display:flex;align-items:center;justify-content:center}
+.exhibit-stage.dragging{cursor:grabbing}
+.exhibit-img{max-width:none;max-height:none;transform-origin:center center;user-select:none;pointer-events:none;transition:filter .1s}
+.exhibit-hint{font-size:10px;color:#888;text-align:center;padding:4px;background:#1a1a2e;border-radius:0 0 6px 6px}
+svg.sharpen-defs{position:absolute;width:0;height:0;overflow:hidden}
 /* AI panel */
 #ai-panel{position:fixed;bottom:0;left:0;right:0;z-index:800;background:#0f0f1e;border-top:2px solid #3a3a6a;transform:translateY(100%);transition:transform .25s ease;display:flex;flex-direction:column;max-height:55vh}
 #ai-panel.open{transform:translateY(0)}
@@ -78,10 +59,10 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 #ai-cursor{display:inline-block;width:2px;height:1em;background:#7ec8ff;animation:blink .7s infinite;vertical-align:text-bottom;margin-left:1px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 #clear-btn{position:fixed;bottom:20px;right:20px;background:#1a1a2e;color:#eee;border:none;border-radius:4px;padding:7px 14px;font-size:11px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3);z-index:500}
+
 </style>
 </head>
 <body>
-
 <svg class="sharpen-defs" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="sh1"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="0 -0.3 0 -0.3 2.2 -0.3 0 -0.3 0"/></filter>
@@ -92,8 +73,8 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
   </defs>
 </svg>
 <header>
-  <h1>Athleta — 영한 대조 + AI 용어 설명</h1>
-  <a class="back-btn" href="../index.html">← 목록</a>
+  <h1>Athleta -- 영한 대조 + AI 용어 설명</h1>
+  <a class="back-btn" href="../index.html">&#8592; 목록</a>
 </header>
 <div class="help-bar">
   <span><kbd>hover</kbd> 하이라이트</span>
@@ -108,601 +89,290 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 <div class="container">
 
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="64845">The defining characteristic of an entrepreneur is that we can talk ourselves into anything. Luckily, I talked myself into entering a phenomenal market —big, underserved, and growing fast — before knowing anything about it.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="5333">기업가의 가장 두드러진 특성은 우리 스스로를 무엇이든 납득시킬 수 있다는 점이다. 다행히도 나는 아무것도 모르는 채로, 규모가 크고, 수요가 충족되지 않았으며, 빠르게 성장하는 탁월한 시장에 뛰어들도록 스스로를 납득시켰다.</span></p></div></div>
+  <div class="cell en"><h3>Athleta</h3></div>
+  <div class="cell kr"><h3>Athleta</h3></div>
 </div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>— Scott W. Kerslake, President and CEO of Athleta</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><blockquote>
-<span class="sent" data-sid="29806">— Scott W. Kerslake, Athleta 대표이사</span>
-</blockquote></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1377">On the morning of March 26, 2002, Scott Kerslake — president and CEO of Athleta—reflected on the unfamiliar sounds of the city while stuck in a Manhattan traffic jam. In contrast, several employees at the Athleta headquarters in Petaluma, California, were preparing to run in the open preserve near the office or take their dogs for a walk. Kerslake and Joe Teno — Athleta’s senior vice president of operations— had come to New York with a single goal: to raise $3 million-$4 million in a Series E round of financing from investors who understood and appreciated Athleta’s business model and culture. Both Kerslake and Teno were determined to return to California with good news for the company’s tightly knit group of employees.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="39130">2002년 3월 26일 아침, Athleta의 대표이사 Scott Kerslake는 맨해튼 교통 체증에 갇혀 낯선 도시의 소음을 떠올리고 있었다. 한편 캘리포니아주 페탈루마에 위치한 Athleta 본사에서는 직원들이 사무실 인근 공원에서 달리기를 하거나 반려견과 산책을 나설 채비를 하고 있었다. Kerslake와 운영 담당 수석 부사장 Joe Teno가 뉴욕을 찾은 것은 단 하나의 목적 때문이었다: Athleta의 비즈니스 모델과 기업 문화를 이해하고 공감하는 투자자들로부터 시리즈 E 라운드로 300만~400만 달러를 조달하는 것. 두 사람은 반드시 좋은 소식을 들고 캘리포니아로 돌아가겠다고 다짐했다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="46239">In 1998, Kerslake founded Athleta as a “women’s sports company” selling a wide range of women’s athletic gear through mail order and online. Since that time, Athleta’s revenues had grown more than 150% per year and were projected to reach almost $26 million in 2002. Now, Athleta anticipated augmenting its multichannel strategy by launching physical retail outlets in 2003. Between 1998 and the end of 2002, Athleta expected to have fulfilled over 400,000 orders, acquired a total of 231,000 customers, and generated over $55 million in revenue —all with under $5 million in equity capital. Despite Athleta’s historical and present-day undercapitalization, Athleta had survived. Kerslake was convinced the company’s success was linked to the enormous dedication of the amateur and professional athletes who made up Athleta’s staff. While other companies, such as Lucy.com and FogDog Sports, had closed up shop or scaled back significantly after raising tens of millions of dollars, Athleta had survived the shakeout and was ready to begin the next phase of development.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="3429">1998년, Kerslake는 우편 주문(카탈로그)과 온라인을 통해 다양한 여성 스포츠 의류를 판매하는 &quot;여성 스포츠 기업&quot;으로 Athleta를 창업했다. 그 이후 매출은 연간 150% 이상 성장했으며, 2002년에는 약 2,600만 달러에 달할 것으로 전망됐다. 이제 Athleta는 2003년 오프라인 매장 출점을 통해 멀티채널 전략을 더욱 강화할 계획이었다. 1998년부터 2002년 말까지 40만 건 이상의 주문 처리, 총 23만 1,000명의 고객 확보, 그리고 500만 달러 미만의 자기자본으로 5,500만 달러 이상의 매출을 달성할 것으로 예상됐다. 만성적인 자본 부족에도 불구하고 Athleta는 살아남았다. Kerslake는 이 성공이 아마추어·프로 선수 출신으로 구성된 직원들의 헌신 덕분이라고 확신했다. Lucy.com과 FogDog Sports처럼 수천만 달러를 유치하고도 폐업하거나 대폭 축소된 기업들과 달리, Athleta는 시장 구조조정을 버텨내고 다음 성장 단계로 도약할 준비를 마쳤다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="54375">In June 1998, Kerslake had raised a seed round of capital totaling slightly over $700,000 from friends and family. Less than six months later, Kerslake turned down offers of up to $10 million in equity to build an online retail company and instead raised only $1.2 million —falling short of his target of $2.2 million —from investors who shared his goal of building a multichannel women’s sports company. Kerslake kept a tight rein on Athleta’s cash expenditures even after raising another $3.1</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="2921">1998년 6월, Kerslake는 지인들로부터 약 70만 달러의 시드 라운드를 조달했다. 6개월도 채 되지 않아 그는 온라인 리테일 기업 구축 조건으로 제시된 최대 1,000만 달러의 투자 제안을 거절하고, 목표액 220만 달러에 못 미치는 120만 달러만을 — 멀티채널 여성 스포츠 기업 구축이라는 목표에 공감하는 투자자들로부터 — 유치했다. Kerslake는 1999년부터 2002년 사이에 추가로 310만 달러를 조달한 이후에도 현금 지출을 철저히 관리했다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="52236">million between 1999 and 2002. Now, in March 2002, Athleta had less than $330,000 of cash remaining, and Kerslake was eager to close a Series E round. While Kerslake was willing to give shareholders a large stake in the company and even accept potentially onerous financing terms, he wanted to preserve the company’s unique culture. Kerslake and Teno had been meeting with venture capital (VC) firms, angel investors, and commercial banks while in New York City. With one eye on his Ironman™ watch and the other eye on the endless Manhattan traffic jam, Kerslake wondered if he would cross the finish line — that is, return to California with $3 million-$4 million in capital and supportive investors in hand.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="30237">1999년부터 2002년 사이에 310만 달러를 추가 조달했음에도 불구하고, 2002년 3월 현재 Athleta의 잔여 현금은 33만 달러에 불과했고, Kerslake는 시리즈 E 라운드를 조속히 마무리하고자 했다. 그는 주주에게 상당한 지분을 내주거나 다소 불리한 투자 조건을 수용할 의향도 있었지만, 회사의 고유한 문화만큼은 반드시 지키고 싶었다. Kerslake와 Teno는 뉴욕 체류 중 벤처 캐피탈(VC) 회사, 엔젤 투자자, 상업은행 담당자들과 잇달아 면담을 진행했다. Ironman™ 시계에 한 눈을 두고, 끝없이 막힌 맨해튼 도로에 다른 한 눈을 두면서, Kerslake는 과연 결승선을 통과할 수 있을지 — 즉, 300만~400만 달러의 자본과 우호적인 투자자들을 확보해 캘리포니아로 돌아갈 수 있을지 — 자문했다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Founder&#x27;s Vision</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>창업자의 비전</h3></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="28855">Kerslake had always dreamed about starting his own company. Prior to becoming an entrepreneur, he worked as an investment banker at Salomon Smith Barney and in an operating role at a retail company before joining Sapient Corporation as a management consultant in 1993. There, he played a significant role in starting Sapient Corporation&#x27;s San Francisco office by helping to manage and grow its team from three to 250 employees in a little over two years. He subsequently served as Sapient’s director of marketing and was instrumental in the company’s successful initial public offering (see Exhibit 1 for management biographies). Finally, in 1997, Kerslake decided to start his own company. He explained:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="13128">Kerslake는 언제나 자신만의 회사를 차리는 꿈을 꿔왔다. 창업 이전에 그는 Salomon Smith Barney에서 투자 은행가로, 한 리테일 회사에서 운영직으로 근무한 뒤, 1993년 Sapient Corporation에 경영 컨설턴트로 합류했다. 그는 Sapient의 샌프란시스코 사무소를 직원 3명에서 250명 규모로 2년여 만에 키우는 데 핵심적인 역할을 했다. 이후 마케팅 디렉터를 역임하며 회사의 성공적인 기업공개(IPO)를 이끌었다(경영진 약력은 부록 1 참조). 마침내 1997년, Kerslake는 자신만의 회사를 창업하기로 결심했다. 그는 당시를 이렇게 설명했다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="58643">I have always loved sports and lived a very active life. Sports have been important to my physical and spiritual well-being for as long as I can remember—so the business model is completely rooted in personal passion.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="34874">저는 언제나 스포츠를 사랑하며 활동적인 삶을 살아왔습니다. 기억하는 한 스포츠는 늘 제 육체적·정신적 건강의 근간이었습니다. 그래서 이 비즈니스 모델은 순전히 개인적인 열정에서 비롯된 것입니다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="59419">Then, one day, I had a dream — literally speaking — about building a women’s sports company. It was only after I conceived of the Athleta brand, product line, and catalog that I did any market research. As it turns out, the statistics on the women&#x27;s sports industry are phenomenal—an incredible growth rate, a huge participant base, and a group of customers frustrated with the dearth of high-quality women’s sportswear sold in traditional retail outlets. So, my dream translated into a great market opportunity—one that far exceeded the opportunity in the men’s market. While many people are surprised that a man founded a women’s sports company, I developed the Athleta concept from the standpoint of an athlete, not the standpoint of a man.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="4632">어느 날, 저는 말 그대로 &#x27;꿈&#x27; 속에서 여성 스포츠 기업을 세우는 장면을 보았습니다. Athleta 브랜드와 제품 라인, 카탈로그를 구상한 뒤에야 비로소 시장 조사를 했는데, 여성 스포츠 산업의 통계는 놀라웠습니다 — 믿기 어려울 만큼 높은 성장률, 방대한 참여 인구, 그리고 일반 리테일 매장에서 판매되는 고품질 여성 스포츠웨어의 부재에 불만을 품은 고객군. 결국 저의 꿈은 훌륭한 시장 기회로 이어졌습니다 — 심지어 남성 시장을 능가하는 기회였죠. 많은 분들이 남성이 여성 스포츠 기업을 창업했다는 사실에 의아해하지만, 저는 Athleta를 한 남자의 관점이 아닌, 한 운동선수의 관점에서 구상했습니다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Women’s Sports Apparel Market</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>여성 스포츠 의류 시장</h3></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="5410">In 1999, a total of 21.2 million women and 15.5 million men in the US. participated in sports and fitness.&#x27; Women’s participation in sports and fitness had grown rapidly in the past decade; by 1999, women made up nearly 50% of total participants in the most popular sports (see Table A for detailed statistics on women’s sports participation). In addition, women accounted for 58% of all health club memberships in the United States in 2001.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="33333">1999년 기준으로 미국에서 스포츠와 피트니스에 참여하는 여성은 2,120만 명, 남성은 1,550만 명이었다. 지난 10년간 여성의 스포츠·피트니스 참여는 빠르게 증가했으며, 1999년에는 주요 종목 전체 참가자의 약 50%를 여성이 차지했다(여성 스포츠 참여 세부 통계는 Table A 참조). 또한 2001년 기준으로 미국 헬스클럽 회원의 58%가 여성이었다.</span></p></div></div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-3">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Table A Wome</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="3"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="3"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="3"></label>
-      <button class="ex-reset" data-id="3">초기화</button>
-      <span class="ex-zoom-label" id="zoom-3">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-3">
-      <img src="Captures/Screenshot 2026-03-17 162736.png" class="exhibit-img" id="img-3" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1059">concerned that e-commerce cannibalized other channels, Athleta’s management team believed that offering consumers a wide range of choices fostered stronger customer relationships and buying patterns. A study on purchasing behavior found that catalog shoppers who visited a retailer&#x27;s Web site spent 8% more per order and ordered 11% more frequently from the catalog.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="291">고객이 여러 채널을 선택할 수 있는 환경이 오히려 더 강한 고객 관계와 구매 패턴을 형성한다고 믿었다. 한 구매 행동 연구에 따르면, 리테일러의 웹사이트를 방문한 카탈로그 고객은 주문당 8% 더 많은 금액을 지출하고, 카탈로그 주문 빈도 또한 11% 높았다.</span></p></div></div>
-</div>
-
-<div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Product</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>제품</h3></div></div>
-</div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="55583">The Athleta product line was sourced from Athleta Essentials —a private-label line of bodywear and technical apparel—and high-quality producers including Patagonia, Adidas, Pearl Izumi, Marmot, Hind, and Sugoi. Kerslake explained the philosophy driving the Athleta private-label line:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="58520">Athleta의 제품 라인은 자체 개발한 프라이빗 라벨(PB) 바디웨어·테크니컬 어패럴 브랜드인 &#x27;Athleta Essentials&#x27;와 Patagonia, Adidas, Pearl Izumi, Marmot, Hind, Sugoi 등 고품질 제조사 제품으로 구성됐다. Kerslake는 Athleta 프라이빗 라벨 라인의 철학을 이렇게 설명했다.</span></p></div></div>
+  <div class="cell en"><blockquote><span class="sent" data-sid="s0-p0-0">The defining characteristic of an entrepreneur is that we can talk ourselves into anything.</span><span class="sent" data-sid="s0-p0-1"> Luckily, I talked myself into entering a phenomenal market —big, underserved, and growing fast — before knowing anything about it.</span></blockquote></div>
+  <div class="cell kr"><blockquote><span class="sent" data-sid="s0-p0-0">기업가의 가장 두드러진 특성은 우리 스스로를 무엇이든 납득시킬 수 있다는 점이다.</span><span class="sent" data-sid="s0-p0-1"> 다행히도 나는 아무것도 모르는 채로, 규모가 크고, 수요가 충족되지 않았으며, 빠르게 성장하는 탁월한 시장에 뛰어들도록 스스로를 납득시켰다.</span></blockquote></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="52690">We designed our own line of clothing because our customers were requesting items, colors, and styles that weren&#x27;t being made. One of the things we heard most often was that it&#x27;s really tough to find athletic pants in tall and petite sizes. We immediately seized this market opportunity by creating private-label athletic pants in hard-to-find sizes.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="32938">고객들이 시중에 없는 아이템, 색상, 스타일을 요청해서 자체 라인을 개발했습니다. 가장 많이 들은 불만 중 하나가 키가 크거나 작은 체형에 맞는 운동 바지를 찾기가 정말 힘들다는 것이었어요. 저희는 즉시 이 기회를 포착해 찾기 어려운 사이즈의 프라이빗 라벨 운동 바지를 출시했습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p1-0">— Scott W. Kerslake, President and CEO of Athleta</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p1-0">&gt; — Scott W. Kerslake, Athleta 대표이사</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="3181">There are two models for private-label branding: either sell a knockoff of an existing product at a lower price or develop your own distinctive product. Many retailers will take top-selling products to southern China where they are reverse engineered, manufactured, and then sold at a lower price. We didn’t want to compete on price. We wanted to manufacture products that were on par with other high-quality manufacturers. While we could have chased a lot of sales by reverse engineering successful products, we didn’t want to compromise the integrity of our brand.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="42170">프라이빗 라벨 브랜딩에는 두 가지 방식이 있습니다. 기존 제품의 저가 복제품을 만들거나, 아니면 독자적인 제품을 개발하거나. 많은 리테일러들이 베스트셀러 제품을 중국 남부로 가져가 역설계·생산해 더 낮은 가격에 판매합니다. 저희는 가격 경쟁을 원하지 않았습니다. 다른 고품질 제조사와 동등한 수준의 제품을 만들고자 했습니다. 성공 제품을 역설계해 매출을 올릴 수도 있었겠지만, 브랜드의 진정성을 타협하고 싶지 않았습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p2-0">On the morning of March 26, 2002, Scott Kerslake — president and CEO of Athleta—reflected on the unfamiliar sounds of the city while stuck in a Manhattan traffic jam.</span><span class="sent" data-sid="s0-p2-1"> In contrast, several employees at the Athleta headquarters in Petaluma, California, were preparing to run in the open preserve near the office or take their dogs for a walk.</span><span class="sent" data-sid="s0-p2-2"> Kerslake and Joe Teno — Athleta&#x27;s senior vice president of operations— had come to New York with a single goal: to raise $3 million-$4 million in a Series E round of financing from investors who understood and appreciated Athleta&#x27;s business model and culture.</span><span class="sent" data-sid="s0-p2-3"> Both Kerslake and Teno were determined to return to California with good news for the company&#x27;s tightly knit group of employees.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p2-0">2002년 3월 26일 아침, Athleta의 대표이사 Scott Kerslake는 맨해튼 교통 체증에 갇혀 낯선 도시의 소음을 떠올리고 있었다.</span><span class="sent" data-sid="s0-p2-1"> 한편 캘리포니아주 페탈루마에 위치한 Athleta 본사에서는 직원들이 사무실 인근 공원에서 달리기를 하거나 반려견과 산책을 나설 채비를 하고 있었다.</span><span class="sent" data-sid="s0-p2-2"> Kerslake와 운영 담당 수석 부사장 Joe Teno가 뉴욕을 찾은 것은 단 하나의 목적 때문이었다: Athleta의 비즈니스 모델과 기업 문화를 이해하고 공감하는 투자자들로부터 시리즈 E 라운드로 300만~400만 달러를 조달하는 것.</span><span class="sent" data-sid="s0-p2-3"> 두 사람은 반드시 좋은 소식을 들고 캘리포니아로 돌아가겠다고 다짐했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Target Customer</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>목표 고객</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p3-0">In 1998, Kerslake founded Athleta as a &quot;women&#x27;s sports company&quot; selling a wide range of women&#x27;s athletic gear through mail order and online. Since that time, Athleta&#x27;s revenues had grown more than 150% per year and were projected to reach almost $26 million in 2002. Now, Athleta anticipated augmenting its multichannel strategy by launching physical retail outlets in 2003. Between 1998 and the end of 2002, Athleta expected to have fulfilled over 400,000 orders, acquired a total of 231,000 customers, and generated over $55 million in revenue —all with under $5 million in equity capital. Despite Athleta&#x27;s historical and present-day undercapitalization, Athleta had survived. Kerslake was convinced the company&#x27;s success was linked to the enormous dedication of the amateur and professional athletes who made up Athleta&#x27;s staff. While other companies, such as Lucy.com and FogDog Sports, had closed up shop or scaled back significantly after raising tens of millions of dollars, Athleta had survived the shakeout and was ready to begin the next phase of development.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p3-0">1998년, Kerslake는 우편 주문(카탈로그)과 온라인을 통해 다양한 여성 스포츠 의류를 판매하는 &quot;여성 스포츠 기업&quot;으로 Athleta를 창업했다. 그 이후 매출은 연간 150% 이상 성장했으며, 2002년에는 약 2,600만 달러에 달할 것으로 전망됐다. 이제 Athleta는 2003년 오프라인 매장 출점을 통해 멀티채널 전략을 더욱 강화할 계획이었다. 1998년부터 2002년 말까지 40만 건 이상의 주문 처리, 총 23만 1,000명의 고객 확보, 그리고 500만 달러 미만의 자기자본으로 5,500만 달러 이상의 매출을 달성할 것으로 예상됐다. 만성적인 자본 부족에도 불구하고 Athleta는 살아남았다. Kerslake는 이 성공이 아마추어·프로 선수 출신으로 구성된 직원들의 헌신 덕분이라고 확신했다. Lucy.com과 FogDog Sports처럼 수천만 달러를 유치하고도 폐업하거나 대폭 축소된 기업들과 달리, Athleta는 시장 구조조정을 버텨내고 다음 성장 단계로 도약할 준비를 마쳤다. 1998년 6월, Kerslake는 지인들로부터 약 70만 달러의 시드 라운드를 조달했다. 6개월도 채 되지 않아 그는 온라인 리테일 기업 구축 조건으로 제시된 최대 1,000만 달러의 투자 제안을 거절하고, 목표액 220만 달러에 못 미치는 120만 달러만을 — 멀티채널 여성 스포츠 기업 구축이라는 목표에 공감하는 투자자들로부터 — 유치했다. Kerslake는 1999년부터 2002년 사이에 추가로 310만 달러를 조달한 이후에도 현금 지출을 철저히 관리했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="49123">Athleta’s initial target customers were women between the ages of 18 and 50 with a college education and average household incomes greater than $80,000. They were also physically active and committed to engaging in regular exercise. They had busy lifestyles and therefore sought alternatives to shopping in traditional retail outlets. Finally, they usually bought high-quality merchandise — even if they had to spend more. Kerslake explained:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="20930">Athleta의 초기 목표 고객은 18~50세의 대졸 여성으로, 가구 평균 소득이 8만 달러 이상이었다. 이들은 신체 활동을 중시하며 규칙적인 운동을 생활화했고, 바쁜 라이프스타일로 인해 일반 리테일 매장 대신 대안적인 쇼핑 방식을 선호했다. 또한 필요하다면 더 많은 돈을 지불하더라도 고품질 제품을 구매하는 성향을 가졌다. Kerslake는 이렇게 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p4-0">In June 1998, Kerslake had raised a seed round of capital totaling slightly over $700,000 from friends and family. Less than six months later, Kerslake turned down offers of up to $10 million in equity to build an online retail company and instead raised only $1.2 million —falling short of his target of $2.2 million —from investors who shared his goal of building a multichannel women&#x27;s sports company. Kerslake kept a tight rein on Athleta&#x27;s cash expenditures even after raising another $3.1 million between 1999 and 2002. Now, in March 2002, Athleta had less than $330,000 of cash remaining, and Kerslake was eager to close a Series E round. While Kerslake was willing to give shareholders a large stake in the company and even accept potentially onerous financing terms, he wanted to preserve the company&#x27;s unique culture. Kerslake and Teno had been meeting with venture capital (VC) firms, angel investors, and commercial banks while in New York City. With one eye on his Ironman™ watch and the other eye on the endless Manhattan traffic jam, Kerslake wondered if he would cross the finish line — that is, return to California with $3 million-$4 million in capital and supportive investors in hand.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p4-0">1999년부터 2002년 사이에 310만 달러를 추가 조달했음에도 불구하고, 2002년 3월 현재 Athleta의 잔여 현금은 33만 달러에 불과했고, Kerslake는 시리즈 E 라운드를 조속히 마무리하고자 했다. 그는 주주에게 상당한 지분을 내주거나 다소 불리한 투자 조건을 수용할 의향도 있었지만, 회사의 고유한 문화만큼은 반드시 지키고 싶었다. Kerslake와 Teno는 뉴욕 체류 중 벤처 캐피탈(VC) 회사, 엔젤 투자자, 상업은행 담당자들과 잇달아 면담을 진행했다. Ironman™ 시계에 한 눈을 두고, 끝없이 막힌 맨해튼 도로에 다른 한 눈을 두면서, Kerslake는 과연 결승선을 통과할 수 있을지 — 즉, 300만~400만 달러의 자본과 우호적인 투자자들을 확보해 캘리포니아로 돌아갈 수 있을지 — 자문했다.</span></p></div>
 </div>
-
+<div class="section-divider">Founder&#x27;s Vision / 창업자의 비전</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="14635">Our customers told us they didn’t have the time to dig through a giant bin of sports bras at SportMart and try to guess which bra would work best for them, or worse, have to rely on the advice of the teenage boy likely to be behind the register. They wanted to shop in an environment with a well-organized selection of products and knowledgeable staff that were easily accessible. We listened carefully when they described their lifestyles and their biggest problems —and then built a company that could resolve them.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="65064">고객들이 저희에게 말했습니다 — SportMart의 거대한 스포츠 브라 바구니를 뒤지며 어떤 제품이 자신에게 맞을지 감으로 골라야 하거나, 더 나쁘게는 계산대 뒤에 서 있는 십대 남직원의 조언에 의존해야 하는 상황은 원하지 않는다고요. 그들은 잘 정리된 상품 진열과 쉽게 접근할 수 있는 전문 직원이 있는 환경에서 쇼핑하고 싶어했습니다. 저희는 고객들의 라이프스타일과 가장 큰 불편 사항을 귀 기울여 듣고, 그 문제를 해결하는 회사를 만들었습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p0-0">Kerslake had always dreamed about starting his own company.</span><span class="sent" data-sid="s1-p0-1"> Prior to becoming an entrepreneur, he worked as an investment banker at Salomon Smith Barney and in an operating role at a retail company before joining Sapient Corporation as a management consultant in 1993.</span><span class="sent" data-sid="s1-p0-2"> There, he played a significant role in starting Sapient Corporation&#x27;s San Francisco office by helping to manage and grow its team from three to 250 employees in a little over two years.</span><span class="sent" data-sid="s1-p0-3"> He subsequently served as Sapient&#x27;s director of marketing and was instrumental in the company&#x27;s successful initial public offering (see Exhibit 1 for management biographies).</span><span class="sent" data-sid="s1-p0-4"> Finally, in 1997, Kerslake decided to start his own company.</span><span class="sent" data-sid="s1-p0-5"> He explained:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p0-0">Kerslake는 언제나 자신만의 회사를 차리는 꿈을 꿔왔다.</span><span class="sent" data-sid="s1-p0-1"> 창업 이전에 그는 Salomon Smith Barney에서 투자 은행가로, 한 리테일 회사에서 운영직으로 근무한 뒤, 1993년 Sapient Corporation에 경영 컨설턴트로 합류했다.</span><span class="sent" data-sid="s1-p0-2"> 그는 Sapient의 샌프란시스코 사무소를 직원 3명에서 250명 규모로 2년여 만에 키우는 데 핵심적인 역할을 했다.</span><span class="sent" data-sid="s1-p0-3"> 이후 마케팅 디렉터를 역임하며 회사의 성공적인 기업공개(IPO)를 이끌었다(경영진 약력은 부록 1 참조).</span><span class="sent" data-sid="s1-p0-4"> 마침내 1997년, Kerslake는 자신만의 회사를 창업하기로 결심했다.</span><span class="sent" data-sid="s1-p0-5"> 그는 당시를 이렇게 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Brand</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>브랜드</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p1-0">I have always loved sports and lived a very active life.</span><span class="sent" data-sid="s1-p1-1"> Sports have been important to my physical and spiritual well-being for as long as I can remember—so the business model is completely rooted in personal passion.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p1-0">저는 언제나 스포츠를 사랑하며 활동적인 삶을 살아왔습니다.</span><span class="sent" data-sid="s1-p1-1"> 기억하는 한 스포츠는 늘 제 육체적·정신적 건강의 근간이었습니다. 그래서 이 비즈니스 모델은 순전히 개인적인 열정에서 비롯된 것입니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="49336">The Athleta brand was designed to communicate an understanding of and respect for the importance of sports and athletics in women’s lives. As such, the company’s catalogs featured fit, healthy, athletic women on its pages. In addition, Athleta sought to educate its customers during the sales process. As such, Athleta’s customer service staff were carefully selected and then trained to provide accurate information, give thoughtful advice, and understand the particular needs of women vis-a-vis the fit, performance, and comfort of sportswear. Athleta also employed an unusual practice</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="34926">Athleta 브랜드는 여성의 삶에서 스포츠와 운동이 갖는 중요성을 이해하고 존중하는 메시지를 전달하도록 설계됐다. 카탈로그에는 건강하고 활동적인 실제 운동선수 여성들의 모습이 담겼다. 또한 Athleta는 판매 과정에서 고객 교육을 중시했다. 고객 서비스 직원들은 엄선 후 훈련을 받아 정확한 정보를 제공하고, 스포츠웨어의 핏·기능성·착용감 측면에서 여성 고객의 특수한 요구를 이해하고 사려 깊은 조언을 건넬 수 있도록 했다. 또한 Athleta는 영업 부서에 독특한 관행을 도입했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p2-0">Then, one day, I had a dream — literally speaking — about building a women&#x27;s sports company.</span><span class="sent" data-sid="s1-p2-1"> It was only after I conceived of the Athleta brand, product line, and catalog that I did any market research.</span><span class="sent" data-sid="s1-p2-2"> As it turns out, the statistics on the women&#x27;s sports industry are phenomenal—an incredible growth rate, a huge participant base, and a group of customers frustrated with the dearth of high-quality women&#x27;s sportswear sold in traditional retail outlets. So, my dream translated into a great market opportunity—one that far exceeded the opportunity in the men&#x27;s market.</span><span class="sent" data-sid="s1-p2-3"> While many people are surprised that a man founded a women&#x27;s sports company, I developed the Athleta concept from the standpoint of an athlete, not the standpoint of a man.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p2-0">어느 날, 저는 말 그대로 &#x27;꿈&#x27; 속에서 여성 스포츠 기업을 세우는 장면을 보았습니다.</span><span class="sent" data-sid="s1-p2-1"> Athleta 브랜드와 제품 라인, 카탈로그를 구상한 뒤에야 비로소 시장 조사를 했는데, 여성 스포츠 산업의 통계는 놀라웠습니다 — 믿기 어려울 만큼 높은 성장률, 방대한 참여 인구, 그리고 일반 리테일 매장에서 판매되는 고품질 여성 스포츠웨어의 부재에 불만을 품은 고객군.</span><span class="sent" data-sid="s1-p2-2"> 결국 저의 꿈은 훌륭한 시장 기회로 이어졌습니다 — 심지어 남성 시장을 능가하는 기회였죠.</span><span class="sent" data-sid="s1-p2-3"> 많은 분들이 남성이 여성 스포츠 기업을 창업했다는 사실에 의아해하지만, 저는 Athleta를 한 남자의 관점이 아닌, 한 운동선수의 관점에서 구상했습니다.</span></p></div>
 </div>
-
+<div class="section-divider">Women&#x27;s Sports Apparel Market / 여성 스포츠 의류 시장</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="29984">in its sales department —it did not set sales goals around individual items, so sales staff could focus on finding the best product for each customer. The Athleta brand represented a belief in building lasting customer relationships based on integrity and trust.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="9398">판매 직원에게 개별 품목별 판매 목표를 부여하지 않았다 — 직원이 각 고객에게 가장 적합한 제품을 찾아주는 데 집중할 수 있도록 하기 위해서였다. Athleta 브랜드는 진정성과 신뢰를 바탕으로 고객과의 지속적인 관계를 구축하겠다는 신념을 표방했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p0-0">In 1999, a total of 21.2 million women and 15.5 million men in the US. participated in sports and fitness.&#x27; Women&#x27;s participation in sports and fitness had grown rapidly in the past decade; by 1999, women made up nearly 50% of total participants in the most popular sports (see Table A for detailed statistics on women&#x27;s sports participation).</span><span class="sent" data-sid="s2-p0-1"> In addition, women accounted for 58% of all health club memberships in the United States in 2001.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p0-0">1999년 기준으로 미국에서 스포츠와 피트니스에 참여하는 여성은 2,120만 명, 남성은 1,550만 명이었다. 지난 10년간 여성의 스포츠·피트니스 참여는 빠르게 증가했으며, 1999년에는 주요 종목 전체 참가자의 약 50%를 여성이 차지했다(여성 스포츠 참여 세부 통계는 Table A 참조).</span><span class="sent" data-sid="s2-p0-1"> 또한 2001년 기준으로 미국 헬스클럽 회원의 58%가 여성이었다.</span></p></div>
 </div>
-
+<div class="section-divider">Table A Women&#x27;s Sports Participation (1999) / 표 A: 여성 스포츠 참여 현황 (1999년)</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Culture</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>기업 문화</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p0-0">Sport Women/Total Participants Running 49% Cycling 49% Swimming 55% Inline Skating 56% Backpacking 49% Fitness/Gym 72%</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p0-0">| 종목 | 여성/전체 참여자 비율 | |------|----------------------| | 달리기(Running) | 49% | | 사이클링(Cycling) | 49% | | 수영(Swimming) | 55% | | 인라인 스케이팅(Inline Skating) | 56% | | 배낭여행(Backpacking) | 49% | | 피트니스/헬스장(Fitness/Gym) | 72% |</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="27088">Athleta worked hard to create an exceptional culture where the employees embraced the company’s five core values. The company values all stemmed from a single premise: the most important values in one’s professional life should not differ from those in one’s personal life. For example, Athleta employees were encouraged to put their families first even though this occasionally resulted in employees leaving work early to pick up their child or take an animal to the vet. Recognizing the importance of staying healthy, the company had built its headquarters close to an open preserve so that employees could easily go running or cycling during breaks. The employee- friendly culture enabled Athleta to maintain lower-than-average turnover rates and attract top talent in key positions. Finally, the open-concept Athleta office was designed to facilitate open communication and to accommodate employees, pets and, on occasion, children.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="22959">Athleta는 직원들이 회사의 5대 핵심 가치를 내면화하는 탁월한 문화를 구축하기 위해 부단히 노력했다. 모든 회사 가치는 하나의 전제에서 출발했다: 직업적 삶에서 가장 중요한 가치는 개인의 삶에서의 가치와 다르지 않아야 한다는 것. 예를 들어, Athleta 직원들은 가끔 아이를 데리러 일찍 퇴근하거나 반려동물을 병원에 데려가야 할 때도 가족을 우선시하도록 장려받았다. 건강 유지의 중요성을 인식한 회사는 직원들이 쉬는 시간에 달리기나 사이클링을 즐길 수 있도록 오픈 공원 인근에 본사를 마련했다. 이러한 직원 친화적 문화 덕분에 Athleta는 업계 평균보다 낮은 이직률을 유지하고 핵심 직책에 우수 인재를 유치할 수 있었다. 오픈 컨셉으로 설계된 사무실은 열린 소통을 촉진하고, 직원과 반려동물, 때로는 자녀까지 수용할 수 있는 공간이었다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p1-0">Source: Company documents.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p1-0">출처: 회사 내부 자료.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Early Company History</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>초기 회사 역사</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p2-0">In 2000, women spent $25 billion on sports apparel, while the broader market for women&#x27;s apparel exceeded $96 billion.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p2-0">2000년, 여성은 스포츠 의류에 250억 달러를 지출했으며, 여성 의류 시장 전체 규모는 960억 달러를 넘었다.</span></p></div>
 </div>
-
+<div class="section-divider">Competition / 경쟁 환경</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="30142">After developing the Athleta concept and performing market research on the women’s sports apparel industry, Kerslake set out to raise a seed round of financing from friends and family. In June 1998, he raised a total of $769,000 and invested the money in producing the company’s first catalog, and buying lists of potential customers. Athleta opened for business in June 1998. Kerslake recalled the process of acquiring Athleta’s first customers:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="59641">여성 스포츠 의류 시장 조사를 마친 Kerslake는 지인들로부터 시드 투자를 유치하기 위해 나섰다. 1998년 6월 총 76만 9,000달러를 조달해 회사 최초의 카탈로그 제작과 잠재 고객 리스트 구매에 투자했다. Athleta는 1998년 6월 영업을 시작했다. Kerslake는 첫 고객 확보 과정을 이렇게 회상했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p0-0">There were four categories of retailers that sold women&#x27;s athletic gear (see Exhibit 2 for a detailed list of Athleta&#x27;s competitors by category):</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p0-0">여성 스포츠 용품을 판매하는 리테일러는 네 가지 범주로 나뉘었다(Athleta 경쟁사의 범주별 상세 목록은 Exhibit 2 참조):</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="15843">‘There are three ways to rent names: you can exchange names with a database company if you have a house file with your own customer names; you can pay a large list compiler such as Abacus or Z-24 for names; or you can pay another catalog company with a similar demographic for their names. Initially, we purchased lists from a database company. We were extremely lucky because our first batch of 93,500 catalogs gamered a 2.8% response rate. Normally, acquiring customers through purchased lists is a difficult science—somehow, we managed to send catalogs to the right people. By the end of 1999, our house file included 19,800 names of actual customers — most of whom had become repeat customers.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="15404">고객 이름을 확보하는 방법은 세 가지입니다: 자체 고객 데이터베이스가 있다면 데이터베이스 회사와 이름을 교환하거나, Abacus나 Z-24 같은 대형 리스트 컴파일러에게 대금을 지불하거나, 유사한 인구통계를 가진 다른 카탈로그 회사에게서 이름을 구매하는 것이죠. 처음에는 데이터베이스 회사에서 리스트를 구입했습니다. 정말 운이 좋았던 것이, 첫 번째 카탈로그 9만 3,500부가 2.8%의 응답률을 기록했습니다. 일반적으로 구매 리스트를 통한 고객 확보는 어려운 일이지만, 저희는 어찌된 일인지 딱 맞는 사람들에게 카탈로그를 보냈습니다. 1999년 말까지 자체 데이터베이스에는 실제 고객 1만 9,800명의 이름이 쌓였고, 대부분이 재구매 고객이 됐습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p1-0">¢ Tier 1: Women-specific sports retailers concentrating exclusively on the women&#x27;s market (e.g., Lady Foot Locker, Title 9)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p1-0">- 1군(Tier 1): 여성 시장에만 전문적으로 집중하는 여성 전문 스포츠 리테일러 (예: Lady Foot Locker, Title 9)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="8791">However, at the end of 1998, nearly all of the seed capital Kerslake had raised was exhausted. Though most of Athleta’s investors were ardent believers in the business model, very few could participate in a subsequent round. After reviewing his options, Kerslake decided to raise outside equity: “You can only finance your company in a few ways: you can raise outside equity, you can raise debt, or you can stretch the terms offered by your suppliers. Stretching supplier terms is an extremely bad business strategy, and raising a large amount of debt was too difficult—so we had to raise more equity.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="17562">그러나 1998년 말, Kerslake가 조달한 시드 자본은 거의 바닥났다. 대부분의 초기 투자자들은 비즈니스 모델을 굳게 믿었지만, 후속 라운드에 참여할 수 있는 이는 극히 드물었다. Kerslake는 선택지를 검토한 끝에 외부 자기자본 조달을 결정했다: &quot;회사에 자금을 조달하는 방법은 몇 가지뿐입니다: 외부 자기자본 조달, 부채 조달, 또는 공급업체 지급 기한 연장. 공급업체 기한을 연장하는 것은 극히 나쁜 전략이고, 대규모 부채 조달은 너무 어려웠습니다 — 그래서 자기자본을 더 조달해야 했습니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p2-0">* Tier 2: Specialty sporting goods retailers concentrating on a particular sport (e.g., running or cycling), carrying mid- to high-end products and offering customers a higher level of expertise (e.g. Fleet Feet, Recreation Equipment Incorporated)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p2-0">- 2군(Tier 2): 특정 종목(예: 달리기, 사이클링)에 집중하며, 중고가 제품을 취급하고 고객에게 높은 수준의 전문성을 제공하는 전문 스포츠 용품 리테일러 (예: Fleet Feet, Recreation Equipment Incorporated)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="24413">In early 1999, Kerslake approached a large number of venture capital firms to raise an additional $2.2 million in equity. He recalled:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="33434">1999년 초, Kerslake는 추가 자기자본 220만 달러를 유치하기 위해 다수의 벤처 캐피탈 회사를 접촉했다. 그는 당시를 이렇게 회상했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p3-0">¢ Tier 3: Big-box retailers carrying very broad and deep product selections for many different sports (e.g., Big 5, SportMart)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p3-0">- 3군(Tier 3): 다양한 종목에 걸쳐 매우 폭넓고 깊은 상품 구성을 갖춘 대형 양판점 (예: Big 5, SportMart)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="35092">To begin, there were few venture capital firms focused on consumer commerce. When we walked into their offices and asked for $2.2 million to expand our catalog business, they laughed. They told us that nascent, low-tech consumer companies were unlikely to be funded in 1999. Most venture capitalists were investing in dot-coms, not mail-order businesses. We were offered $10 million if we converted our business model to “Athleta.com.” From our</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="20354">당시 소비자 커머스에 집중하는 VC 회사는 거의 없었습니다. 그들 사무실에 찾아가 카탈로그 사업 확장을 위해 220만 달러를 요청하자 그들은 비웃었습니다. 초기 단계의 저기술 소비재 기업은 1999년에 투자받기 어렵다는 게 이유였습니다. 당시 대부분의 VC들은 도트컴 기업에 투자하고 있었지, 우편 주문 비즈니스에는 관심이 없었습니다. 저희 비즈니스 모델을 &quot;Athleta.com&quot;으로 전환하는 조건으로 1,000만 달러를 제안받기도 했습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p4-0">¢ Tier 4: Department stores carrying a narrow range of sports-related products (e.g., Nordstrom, Macy&#x27;s)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p4-0">- 4군(Tier 4): 제한된 범위의 스포츠 관련 제품을 취급하는 백화점 (예: Nordstrom, Macy&#x27;s)</span></p></div>
 </div>
-
+<div class="section-divider">Business Model / 비즈니스 모델</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="18060">perspective, the venture capitalists were narrowly focused on channel instead of the overall brand or business model. It is the hardest thing in the world to look somebody in the eye and turn down $10 million, especially when you aren’t sure you have enough capital to make it to the next quarter.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="9251">그들의 관점에서 VC들은 전체 브랜드나 비즈니스 모델이 아니라 채널에만 좁게 집중하고 있었습니다. 정말 필요한 자금이 부족한 상황에서 누군가의 눈을 똑바로 바라보며 1,000만 달러를 거절하는 것은 세상에서 가장 어려운 일 중 하나입니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p0-0">Kerslake conceptualized Athleta as a premier women&#x27;s multichannel sports retailer offering a limited selection of top products across a wide variety of sports and an exceptional level of customer service.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p0-0">Kerslake는 Athleta를 다양한 스포츠에 걸쳐 엄선된 최상위 제품과 탁월한 수준의 고객 서비스를 제공하는 프리미엄 여성 멀티채널 스포츠 리테일러로 구상했다.</span></p></div>
 </div>
-
+<div class="section-divider">Channel Strategy / 채널 전략</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="11857">I know that a lot of companies took the money and then privately decided to do what they wanted with it. It sounds ridiculous to turn down $10 million when you really need it, but I wanted to build a company with integrity. So, we stuck to our guns, retained control of the company, and raised a lot less capital. Looking back, I think we made the right decision because competitors like FogDog burned through tens of millions and then closed their doors.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="33794">많은 기업들이 그 돈을 받은 뒤 뒤에서는 자신들이 원하는 방식대로 운영했다는 것을 압니다. 정말 필요한 상황에서 1,000만 달러를 거절하는 게 말이 안 되는 것처럼 들리지만, 저는 진정성 있는 회사를 만들고 싶었습니다. 그래서 뜻을 굽히지 않고 경영권을 지켰으며, 훨씬 적은 자본을 조달했습니다. 돌이켜보면 옳은 결정이었다고 생각합니다 — FogDog 같은 경쟁사들이 수천만 달러를 소진하고 문을 닫았으니까요.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p0-0">Athleta was launched as a multichannel company serving customers through the mail-order and online channels.</span><span class="sent" data-sid="s6-p0-1"> The company planned to launch retail stores in 2003 after growing its expertise in the women&#x27;s sporting goods market.</span><span class="sent" data-sid="s6-p0-2"> In 2001, Athleta derived 70% of total revenue from its direct- mail catalogs and 30% of revenues from the Athleta.com Web site. While many experts were concerned that e-commerce cannibalized other channels, Athleta&#x27;s management team believed that offering consumers a wide range of choices fostered stronger customer relationships and buying patterns.</span><span class="sent" data-sid="s6-p0-3"> A study on purchasing behavior found that catalog shoppers who visited a retailer&#x27;s Web site spent 8% more per order and ordered 11% more frequently from the catalog.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p0-0">Athleta는 우편 주문(카탈로그)과 온라인 채널을 통해 고객을 서비스하는 멀티채널 기업으로 출발했다.</span><span class="sent" data-sid="s6-p0-1"> 여성 스포츠 용품 시장에서 전문성을 키운 뒤 2003년에 오프라인 매장을 출점할 계획이었다.</span><span class="sent" data-sid="s6-p0-2"> 2001년 기준으로 Athleta 전체 매출의 70%는 카탈로그에서, 30%는 Athleta.com 웹사이트에서 발생했다. 많은 전문가들이 e커머스가 다른 채널의 매출을 잠식한다고 우려했지만, Athleta 경영진은 고객이 여러 채널을 선택할 수 있는 환경이 오히려 더 강한 고객 관계와 구매 패턴을 형성한다고 믿었다.</span><span class="sent" data-sid="s6-p0-3"> 한 구매 행동 연구에 따르면, 리테일러의 웹사이트를 방문한 카탈로그 고객은 주문당 8% 더 많은 금액을 지출하고, 카탈로그 주문 빈도 또한 11% 높았다.</span></p></div>
 </div>
-
+<div class="section-divider">Product / 제품</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="26056">While Kerslake set out to raise $2.2 million, he closed Athleta’s first external round of $1.2 million from angel investors at a premoney valuation of $6.8 million in March 1999. (See Exhibit 3 for Athleta’s historical financial statements.) Armed with additional capital, Kerslake set out to begin manufacturing and selling Athleta private-label sportswear and hiring additional customer service staff. He recalled:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="47694">목표액 220만 달러를 목표로 했지만, 결국 Kerslake는 1999년 3월 전 자본 가치(pre-money valuation) 680만 달러 기준으로 엔젤 투자자들로부터 첫 외부 라운드 120만 달러를 마무리했다(Athleta의 과거 재무제표는 Exhibit 3 참조). 추가 자본을 확보한 Kerslake는 Athleta 프라이빗 라벨 스포츠웨어의 제조·판매와 고객 서비스 인력 채용에 나섰다. 그는 이렇게 회상했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s7-p0-0">The Athleta product line was sourced from Athleta Essentials —a private-label line of bodywear and technical apparel—and high-quality producers including Patagonia, Adidas, Pearl Izumi, Marmot, Hind, and Sugoi.</span><span class="sent" data-sid="s7-p0-1"> Kerslake explained the philosophy driving the Athleta private-label line:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s7-p0-0">Athleta의 제품 라인은 자체 개발한 프라이빗 라벨(PB) 바디웨어·테크니컬 어패럴 브랜드인 &#x27;Athleta Essentials&#x27;와 Patagonia, Adidas, Pearl Izumi, Marmot, Hind, Sugoi 등 고품질 제조사 제품으로 구성됐다.</span><span class="sent" data-sid="s7-p0-1"> Kerslake는 Athleta 프라이빗 라벨 라인의 철학을 이렇게 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="14314">Not having enough capital is really tough. We have always been really, really prudent with money —we watch every single penny. The problem with too little capital is that you have to think about the “here and now.” You make cash-oriented decisions as opposed to long-term decisions. We haven&#x27;t had enough capital to build a company the right way, so we have built it by any means possible. It&#x27;s been a real challenge.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="13376">자본이 부족하다는 것은 정말 힘든 일입니다. 저희는 항상 돈에 매우 신중했습니다 — 한 푼 한 푼을 지켜봤죠. 자본이 너무 부족하면 &#x27;지금 당장&#x27;만 생각하게 됩니다. 장기적 결정이 아닌 현금 중심의 결정을 내리게 되는 것입니다. 제대로 된 방식으로 회사를 키울 만큼 자본이 충분하지 않았기에, 가능한 모든 방법을 동원해 여기까지 왔습니다. 정말 힘든 도전이었습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s7-p1-0">We designed our own line of clothing because our customers were requesting items, colors, and styles that weren&#x27;t being made.</span><span class="sent" data-sid="s7-p1-1"> One of the things we heard most often was that it&#x27;s really tough to find athletic pants in tall and petite sizes.</span><span class="sent" data-sid="s7-p1-2"> We immediately seized this market opportunity by creating private-label athletic pants in hard-to-find sizes.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s7-p1-0">고객들이 시중에 없는 아이템, 색상, 스타일을 요청해서 자체 라인을 개발했습니다.</span><span class="sent" data-sid="s7-p1-1"> 가장 많이 들은 불만 중 하나가 키가 크거나 작은 체형에 맞는 운동 바지를 찾기가 정말 힘들다는 것이었어요.</span><span class="sent" data-sid="s7-p1-2"> 저희는 즉시 이 기회를 포착해 찾기 어려운 사이즈의 프라이빗 라벨 운동 바지를 출시했습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Growing the Company</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>회사 성장</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s7-p2-0">There are two models for private-label branding: either sell a knockoff of an existing product at a lower price or develop your own distinctive product.</span><span class="sent" data-sid="s7-p2-1"> Many retailers will take top-selling products to southern China where they are reverse engineered, manufactured, and then sold at a lower price.</span><span class="sent" data-sid="s7-p2-2"> We didn&#x27;t want to compete on price.</span><span class="sent" data-sid="s7-p2-3"> We wanted to manufacture products that were on par with other high-quality manufacturers.</span><span class="sent" data-sid="s7-p2-4"> While we could have chased a lot of sales by reverse engineering successful products, we didn&#x27;t want to compromise the integrity of our brand.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s7-p2-0">프라이빗 라벨 브랜딩에는 두 가지 방식이 있습니다.</span><span class="sent" data-sid="s7-p2-1"> 기존 제품의 저가 복제품을 만들거나, 아니면 독자적인 제품을 개발하거나.</span><span class="sent" data-sid="s7-p2-2"> 많은 리테일러들이 베스트셀러 제품을 중국 남부로 가져가 역설계·생산해 더 낮은 가격에 판매합니다.</span><span class="sent" data-sid="s7-p2-3"> 저희는 가격 경쟁을 원하지 않았습니다. 다른 고품질 제조사와 동등한 수준의 제품을 만들고자 했습니다.</span><span class="sent" data-sid="s7-p2-4"> 성공 제품을 역설계해 매출을 올릴 수도 있었겠지만, 브랜드의 진정성을 타협하고 싶지 않았습니다.</span></p></div>
 </div>
-
+<div class="section-divider">Target Customer / 목표 고객</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="6768">From the beginning, Kerslake focused on hiring staff that believed in the Athleta business model and shared his passion for sport. He recalled:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="22937">처음부터 Kerslake는 Athleta 비즈니스 모델을 믿고 스포츠에 대한 열정을 공유하는 직원 채용에 집중했다. 그는 이렇게 회상했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s8-p0-0">Athleta&#x27;s initial target customers were women between the ages of 18 and 50 with a college education and average household incomes greater than $80,000.</span><span class="sent" data-sid="s8-p0-1"> They were also physically active and committed to engaging in regular exercise.</span><span class="sent" data-sid="s8-p0-2"> They had busy lifestyles and therefore sought alternatives to shopping in traditional retail outlets.</span><span class="sent" data-sid="s8-p0-3"> Finally, they usually bought high-quality merchandise — even if they had to spend more. Kerslake explained:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s8-p0-0">Athleta의 초기 목표 고객은 18~50세의 대졸 여성으로, 가구 평균 소득이 8만 달러 이상이었다.</span><span class="sent" data-sid="s8-p0-1"> 이들은 신체 활동을 중시하며 규칙적인 운동을 생활화했고, 바쁜 라이프스타일로 인해 일반 리테일 매장 대신 대안적인 쇼핑 방식을 선호했다.</span><span class="sent" data-sid="s8-p0-2"> 또한 필요하다면 더 많은 돈을 지불하더라도 고품질 제품을 구매하는 성향을 가졌다.</span><span class="sent" data-sid="s8-p0-3"> Kerslake는 이렇게 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51895">Your employees are critical —especially when there is a large gap between what you aspire to do and what you can afford to do. The only way to bridge the gap is through sweat, hard work, and sheer will. We employ athletes who understand the magic of sport—the way going, for a run or a bike ride can take you into a completely different realm. Our employees want to help cultivate new and existing athletes. For example, Ellen Krimmel is a former professional athlete who runs our customer service group. She has an enormous will—she would damn near kill herself to help Athleta succeed. There is a downside to such a high level of employee commitment — you don’t want your staff to burn out. Every day, I think long and hard about what we need to do in order to attract and retain extraordinary people like Ellen.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="28175">직원들이 정말 중요합니다 — 특히 지향하는 바와 실제로 할 수 있는 것 사이에 큰 간극이 있을 때는 더욱 그렇습니다. 그 간극을 메울 수 있는 유일한 방법은 땀과 노력, 그리고 강인한 의지뿐입니다. 저희는 스포츠의 마법을 이해하는 운동선수 직원들을 고용합니다 — 달리기나 자전거 타기가 완전히 다른 세계로 데려다 준다는 것을요. 저희 직원들은 신규·기존 선수 모두를 돕고자 합니다. 예를 들어 Ellen Krimmel은 전직 프로 운동선수로 고객 서비스 팀을 이끌고 있습니다. 그녀의 의지는 대단합니다 — Athleta의 성공을 위해서라면 자신을 불사르다시피 할 사람입니다. 이처럼 높은 직원 헌신에는 단점도 있습니다 — 직원들이 번아웃될 수 있다는 점이죠. 저는 매일 Ellen 같은 특출한 인재들을 어떻게 유치하고 유지할지 깊이 고민합니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s8-p1-0">Our customers told us they didn&#x27;t have the time to dig through a giant bin of sports bras at SportMart and try to guess which bra would work best for them, or worse, have to rely on the advice of the teenage boy likely to be behind the register.</span><span class="sent" data-sid="s8-p1-1"> They wanted to shop in an environment with a well-organized selection of products and knowledgeable staff that were easily accessible.</span><span class="sent" data-sid="s8-p1-2"> We listened carefully when they described their lifestyles and their biggest problems —and then built a company that could resolve them.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s8-p1-0">고객들이 저희에게 말했습니다 — SportMart의 거대한 스포츠 브라 바구니를 뒤지며 어떤 제품이 자신에게 맞을지 감으로 골라야 하거나, 더 나쁘게는 계산대 뒤에 서 있는 십대 남직원의 조언에 의존해야 하는 상황은 원하지 않는다고요.</span><span class="sent" data-sid="s8-p1-1"> 그들은 잘 정리된 상품 진열과 쉽게 접근할 수 있는 전문 직원이 있는 환경에서 쇼핑하고 싶어했습니다.</span><span class="sent" data-sid="s8-p1-2"> 저희는 고객들의 라이프스타일과 가장 큰 불편 사항을 귀 기울여 듣고, 그 문제를 해결하는 회사를 만들었습니다.</span></p></div>
 </div>
-
+<div class="section-divider">Brand / 브랜드</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51819">Kerslake also described Athleta’s teamwork ethic:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="18611">Kerslake는 Athleta의 팀워크 윤리에 대해서도 이야기했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s9-p0-0">The Athleta brand was designed to communicate an understanding of and respect for the importance of sports and athletics in women&#x27;s lives.</span><span class="sent" data-sid="s9-p0-1"> As such, the company&#x27;s catalogs featured fit, healthy, athletic women on its pages.</span><span class="sent" data-sid="s9-p0-2"> In addition, Athleta sought to educate its customers during the sales process.</span><span class="sent" data-sid="s9-p0-3"> As such, Athleta&#x27;s customer service staff were carefully selected and then trained to provide accurate information, give thoughtful advice, and understand the particular needs of women vis-a-vis the fit, performance, and comfort of sportswear.</span><span class="sent" data-sid="s9-p0-4"> Athleta also employed an unusual practice in its sales department —it did not set sales goals around individual items, so sales staff could focus on finding the best product for each customer.</span><span class="sent" data-sid="s9-p0-5"> The Athleta brand represented a belief in building lasting customer relationships based on integrity and trust.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s9-p0-0">Athleta 브랜드는 여성의 삶에서 스포츠와 운동이 갖는 중요성을 이해하고 존중하는 메시지를 전달하도록 설계됐다.</span><span class="sent" data-sid="s9-p0-1"> 카탈로그에는 건강하고 활동적인 실제 운동선수 여성들의 모습이 담겼다.</span><span class="sent" data-sid="s9-p0-2"> 또한 Athleta는 판매 과정에서 고객 교육을 중시했다.</span><span class="sent" data-sid="s9-p0-3"> 고객 서비스 직원들은 엄선 후 훈련을 받아 정확한 정보를 제공하고, 스포츠웨어의 핏·기능성·착용감 측면에서 여성 고객의 특수한 요구를 이해하고 사려 깊은 조언을 건넬 수 있도록 했다.</span><span class="sent" data-sid="s9-p0-4"> 또한 Athleta는 영업 부서에 독특한 관행을 도입했다. 판매 직원에게 개별 품목별 판매 목표를 부여하지 않았다 — 직원이 각 고객에게 가장 적합한 제품을 찾아주는 데 집중할 수 있도록 하기 위해서였다.</span><span class="sent" data-sid="s9-p0-5"> Athleta 브랜드는 진정성과 신뢰를 바탕으로 고객과의 지속적인 관계를 구축하겠다는 신념을 표방했다.</span></p></div>
 </div>
-
+<div class="section-divider">Culture / 기업 문화</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="34535">Athletes have a profound understanding of what it means to be a team player. Many of our employees are former professional or college athletes who couldn&#x27;t have succeeded without teamwork. Our employees often say that corporate team-building exercises are “flaky” when compared with the team building inherent in sport. Athleta couldn&#x27;t have made it this far without employees that espouse a teamwork ethic.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="64380">운동선수들은 팀 플레이어가 무엇을 의미하는지 깊이 이해합니다. 저희 직원 중 많은 이들이 팀워크 없이는 성공할 수 없었던 전직 프로·대학 선수들입니다. 기업의 팀빌딩 활동이 스포츠에 내재된 팀빌딩에 비하면 &#x27;형식적&#x27;이라고 직원들은 종종 말합니다. Athleta는 팀워크 정신을 갖춘 직원들 없이는 여기까지 올 수 없었을 것입니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s10-p0-0">Athleta worked hard to create an exceptional culture where the employees embraced the company&#x27;s five core values.</span><span class="sent" data-sid="s10-p0-1"> The company values all stemmed from a single premise: the most important values in one&#x27;s professional life should not differ from those in one&#x27;s personal life.</span><span class="sent" data-sid="s10-p0-2"> For example, Athleta employees were encouraged to put their families first even though this occasionally resulted in employees leaving work early to pick up their child or take an animal to the vet.</span><span class="sent" data-sid="s10-p0-3"> Recognizing the importance of staying healthy, the company had built its headquarters close to an open preserve so that employees could easily go running or cycling during breaks.</span><span class="sent" data-sid="s10-p0-4"> The employee- friendly culture enabled Athleta to maintain lower-than-average turnover rates and attract top talent in key positions.</span><span class="sent" data-sid="s10-p0-5"> Finally, the open-concept Athleta office was designed to facilitate open communication and to accommodate employees, pets and, on occasion, children.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s10-p0-0">Athleta는 직원들이 회사의 5대 핵심 가치를 내면화하는 탁월한 문화를 구축하기 위해 부단히 노력했다.</span><span class="sent" data-sid="s10-p0-1"> 모든 회사 가치는 하나의 전제에서 출발했다: 직업적 삶에서 가장 중요한 가치는 개인의 삶에서의 가치와 다르지 않아야 한다는 것.</span><span class="sent" data-sid="s10-p0-2"> 예를 들어, Athleta 직원들은 가끔 아이를 데리러 일찍 퇴근하거나 반려동물을 병원에 데려가야 할 때도 가족을 우선시하도록 장려받았다.</span><span class="sent" data-sid="s10-p0-3"> 건강 유지의 중요성을 인식한 회사는 직원들이 쉬는 시간에 달리기나 사이클링을 즐길 수 있도록 오픈 공원 인근에 본사를 마련했다.</span><span class="sent" data-sid="s10-p0-4"> 이러한 직원 친화적 문화 덕분에 Athleta는 업계 평균보다 낮은 이직률을 유지하고 핵심 직책에 우수 인재를 유치할 수 있었다.</span><span class="sent" data-sid="s10-p0-5"> 오픈 컨셉으로 설계된 사무실은 열린 소통을 촉진하고, 직원과 반려동물, 때로는 자녀까지 수용할 수 있는 공간이었다.</span></p></div>
 </div>
-
+<div class="section-divider">Early Company History / 초기 회사 역사</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="7011">Between 1999 and 2001, Athleta’s business model took flight. Despite the paucity of equity capital and the challenges associated with running a retail operation, Athleta developed a loyal customer base. By 2001, Athleta had amassed nearly 152,000 customers and $18.6 million in revenues (see Table B for summary of Athleta operating results). Kerslake estimated that 22% of Athleta’s orders came from repeat customers. Management claimed that, in 2001, the Athleta catalog generated an</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="14252">1999년부터 2001년 사이, Athleta의 비즈니스 모델은 도약했다. 자기자본 부족과 리테일 운영의 어려움에도 불구하고, Athleta는 충성도 높은 고객층을 구축했다. 2001년까지 약 15만 2,000명의 고객과 1,860만 달러의 매출을 달성했다(Athleta 운영 실적 요약은 표 B 참조). Kerslake는 Athleta 주문의 22%가 재구매 고객에서 발생한다고 추정했다. 경영진에 따르면, 2001년 Athleta 카탈로그가</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p0-0">After developing the Athleta concept and performing market research on the women&#x27;s sports apparel industry, Kerslake set out to raise a seed round of financing from friends and family.</span><span class="sent" data-sid="s11-p0-1"> In June 1998, he raised a total of $769,000 and invested the money in producing the company&#x27;s first catalog, and buying lists of potential customers.</span><span class="sent" data-sid="s11-p0-2"> Athleta opened for business in June 1998.</span><span class="sent" data-sid="s11-p0-3"> Kerslake recalled the process of acquiring Athleta&#x27;s first customers:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p0-0">여성 스포츠 의류 시장 조사를 마친 Kerslake는 지인들로부터 시드 투자를 유치하기 위해 나섰다.</span><span class="sent" data-sid="s11-p0-1"> 1998년 6월 총 76만 9,000달러를 조달해 회사 최초의 카탈로그 제작과 잠재 고객 리스트 구매에 투자했다.</span><span class="sent" data-sid="s11-p0-2"> Athleta는 1998년 6월 영업을 시작했다.</span><span class="sent" data-sid="s11-p0-3"> Kerslake는 첫 고객 확보 과정을 이렇게 회상했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="43205">average response rate of 6.0%° and an average order size of $128,° as compared to industry standards of 3.6% and $100, respectively.” Kerslake believed that the company’s operating results proved the basic business model and demonstrated the company’s capacity to succeed in the women’s sportswear industry. So, Kerslake decided to raise another round of equity in order to take the company to the next stage of development.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="4430">평균 응답률 6.0%, 평균 주문 금액 128달러를 기록했는데, 이는 업계 평균인 3.6%, 100달러를 크게 웃도는 수치였다. Kerslake는 이러한 운영 성과가 핵심 비즈니스 모델의 타당성을 입증하고, 여성 스포츠웨어 시장에서 회사가 성공할 수 있는 역량을 보여준다고 확신했다. 이에 Kerslake는 회사를 다음 성장 단계로 이끌기 위해 추가 자기자본 조달을 결정했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p1-0">There are three ways to rent names: you can exchange names with a database company if you have a house file with your own customer names; you can pay a large list compiler such as Abacus or Z-24 for names; or you can pay another catalog company with a similar demographic for their names.</span><span class="sent" data-sid="s11-p1-1"> Initially, we purchased lists from a database company.</span><span class="sent" data-sid="s11-p1-2"> We were extremely lucky because our first batch of 93,500 catalogs gamered a 2.8% response rate.</span><span class="sent" data-sid="s11-p1-3"> Normally, acquiring customers through purchased lists is a difficult science—somehow, we managed to send catalogs to the right people.</span><span class="sent" data-sid="s11-p1-4"> By the end of 1999, our house file included 19,800 names of actual customers — most of whom had become repeat customers.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p1-0">고객 이름을 확보하는 방법은 세 가지입니다: 자체 고객 데이터베이스가 있다면 데이터베이스 회사와 이름을 교환하거나, Abacus나 Z-24 같은 대형 리스트 컴파일러에게 대금을 지불하거나, 유사한 인구통계를 가진 다른 카탈로그 회사에게서 이름을 구매하는 것이죠.</span><span class="sent" data-sid="s11-p1-1"> 처음에는 데이터베이스 회사에서 리스트를 구입했습니다.</span><span class="sent" data-sid="s11-p1-2"> 정말 운이 좋았던 것이, 첫 번째 카탈로그 9만 3,500부가 2.8%의 응답률을 기록했습니다.</span><span class="sent" data-sid="s11-p1-3"> 일반적으로 구매 리스트를 통한 고객 확보는 어려운 일이지만, 저희는 어찌된 일인지 딱 맞는 사람들에게 카탈로그를 보냈습니다.</span><span class="sent" data-sid="s11-p1-4"> 1999년 말까지 자체 데이터베이스에는 실제 고객 1만 9,800명의 이름이 쌓였고, 대부분이 재구매 고객이 됐습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="41080">Table B Summary of Athleta Actual and Projected Operating Results</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>표 B: Athleta 실적 및 예상 영업 실적 요약</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p2-0">However, at the end of 1998, nearly all of the seed capital Kerslake had raised was exhausted.</span><span class="sent" data-sid="s11-p2-1"> Though most of Athleta&#x27;s investors were ardent believers in the business model, very few could participate in a subsequent round.</span><span class="sent" data-sid="s11-p2-2"> After reviewing his options, Kerslake decided to raise outside equity: &quot;You can only finance your company in a few ways: you can raise outside equity, you can raise debt, or you can stretch the terms offered by your suppliers.</span><span class="sent" data-sid="s11-p2-3"> Stretching supplier terms is an extremely bad business strategy, and raising a large amount of debt was too difficult—so we had to raise more equity.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p2-0">그러나 1998년 말, Kerslake가 조달한 시드 자본은 거의 바닥났다.</span><span class="sent" data-sid="s11-p2-1"> 대부분의 초기 투자자들은 비즈니스 모델을 굳게 믿었지만, 후속 라운드에 참여할 수 있는 이는 극히 드물었다.</span><span class="sent" data-sid="s11-p2-2"> Kerslake는 선택지를 검토한 끝에 외부 자기자본 조달을 결정했다: &quot;회사에 자금을 조달하는 방법은 몇 가지뿐입니다: 외부 자기자본 조달, 부채 조달, 또는 공급업체 지급 기한 연장.</span><span class="sent" data-sid="s11-p2-3"> 공급업체 기한을 연장하는 것은 극히 나쁜 전략이고, 대규모 부채 조달은 너무 어려웠습니다 — 그래서 자기자본을 더 조달해야 했습니다.&quot;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="43961">1999 2000 2001 Est. 2002* Revenue (millions) $17 $9.7 $18.6 $25.9 Customer orders 15,670 81,778 144,375 195,184 Average order size $104.63 $118.39 $128.61 $132.70 Athleta’s house file 19,800 77,500 152,000 231,000</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="38622">1999   2000   2001   예상 2002*   매출(백만) $1.7   $9.7   $18.6   $25.9   고객 주문수 15,670   81,778   144,375   195,184   평균 주문 금액 $104.63   $118.39   $128.61   $132.70   자체 고객 데이터베이스 19,800   77,500   152,000   231,000</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p3-0">In early 1999, Kerslake approached a large number of venture capital firms to raise an additional $2.2 million in equity.</span><span class="sent" data-sid="s11-p3-1"> He recalled:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p3-0">1999년 초, Kerslake는 추가 자기자본 220만 달러를 유치하기 위해 다수의 벤처 캐피탈 회사를 접촉했다.</span><span class="sent" data-sid="s11-p3-1"> 그는 당시를 이렇게 회상했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="29995">Source: Company. “Estimated for the 12 months ending May 31, 2002. Revenues represent merchandise sales plus shipping income.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="1201">출처: 회사 자료. *2002년 5월 31일 종료 12개월 예상치. 매출은 상품 판매액과 배송 수입의 합계.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p4-0">To begin, there were few venture capital firms focused on consumer commerce.</span><span class="sent" data-sid="s11-p4-1"> When we walked into their offices and asked for $2.2 million to expand our catalog business, they laughed.</span><span class="sent" data-sid="s11-p4-2"> They told us that nascent, low-tech consumer companies were unlikely to be funded in 1999.</span><span class="sent" data-sid="s11-p4-3"> Most venture capitalists were investing in dot-coms, not mail-order businesses. We were offered $10 million if we converted our business model to &quot;Athleta.com.&quot; From our perspective, the venture capitalists were narrowly focused on channel instead of the overall brand or business model.</span><span class="sent" data-sid="s11-p4-4"> It is the hardest thing in the world to look somebody in the eye and turn down $10 million, especially when you aren&#x27;t sure you have enough capital to make it to the next quarter.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p4-0">당시 소비자 커머스에 집중하는 VC 회사는 거의 없었습니다.</span><span class="sent" data-sid="s11-p4-1"> 그들 사무실에 찾아가 카탈로그 사업 확장을 위해 220만 달러를 요청하자 그들은 비웃었습니다.</span><span class="sent" data-sid="s11-p4-2"> 초기 단계의 저기술 소비재 기업은 1999년에 투자받기 어렵다는 게 이유였습니다.</span><span class="sent" data-sid="s11-p4-3"> 당시 대부분의 VC들은 도트컴 기업에 투자하고 있었지, 우편 주문 비즈니스에는 관심이 없었습니다.</span><span class="sent" data-sid="s11-p4-4"> 저희 비즈니스 모델을 &quot;Athleta.com&quot;으로 전환하는 조건으로 1,000만 달러를 제안받기도 했습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Plans for Growth</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>성장 계획</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p5-0">I know that a lot of companies took the money and then privately decided to do what they wanted with it. It sounds ridiculous to turn down $10 million when you really need it, but I wanted to build a company with integrity. So, we stuck to our guns, retained control of the company, and raised a lot less capital. Looking back, I think we made the right decision because competitors like FogDog burned through tens of millions and then closed their doors.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p5-0">그들의 관점에서 VC들은 전체 브랜드나 비즈니스 모델이 아니라 채널에만 좁게 집중하고 있었습니다. 정말 필요한 자금이 부족한 상황에서 누군가의 눈을 똑바로 바라보며 1,000만 달러를 거절하는 것은 세상에서 가장 어려운 일 중 하나입니다. 많은 기업들이 그 돈을 받은 뒤 뒤에서는 자신들이 원하는 방식대로 운영했다는 것을 압니다. 정말 필요한 상황에서 1,000만 달러를 거절하는 게 말이 안 되는 것처럼 들리지만, 저는 진정성 있는 회사를 만들고 싶었습니다. 그래서 뜻을 굽히지 않고 경영권을 지켰으며, 훨씬 적은 자본을 조달했습니다. 돌이켜보면 옳은 결정이었다고 생각합니다 — FogDog 같은 경쟁사들이 수천만 달러를 소진하고 문을 닫았으니까요.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="52560">In early 2002, Kerslake and his senior management team developed a strategic growth plan for the company (see Exhibit 4 for Athleta’s projected financial statements). They articulated the goals and capital requirements to enable Athleta to become a leading, multichannel women’s sports company (see Table C for Athleta’s detailed financing requirements).</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="61127">2002년 초, Kerslake와 경영진은 회사의 전략적 성장 계획을 수립했다(Athleta의 재무 예측은 Exhibit 4 참조). 이들은 Athleta를 선도적인 멀티채널 여성 스포츠 기업으로 발전시키기 위한 목표와 자본 요건을 구체화했다(세부 자금 조달 요건은 표 C 참조).</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p6-0">While Kerslake set out to raise $2.2 million, he closed Athleta&#x27;s first external round of $1.2 million from angel investors at a premoney valuation of $6.8 million in March 1999. (See Exhibit 3 for Athleta&#x27;s historical financial statements.) Armed with additional capital, Kerslake set out to begin manufacturing and selling Athleta private-label sportswear and hiring additional customer service staff.</span><span class="sent" data-sid="s11-p6-1"> He recalled:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p6-0">목표액 220만 달러를 목표로 했지만, 결국 Kerslake는 1999년 3월 전 자본 가치(pre-money valuation) 680만 달러 기준으로 엔젤 투자자들로부터 첫 외부 라운드 120만 달러를 마무리했다(Athleta의 과거 재무제표는 Exhibit 3 참조). 추가 자본을 확보한 Kerslake는 Athleta 프라이빗 라벨 스포츠웨어의 제조·판매와 고객 서비스 인력 채용에 나섰다.</span><span class="sent" data-sid="s11-p6-1"> 그는 이렇게 회상했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>TableC Summary of Athleta Financing Requirements</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>표 C: Athleta 자금 조달 요건 요약</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s11-p7-0">Not having enough capital is really tough.</span><span class="sent" data-sid="s11-p7-1"> We have always been really, really prudent with money —we watch every single penny.</span><span class="sent" data-sid="s11-p7-2"> The problem with too little capital is that you have to think about the &quot;here and now.&quot;</span><span class="sent" data-sid="s11-p7-3"> You make cash-oriented decisions as opposed to long-term decisions.</span><span class="sent" data-sid="s11-p7-4"> We haven&#x27;t had enough capital to build a company the right way, so we have built it by any means possible.</span><span class="sent" data-sid="s11-p7-5"> It&#x27;s been a real challenge.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s11-p7-0">자본이 부족하다는 것은 정말 힘든 일입니다.</span><span class="sent" data-sid="s11-p7-1"> 저희는 항상 돈에 매우 신중했습니다 — 한 푼 한 푼을 지켜봤죠.</span><span class="sent" data-sid="s11-p7-2"> 자본이 너무 부족하면 &#x27;지금 당장&#x27;만 생각하게 됩니다.</span><span class="sent" data-sid="s11-p7-3"> 장기적 결정이 아닌 현금 중심의 결정을 내리게 되는 것입니다.</span><span class="sent" data-sid="s11-p7-4"> 제대로 된 방식으로 회사를 키울 만큼 자본이 충분하지 않았기에, 가능한 모든 방법을 동원해 여기까지 왔습니다.</span><span class="sent" data-sid="s11-p7-5"> 정말 힘든 도전이었습니다.</span></p></div>
 </div>
-
+<div class="section-divider">Growing the Company / 회사 성장</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1151">Capital Required Area Purpose of Proceeds (M) Circulation Growth Increase annual circulation from 6.5M to 20M in 4 years $1.50 Working Capital Improve terms with suppliers/manufacturers $1.10 Infrastructure Expand offices and distribution facilities; MIS $0.28 Merchandising Private-label product expansion $0.22 Human Resources New staff in HR, merchandising, direct marketing $0.22 General Purpose Cushion $0.30 Total $3.62</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="17341">(카탈로그 유통 확대 $150만, 운전자본 $110만, 인프라 $28만, 상품화 $22만, 인력 $22만, 기타 $30만 — 합계 $362만)</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s12-p0-0">From the beginning, Kerslake focused on hiring staff that believed in the Athleta business model and shared his passion for sport.</span><span class="sent" data-sid="s12-p0-1"> He recalled:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s12-p0-0">처음부터 Kerslake는 Athleta 비즈니스 모델을 믿고 스포츠에 대한 열정을 공유하는 직원 채용에 집중했다.</span><span class="sent" data-sid="s12-p0-1"> 그는 이렇게 회상했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="16324">Source: Company.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="39794">출처: 회사 자료.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s12-p1-0">Your employees are critical —especially when there is a large gap between what you aspire to do and what you can afford to do.</span><span class="sent" data-sid="s12-p1-1"> The only way to bridge the gap is through sweat, hard work, and sheer will.</span><span class="sent" data-sid="s12-p1-2"> We employ athletes who understand the magic of sport—the way going, for a run or a bike ride can take you into a completely different realm.</span><span class="sent" data-sid="s12-p1-3"> Our employees want to help cultivate new and existing athletes.</span><span class="sent" data-sid="s12-p1-4"> For example, Ellen Krimmel is a former professional athlete who runs our customer service group.</span><span class="sent" data-sid="s12-p1-5"> She has an enormous will—she would damn near kill herself to help Athleta succeed.</span><span class="sent" data-sid="s12-p1-6"> There is a downside to such a high level of employee commitment — you don&#x27;t want your staff to burn out.</span><span class="sent" data-sid="s12-p1-7"> Every day, I think long and hard about what we need to do in order to attract and retain extraordinary people like Ellen.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s12-p1-0">직원들이 정말 중요합니다 — 특히 지향하는 바와 실제로 할 수 있는 것 사이에 큰 간극이 있을 때는 더욱 그렇습니다.</span><span class="sent" data-sid="s12-p1-1"> 그 간극을 메울 수 있는 유일한 방법은 땀과 노력, 그리고 강인한 의지뿐입니다.</span><span class="sent" data-sid="s12-p1-2"> 저희는 스포츠의 마법을 이해하는 운동선수 직원들을 고용합니다 — 달리기나 자전거 타기가 완전히 다른 세계로 데려다 준다는 것을요.</span><span class="sent" data-sid="s12-p1-3"> 저희 직원들은 신규·기존 선수 모두를 돕고자 합니다.</span><span class="sent" data-sid="s12-p1-4"> 예를 들어 Ellen Krimmel은 전직 프로 운동선수로 고객 서비스 팀을 이끌고 있습니다.</span><span class="sent" data-sid="s12-p1-5"> 그녀의 의지는 대단합니다 — Athleta의 성공을 위해서라면 자신을 불사르다시피 할 사람입니다.</span><span class="sent" data-sid="s12-p1-6"> 이처럼 높은 직원 헌신에는 단점도 있습니다 — 직원들이 번아웃될 수 있다는 점이죠.</span><span class="sent" data-sid="s12-p1-7"> 저는 매일 Ellen 같은 특출한 인재들을 어떻게 유치하고 유지할지 깊이 고민합니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51842">1. Increase catalog circulation to acquire a larger base of customers</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="58614">1. 카탈로그 유통 확대를 통한 고객 기반 확장</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s12-p2-0">Kerslake also described Athleta&#x27;s teamwork ethic:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s12-p2-0">Kerslake는 Athleta의 팀워크 윤리에 대해서도 이야기했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="13525">‘The catalog business depended heavily upon customer response rates to mailings. In general, it cost Athleta approximately $0.60 to print and mail each catalog. Athleta sought to achieve a 1.8% response rate on prospects® and an average order size of $135.00 in order to break even (given 2002 projected margins and fulfillment costs). By 2003, Athleta aimed to grow its catalog circulation from 6.5 million to 20 million. Management believed there were at least 20 million customers in Athleta’s target market.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="41054">카탈로그 비즈니스는 우편 발송에 대한 고객 응답률에 크게 의존했다. Athleta의 카탈로그 1부당 인쇄·발송 비용은 약 0.60달러였으며, 2002년 예상 마진과 이행 비용을 감안할 때 손익분기점을 달성하려면 신규 고객 응답률 1.8%, 평균 주문 금액 135달러를 목표로 해야 했다. 2003년까지 카탈로그 유통 부수를 650만 부에서 2,000만 부로 늘릴 계획이었으며, 경영진은 Athleta의 목표 시장 내 잠재 고객이 최소 2,000만 명 이상이라고 추산했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s12-p3-0">Athletes have a profound understanding of what it means to be a team player. Many of our employees are former professional or college athletes who couldn&#x27;t have succeeded without teamwork. Our employees often say that corporate team-building exercises are &quot;flaky&quot; when compared with the team building inherent in sport. Athleta couldn&#x27;t have made it this far without employees that espouse a teamwork ethic.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s12-p3-0">운동선수들은 팀 플레이어가 무엇을 의미하는지 깊이 이해합니다. 저희 직원 중 많은 이들이 팀워크 없이는 성공할 수 없었던 전직 프로·대학 선수들입니다. 기업의 팀빌딩 활동이 스포츠에 내재된 팀빌딩에 비하면 &#x27;형식적&#x27;이라고 직원들은 종종 말합니다. Athleta는 팀워크 정신을 갖춘 직원들 없이는 여기까지 올 수 없었을 것입니다. 1999년부터 2001년 사이, Athleta의 비즈니스 모델은 도약했다. 자기자본 부족과 리테일 운영의 어려움에도 불구하고, Athleta는 충성도 높은 고객층을 구축했다. 2001년까지 약 15만 2,000명의 고객과 1,860만 달러의 매출을 달성했다(Athleta 운영 실적 요약은 표 B 참조). Kerslake는 Athleta 주문의 22%가 재구매 고객에서 발생한다고 추정했다. 경영진에 따르면, 2001년 Athleta 카탈로그가</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="39074">2. Improve supplier terms</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="56518">2. 공급업체 결제 조건 개선</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s12-p4-0">Between 1999 and 2001, Athleta&#x27;s business model took flight. Despite the paucity of equity capital and the challenges associated with running a retail operation, Athleta developed a loyal customer base. By 2001, Athleta had amassed nearly 152,000 customers and $18.6 million in revenues (see Table B for summary of Athleta operating results). Kerslake estimated that 22% of Athleta&#x27;s orders came from repeat customers. Management claimed that, in 2001, the Athleta catalog generated an average response rate of 6.0%° and an average order size of $128,° as compared to industry standards of 3.6% and $100, respectively.&quot; Kerslake believed that the company&#x27;s operating results proved the basic business model and demonstrated the company&#x27;s capacity to succeed in the women&#x27;s sportswear industry. So, Kerslake decided to raise another round of equity in order to take the company to the next stage of development.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s12-p4-0">평균 응답률 6.0%, 평균 주문 금액 128달러를 기록했는데, 이는 업계 평균인 3.6%, 100달러를 크게 웃도는 수치였다. Kerslake는 이러한 운영 성과가 핵심 비즈니스 모델의 타당성을 입증하고, 여성 스포츠웨어 시장에서 회사가 성공할 수 있는 역량을 보여준다고 확신했다. 이에 Kerslake는 회사를 다음 성장 단계로 이끌기 위해 추가 자기자본 조달을 결정했다.</span></p></div>
 </div>
-
+<div class="section-divider">Table B Summary of Athleta Actual and Projected Operating Results / 표 B: Athleta 실적 및 예상 영업 실적 요약</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="36025">Beginning in 2000, Athleta paid its suppliers on an extended basis, forgoing early-payment discounts as large as 8% of cost of goods sold (COGS). While extending supplier payments enabled Athleta to stretch its working capital, the company estimated that it could reduce COGS by 2% through early payment. In addition, the company’s suboptimal inventory management resulted in $11.00 for each back order and an annual inventory turnover of four compared with the industry average of five. Athleta required $1.1 million for working capital in order to improve terms with suppliers and reduce inventory management costs.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="16663">2000년부터 Athleta는 공급업체 대금을 연장된 조건으로 지급해, 매출원가(COGS)의 최대 8%에 달하는 조기 결제 할인 혜택을 포기해왔다. 공급업체 결제를 연장함으로써 운전자본을 확보할 수 있었지만, 조기 결제 시 COGS를 2% 절감할 수 있었다. 또한 최적화되지 않은 재고 관리로 인해 미납주문(back order)당 11달러의 비용이 발생하고, 연간 재고 회전율은 업계 평균 5회 대비 4회에 그쳤다. 공급업체 조건 개선과 재고 관리 비용 절감을 위해 110만 달러의 운전자본이 필요했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s13-p0-0">1999 2000 2001 Est. 2002* Revenue (millions) $17 $9.7 $18.6 $25.9 Customer orders 15,670 81,778 144,375 195,184 Average order size $104.63 $118.39 $128.61 $132.70 Athleta&#x27;s house file 19,800 77,500 152,000 231,000</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s13-p0-0">1999   2000   2001   예상 2002*   매출(백만) $1.7   $9.7   $18.6   $25.9   고객 주문수 15,670   81,778   144,375   195,184   평균 주문 금액 $104.63   $118.39   $128.61   $132.70   자체 고객 데이터베이스 19,800   77,500   152,000   231,000</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="13921">3. Transfer headquarters and improve management information systems (MIS)</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="20707">3. 본사 이전 및 경영정보시스템(MIS) 개선</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s13-p1-0">Source: Company. &quot;Estimated for the 12 months ending May 31, 2002.</span><span class="sent" data-sid="s13-p1-1"> Revenues represent merchandise sales plus shipping income.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s13-p1-0">출처: 회사 자료. *2002년 5월 31일 종료 12개월 예상치.</span><span class="sent" data-sid="s13-p1-1"> 매출은 상품 판매액과 배송 수입의 합계.</span></p></div>
 </div>
-
+<div class="section-divider">Plans for Growth / 성장 계획</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="60620">Due to Athleta’s rapid growth, it had outgrown its current headquarters and 9,000-square-foot distribution center. Athleta also needed to upgrade its MIS in order to provide more detailed financial reporting for each distribution channel. Athleta required $280,000 for moving expenses and upgrading the company’s systems.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="15275">Athleta의 급격한 성장으로 인해 현재 본사와 약 836㎡(9,000평방피트) 규모의 물류 센터가 이미 포화 상태에 달했다. 또한 각 유통 채널별 세부 재무 보고를 위한 MIS 고도화도 필요했다. 이전 비용과 시스템 업그레이드에 28만 달러가 필요했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s14-p0-0">In early 2002, Kerslake and his senior management team developed a strategic growth plan for the company (see Exhibit 4 for Athleta&#x27;s projected financial statements).</span><span class="sent" data-sid="s14-p0-1"> They articulated the goals and capital requirements to enable Athleta to become a leading, multichannel women&#x27;s sports company (see Table C for Athleta&#x27;s detailed financing requirements).</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s14-p0-0">2002년 초, Kerslake와 경영진은 회사의 전략적 성장 계획을 수립했다(Athleta의 재무 예측은 Exhibit 4 참조).</span><span class="sent" data-sid="s14-p0-1"> 이들은 Athleta를 선도적인 멀티채널 여성 스포츠 기업으로 발전시키기 위한 목표와 자본 요건을 구체화했다(세부 자금 조달 요건은 표 C 참조).</span></p></div>
 </div>
-
+<div class="section-divider">Table C Summary of Athleta Financing Requirements / 표 C: Athleta 자금 조달 요건 요약</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="4246">4. Expand Athleta’s private-label line</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="7296">4. 프라이빗 라벨 라인 확장</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p0-0">Capital Required Area Purpose of Proceeds (M) Circulation Growth Increase annual circulation from 6.5M to 20M in 4 years $1.50 Working Capital Improve terms with suppliers/manufacturers $1.10 Infrastructure Expand offices and distribution facilities; MIS $0.28 Merchandising Private-label product expansion $0.22 Human Resources New staff in HR, merchandising, direct marketing $0.22 General Purpose Cushion $0.30 Total $3.62</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p0-0">(카탈로그 유통 확대 $150만, 운전자본 $110만, 인프라 $28만, 상품화 $22만, 인력 $22만, 기타 $30만 — 합계 $362만)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="38342">Since its inception, Athleta’s private-label brand filled a niche in the women’s sportswear market. Athleta’s private-label line of clothing expanded from 7% of product assortment in 1998 to 28% of product assortment in 2002. In addition, Athleta’s private-label line frequently outsold the best products from brands such as Patagonia, Adidas, and Sugoi. Gross margins on Athleta’s private- label line were 20% higher than those of its branded manufacturers. Athleta projected that by 2005, 40%-45% of total assortment and 65% of total sales would stem from private-label product sales. Athleta required $220,000 to enhance its private-label business.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="31040">창업 이래 Athleta의 프라이빗 라벨 브랜드는 여성 스포츠웨어 시장의 틈새를 공략해왔다. 프라이빗 라벨 라인의 상품 구성 비중은 1998년 7%에서 2002년 28%로 확대됐다. 또한 Athleta의 프라이빗 라벨 라인은 Patagonia, Adidas, Sugoi 등 유명 브랜드의 베스트셀러를 자주 능가했다. 프라이빗 라벨의 매출 총이익률은 외부 브랜드 대비 20% 포인트 높았다. 2005년까지 전체 상품 구성의 40~45%, 총 매출의 65%를 프라이빗 라벨에서 창출하는 것이 목표였다. 프라이빗 라벨 사업 강화를 위해 22만 달러가 필요했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p1-0">Source: Company.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p1-0">출처: 회사 자료.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="56854">5. Team expansion and marketing initiatives</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="4413">5. 팀 확충 및 마케팅 이니셔티브</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p2-0">1.</span><span class="sent" data-sid="s15-p2-1"> Increase catalog circulation to acquire a larger base of customers</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p2-0">1.</span><span class="sent" data-sid="s15-p2-1"> 카탈로그 유통 확대를 통한 고객 기반 확장</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="61158">Finally, Athleta intended to hire new staff and invest in new marketing initiatives. To begin, Athleta sought to selectively add to its senior management team. In addition, at least 20 new employees were required in the customer service, distribution, and Web development departments. Athleta also planned to initiate several new marketing programs, including 1) increased editorial coverage/product placement, 2) grass-roots marketing programs and sponsorships, 3) strategic partnerships and comarketing agreements, and 4) co-op advertising. Kerslake estimated that $220,000 was required to grow the Athleta team and to invest in marketing initiatives.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="33424">마지막으로, Athleta는 신규 인력 채용과 새로운 마케팅 프로그램에 투자할 계획이었다. 경영진 팀을 선별적으로 강화하고, 고객 서비스·물류·웹 개발 부문에 최소 20명의 신규 직원을 채용할 예정이었다. 또한 ①에디토리얼 커버리지·제품 노출 확대, ②풀뿌리 마케팅 프로그램 및 스폰서십, ③전략적 파트너십·공동 마케팅 협약, ④협력 광고 등 다양한 신규 마케팅 프로그램을 추진할 계획이었다. 팀 확충 및 마케팅 이니셔티브에는 22만 달러가 필요했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p3-0">The catalog business depended heavily upon customer response rates to mailings. In general, it cost Athleta approximately $0.60 to print and mail each catalog. Athleta sought to achieve a 1.8% response rate on prospects® and an average order size of $135.00 in order to break even (given 2002 projected margins and fulfillment costs). By 2003, Athleta aimed to grow its catalog circulation from 6.5 million to 20 million. Management believed there were at least 20 million customers in Athleta&#x27;s target market.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p3-0">카탈로그 비즈니스는 우편 발송에 대한 고객 응답률에 크게 의존했다. Athleta의 카탈로그 1부당 인쇄·발송 비용은 약 0.60달러였으며, 2002년 예상 마진과 이행 비용을 감안할 때 손익분기점을 달성하려면 신규 고객 응답률 1.8%, 평균 주문 금액 135달러를 목표로 해야 했다. 2003년까지 카탈로그 유통 부수를 650만 부에서 2,000만 부로 늘릴 계획이었으며, 경영진은 Athleta의 목표 시장 내 잠재 고객이 최소 2,000만 명 이상이라고 추산했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Financing Options</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>자금 조달 옵션</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p4-0">2.</span><span class="sent" data-sid="s15-p4-1"> Improve supplier terms</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p4-0">2.</span><span class="sent" data-sid="s15-p4-1"> 공급업체 결제 조건 개선</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="65343">When Kerslake and Teno went to New York in late March 2002, Athleta had less than $330,000 in cash remaining. However, several different options emerged during their fund-raising trip to the East Coast.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="57436">2002년 3월 하순 Kerslake와 Teno가 뉴욕을 방문했을 때, Athleta의 잔여 현금은 33만 달러에 불과했다. 그러나 동부 출장 중 몇 가지 자금 조달 방안이 구체화됐다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p5-0">Beginning in 2000, Athleta paid its suppliers on an extended basis, forgoing early-payment discounts as large as 8% of cost of goods sold (COGS).</span><span class="sent" data-sid="s15-p5-1"> While extending supplier payments enabled Athleta to stretch its working capital, the company estimated that it could reduce COGS by 2% through early payment.</span><span class="sent" data-sid="s15-p5-2"> In addition, the company&#x27;s suboptimal inventory management resulted in $11.00 for each back order and an annual inventory turnover of four compared with the industry average of five.</span><span class="sent" data-sid="s15-p5-3"> Athleta required $1.1 million for working capital in order to improve terms with suppliers and reduce inventory management costs.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p5-0">2000년부터 Athleta는 공급업체 대금을 연장된 조건으로 지급해, 매출원가(COGS)의 최대 8%에 달하는 조기 결제 할인 혜택을 포기해왔다.</span><span class="sent" data-sid="s15-p5-1"> 공급업체 결제를 연장함으로써 운전자본을 확보할 수 있었지만, 조기 결제 시 COGS를 2% 절감할 수 있었다.</span><span class="sent" data-sid="s15-p5-2"> 또한 최적화되지 않은 재고 관리로 인해 미납주문(back order)당 11달러의 비용이 발생하고, 연간 재고 회전율은 업계 평균 5회 대비 4회에 그쳤다.</span><span class="sent" data-sid="s15-p5-3"> 공급업체 조건 개선과 재고 관리 비용 절감을 위해 110만 달러의 운전자본이 필요했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Venture capital</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>벤처 캐피탈</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p6-0">3.</span><span class="sent" data-sid="s15-p6-1"> Transfer headquarters and improve management information systems (MIS)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p6-0">3.</span><span class="sent" data-sid="s15-p6-1"> 본사 이전 및 경영정보시스템(MIS) 개선</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="11785">During the first quarter of 2002, the VC market continued a cyclical downturn that had started in early 2001 (see Exhibit 5 for U.S. venture capital investment trends). In particular, the consumer e-commerce industry was hit hard during the dot-com market crash, which resulted in hundreds of companies declaring bankruptcy because they could not develop a sustainable economic model and/or raise additional capital. As such, VC firms were much more cautious about investing in consumer retail business models and applied even higher discount rates to revenue projections. Though Kerslake was interested in securing a Series E round from a VC firm, he was concerned that Athleta’s projected revenues and profits were not high enough to meet the minimum standards set out by most firms. To make matters worse, consumer retail companies had fallen out of favor in the public markets, resulting in sagging valuations (see Exhibit 6 for specialty retailer comparisons). Therefore, exit options for retailers in the consumer sector were limited to being acquired or merging with another company. Kerslake explained:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="63050">2002년 1분기, VC 시장은 2001년 초부터 시작된 경기 순환적 침체를 이어가고 있었다(미국 벤처 캐피탈 투자 추이는 Exhibit 5 참조). 특히 소비자 e커머스 분야는 도트컴 버블 붕괴로 직격탄을 맞아, 지속 가능한 사업 모델 구축과 추가 자본 조달에 실패한 수백 개 기업이 파산을 선언했다. 이에 따라 VC 회사들은 소비자 리테일 비즈니스 모델에 훨씬 신중한 태도를 취하며, 매출 예측에 더 높은 할인율을 적용했다. Kerslake는 VC로부터 시리즈 E를 유치하는 방안에 관심이 있었지만, Athleta의 예상 매출과 이익이 대부분의 VC 회사들이 설정한 최소 기준에 못 미칠 것을 우려했다. 더욱이 소비자 리테일 기업들이 공개 시장에서 외면받으며 밸류에이션이 급락했고(전문 리테일러 비교는 Exhibit 6 참조), 리테일 부문의 투자 회수(exit) 수단은 피인수 또는 합병으로 제한됐다. Kerslake는 이렇게 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p7-0">Due to Athleta&#x27;s rapid growth, it had outgrown its current headquarters and 9,000-square-foot distribution center.</span><span class="sent" data-sid="s15-p7-1"> Athleta also needed to upgrade its MIS in order to provide more detailed financial reporting for each distribution channel.</span><span class="sent" data-sid="s15-p7-2"> Athleta required $280,000 for moving expenses and upgrading the company&#x27;s systems.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p7-0">Athleta의 급격한 성장으로 인해 현재 본사와 약 836㎡(9,000평방피트) 규모의 물류 센터가 이미 포화 상태에 달했다.</span><span class="sent" data-sid="s15-p7-1"> 또한 각 유통 채널별 세부 재무 보고를 위한 MIS 고도화도 필요했다.</span><span class="sent" data-sid="s15-p7-2"> 이전 비용과 시스템 업그레이드에 28만 달러가 필요했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="43058">It was really difficult to find a VC firm interested in specialty retail companies — especially one with real expertise in our sector. The firms we approached were very open with us—they told us that they invested in proven concepts, strong management teams, and aggressive growth targets. They also told us to expect a more onerous term sheet that included participation clauses, full-ratchet provisions, and cumulative dividends. The only good news was that deal flow had decreased substantially, so they were willing to move quickly when they found the right portfolio companies.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="19625">전문 리테일 기업, 특히 우리 분야에 실질적인 전문성을 갖춘 VC 회사를 찾기가 정말 어려웠습니다. 접촉한 회사들은 솔직하게 말해줬습니다 — 검증된 사업 개념, 강력한 경영진, 공격적인 성장 목표에 투자한다고요. 또한 참여 조항, 완전 래칫 조항, 누적 배당금이 포함된 더 까다로운 텀시트를 예상하라고 했습니다. 그나마 다행인 것은 딜 플로우가 크게 줄어들어, 적합한 포트폴리오 기업을 발견하면 신속하게 움직일 의향이 있다는 점이었습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p8-0">4.</span><span class="sent" data-sid="s15-p8-1"> Expand Athleta&#x27;s private-label line</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p8-0">4.</span><span class="sent" data-sid="s15-p8-1"> 프라이빗 라벨 라인 확장</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Angel investors</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>엔젤 투자자</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p9-0">Since its inception, Athleta&#x27;s private-label brand filled a niche in the women&#x27;s sportswear market.</span><span class="sent" data-sid="s15-p9-1"> Athleta&#x27;s private-label line of clothing expanded from 7% of product assortment in 1998 to 28% of product assortment in 2002.</span><span class="sent" data-sid="s15-p9-2"> In addition, Athleta&#x27;s private-label line frequently outsold the best products from brands such as Patagonia, Adidas, and Sugoi.</span><span class="sent" data-sid="s15-p9-3"> Gross margins on Athleta&#x27;s private- label line were 20% higher than those of its branded manufacturers.</span><span class="sent" data-sid="s15-p9-4"> Athleta projected that by 2005, 40%-45% of total assortment and 65% of total sales would stem from private-label product sales.</span><span class="sent" data-sid="s15-p9-5"> Athleta required $220,000 to enhance its private-label business.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p9-0">창업 이래 Athleta의 프라이빗 라벨 브랜드는 여성 스포츠웨어 시장의 틈새를 공략해왔다.</span><span class="sent" data-sid="s15-p9-1"> 프라이빗 라벨 라인의 상품 구성 비중은 1998년 7%에서 2002년 28%로 확대됐다.</span><span class="sent" data-sid="s15-p9-2"> 또한 Athleta의 프라이빗 라벨 라인은 Patagonia, Adidas, Sugoi 등 유명 브랜드의 베스트셀러를 자주 능가했다.</span><span class="sent" data-sid="s15-p9-3"> 프라이빗 라벨의 매출 총이익률은 외부 브랜드 대비 20% 포인트 높았다.</span><span class="sent" data-sid="s15-p9-4"> 2005년까지 전체 상품 구성의 40~45%, 총 매출의 65%를 프라이빗 라벨에서 창출하는 것이 목표였다.</span><span class="sent" data-sid="s15-p9-5"> 프라이빗 라벨 사업 강화를 위해 22만 달러가 필요했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="10686">By 2002, there were literally thousands of active angel investors in the US., though the crash of 2000-2001 had burned many investors and forced them to reconsider investing in private companies. While in New York, Kerslake and Teno met with a handful of angel investors whose names they had received from existing investors, employees, and VCs. Kerslake had not yet approached other potential angel investors including professional athletes, female celebrities, and owners of women’s sports teams. After meeting with a handful of angel investors, Kerslake had several concerns:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="43342">2002년, 미국에는 수천 명의 활성 엔젤 투자자들이 있었지만, 2000~2001년의 버블 붕괴가 많은 투자자들에게 상처를 남기며 비상장 기업 투자에 대한 재고를 강요했다. Kerslake와 Teno는 뉴욕 체류 중 기존 투자자·직원·VC로부터 소개받은 소수의 엔젤 투자자들과 면담을 가졌다. 프로 운동선수, 여성 유명인, 여성 스포츠팀 구단주 등 잠재적 엔젤 투자자들에게는 아직 접근하지 않은 상태였다. 몇 명의 엔젤 투자자들과 면담한 뒤, Kerslake는 몇 가지 우려 사항이 생겼다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p10-0">5.</span><span class="sent" data-sid="s15-p10-1"> Team expansion and marketing initiatives</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p10-0">5.</span><span class="sent" data-sid="s15-p10-1"> 팀 확충 및 마케팅 이니셔티브</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="16150">Because of our cash crunch, I was concerned about the time and effort required to raise equity from a group of angels. Given that most angel investors invest between $50,000 and $1 million, we would have to sell our plan to 5 or 10 or even 20 different angels in order to raise $3-$4 million. The upside is that most angel investors really appreciated our concept and business model —they wanted to be “partners” rather than just “investors” in the company.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="34735">현금 압박 상황이라 여러 엔젤로부터 자기자본을 유치하는 데 드는 시간과 노력이 걱정됐습니다. 대부분의 엔젤 투자자들이 5만~100만 달러를 투자하기 때문에, 300만~400만 달러를 모으려면 5명에서 10명, 심지어 20명의 엔젤에게 사업계획을 제시해야 합니다. 그래도 좋은 점은, 대부분의 엔젤 투자자들이 우리의 사업 개념과 비즈니스 모델에 진심으로 공감하며 단순한 &#x27;투자자&#x27;가 아닌 회사의 &#x27;파트너&#x27;가 되고자 했다는 것입니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s15-p11-0">Finally, Athleta intended to hire new staff and invest in new marketing initiatives.</span><span class="sent" data-sid="s15-p11-1"> To begin, Athleta sought to selectively add to its senior management team.</span><span class="sent" data-sid="s15-p11-2"> In addition, at least 20 new employees were required in the customer service, distribution, and Web development departments. Athleta also planned to initiate several new marketing programs, including 1) increased editorial coverage/product placement, 2) grass-roots marketing programs and sponsorships, 3) strategic partnerships and comarketing agreements, and 4) co-op advertising.</span><span class="sent" data-sid="s15-p11-3"> Kerslake estimated that $220,000 was required to grow the Athleta team and to invest in marketing initiatives.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s15-p11-0">마지막으로, Athleta는 신규 인력 채용과 새로운 마케팅 프로그램에 투자할 계획이었다.</span><span class="sent" data-sid="s15-p11-1"> 경영진 팀을 선별적으로 강화하고, 고객 서비스·물류·웹 개발 부문에 최소 20명의 신규 직원을 채용할 예정이었다.</span><span class="sent" data-sid="s15-p11-2"> 또한 ①에디토리얼 커버리지·제품 노출 확대, ②풀뿌리 마케팅 프로그램 및 스폰서십, ③전략적 파트너십·공동 마케팅 협약, ④협력 광고 등 다양한 신규 마케팅 프로그램을 추진할 계획이었다.</span><span class="sent" data-sid="s15-p11-3"> 팀 확충 및 마케팅 이니셔티브에는 22만 달러가 필요했다.</span></p></div>
 </div>
-
+<div class="section-divider">Financing Options / 자금 조달 옵션</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Commercial banks</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>상업은행</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s16-p0-0">When Kerslake and Teno went to New York in late March 2002, Athleta had less than $330,000 in cash remaining.</span><span class="sent" data-sid="s16-p0-1"> However, several different options emerged during their fund-raising trip to the East Coast.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s16-p0-0">2002년 3월 하순 Kerslake와 Teno가 뉴욕을 방문했을 때, Athleta의 잔여 현금은 33만 달러에 불과했다.</span><span class="sent" data-sid="s16-p0-1"> 그러나 동부 출장 중 몇 가지 자금 조달 방안이 구체화됐다.</span></p></div>
 </div>
-
+<div class="section-divider">Venture capital / 벤처 캐피탈</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="19719">Another financing option was to negotiate credit lines with one or several different commercial banks in order to finance the company’s growing inventory. Based on Athleta’s total sales and inventory figures for 2001, Kerslake estimated that the company could raise between $750,000 and $2 million in credit facilities. However, the credit markets had tightened during 2001, and commercial banks were reluctant to open large credit lines with early-stage or higher-risk companies. Kerslake explained:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="49284">또 다른 자금 조달 방안은 성장하는 재고를 담보로 하나 이상의 상업은행과 신용 한도를 협상하는 것이었다. 2001년 Athleta의 총 매출과 재고 수치를 바탕으로, Kerslake는 75만~200만 달러의 신용 시설을 확보할 수 있을 것으로 추산했다. 그러나 2001년 신용 시장이 경색되면서 상업은행들은 초기 단계이거나 위험도가 높은 기업과의 대규모 신용 한도 개설을 꺼렸다. Kerslake는 이렇게 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s17-p0-0">During the first quarter of 2002, the VC market continued a cyclical downturn that had started in early 2001 (see Exhibit 5 for U.S. venture capital investment trends).</span><span class="sent" data-sid="s17-p0-1"> In particular, the consumer e-commerce industry was hit hard during the dot-com market crash, which resulted in hundreds of companies declaring bankruptcy because they could not develop a sustainable economic model and/or raise additional capital.</span><span class="sent" data-sid="s17-p0-2"> As such, VC firms were much more cautious about investing in consumer retail business models and applied even higher discount rates to revenue projections.</span><span class="sent" data-sid="s17-p0-3"> Though Kerslake was interested in securing a Series E round from a VC firm, he was concerned that Athleta&#x27;s projected revenues and profits were not high enough to meet the minimum standards set out by most firms.</span><span class="sent" data-sid="s17-p0-4"> To make matters worse, consumer retail companies had fallen out of favor in the public markets, resulting in sagging valuations (see Exhibit 6 for specialty retailer comparisons).</span><span class="sent" data-sid="s17-p0-5"> Therefore, exit options for retailers in the consumer sector were limited to being acquired or merging with another company. Kerslake explained:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s17-p0-0">2002년 1분기, VC 시장은 2001년 초부터 시작된 경기 순환적 침체를 이어가고 있었다(미국 벤처 캐피탈 투자 추이는 Exhibit 5 참조).</span><span class="sent" data-sid="s17-p0-1"> 특히 소비자 e커머스 분야는 도트컴 버블 붕괴로 직격탄을 맞아, 지속 가능한 사업 모델 구축과 추가 자본 조달에 실패한 수백 개 기업이 파산을 선언했다.</span><span class="sent" data-sid="s17-p0-2"> 이에 따라 VC 회사들은 소비자 리테일 비즈니스 모델에 훨씬 신중한 태도를 취하며, 매출 예측에 더 높은 할인율을 적용했다.</span><span class="sent" data-sid="s17-p0-3"> Kerslake는 VC로부터 시리즈 E를 유치하는 방안에 관심이 있었지만, Athleta의 예상 매출과 이익이 대부분의 VC 회사들이 설정한 최소 기준에 못 미칠 것을 우려했다.</span><span class="sent" data-sid="s17-p0-4"> 더욱이 소비자 리테일 기업들이 공개 시장에서 외면받으며 밸류에이션이 급락했고(전문 리테일러 비교는 Exhibit 6 참조), 리테일 부문의 투자 회수(exit) 수단은 피인수 또는 합병으로 제한됐다.</span><span class="sent" data-sid="s17-p0-5"> Kerslake는 이렇게 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="46509">Securing credit lines was a last resort for us—mainly because we were unlikely to raise the full amount we required from a commercial bank. While we needed to secure credit lines for Athleta’s growing inventory, we also viewed the commercial banks as a viable source of bridge</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="10240">신용 한도 확보는 저희에게 최후의 수단이었습니다 — 주로 상업은행에서 필요한 전액을 조달할 가능성이 낮았기 때문입니다. 성장하는 재고를 위한 신용 한도가 필요했지만, 상업은행을 시리즈 E를 다른 곳에서 조달하는 동안의 브리지 파이낸싱 수단으로도 활용할 수 있다고 봤습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s17-p1-0">It was really difficult to find a VC firm interested in specialty retail companies — especially one with real expertise in our sector.</span><span class="sent" data-sid="s17-p1-1"> The firms we approached were very open with us—they told us that they invested in proven concepts, strong management teams, and aggressive growth targets.</span><span class="sent" data-sid="s17-p1-2"> They also told us to expect a more onerous term sheet that included participation clauses, full-ratchet provisions, and cumulative dividends.</span><span class="sent" data-sid="s17-p1-3"> The only good news was that deal flow had decreased substantially, so they were willing to move quickly when they found the right portfolio companies.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s17-p1-0">전문 리테일 기업, 특히 우리 분야에 실질적인 전문성을 갖춘 VC 회사를 찾기가 정말 어려웠습니다.</span><span class="sent" data-sid="s17-p1-1"> 접촉한 회사들은 솔직하게 말해줬습니다 — 검증된 사업 개념, 강력한 경영진, 공격적인 성장 목표에 투자한다고요.</span><span class="sent" data-sid="s17-p1-2"> 또한 참여 조항, 완전 래칫 조항, 누적 배당금이 포함된 더 까다로운 텀시트를 예상하라고 했습니다.</span><span class="sent" data-sid="s17-p1-3"> 그나마 다행인 것은 딜 플로우가 크게 줄어들어, 적합한 포트폴리오 기업을 발견하면 신속하게 움직일 의향이 있다는 점이었습니다.</span></p></div>
 </div>
-
+<div class="section-divider">Angel investors / 엔젤 투자자</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="2817">financing. Raising a small amount of debt would buy us enough time to raise the Series E from other sources. Unfortunately, commercial banks were very tight-fisted in 2002.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="4637">그러나 상업은행들은 2002년 들어 자금 대출에 매우 인색했습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s18-p0-0">By 2002, there were literally thousands of active angel investors in the US., though the crash of 2000-2001 had burned many investors and forced them to reconsider investing in private companies.</span><span class="sent" data-sid="s18-p0-1"> While in New York, Kerslake and Teno met with a handful of angel investors whose names they had received from existing investors, employees, and VCs.</span><span class="sent" data-sid="s18-p0-2"> Kerslake had not yet approached other potential angel investors including professional athletes, female celebrities, and owners of women&#x27;s sports teams.</span><span class="sent" data-sid="s18-p0-3"> After meeting with a handful of angel investors, Kerslake had several concerns:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s18-p0-0">2002년, 미국에는 수천 명의 활성 엔젤 투자자들이 있었지만, 2000~2001년의 버블 붕괴가 많은 투자자들에게 상처를 남기며 비상장 기업 투자에 대한 재고를 강요했다.</span><span class="sent" data-sid="s18-p0-1"> Kerslake와 Teno는 뉴욕 체류 중 기존 투자자·직원·VC로부터 소개받은 소수의 엔젤 투자자들과 면담을 가졌다.</span><span class="sent" data-sid="s18-p0-2"> 프로 운동선수, 여성 유명인, 여성 스포츠팀 구단주 등 잠재적 엔젤 투자자들에게는 아직 접근하지 않은 상태였다.</span><span class="sent" data-sid="s18-p0-3"> 몇 명의 엔젤 투자자들과 면담한 뒤, Kerslake는 몇 가지 우려 사항이 생겼다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="18846">Kerslake was eager to develop a sound financing plan for Athleta. Every day, his company helped hundreds of women find athletic apparel that met their needs. And, Kerslake was convinced that bringing Athleta into physical retail outlets would open up dozens of new opportunities for the company to serve female athletes. Now all he had to do was secure the capital necessary to take Athleta to the next level.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="50531">Kerslake는 Athleta를 위한 탄탄한 자금 조달 계획을 수립하고자 했다. 매일 그의 회사는 수백 명의 여성이 자신에게 맞는 스포츠 의류를 찾도록 돕고 있었다. 그리고 Athleta가 오프라인 리테일 매장으로 확장된다면 여성 운동선수들을 위한 수십 가지 새로운 기회가 열릴 것이라고 확신했다. 이제 남은 것은 Athleta를 다음 단계로 이끌기 위한 자본을 확보하는 일이었다.</span></p></div></div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-11">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit1 Ma</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="11"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="11"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="11"></label>
-      <button class="ex-reset" data-id="11">초기화</button>
-      <span class="ex-zoom-label" id="zoom-11">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-11">
-      <img src="Captures/Screenshot 2026-03-17 162845.png" class="exhibit-img" id="img-11" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
+  <div class="cell en"><p><span class="sent" data-sid="s18-p1-0">Because of our cash crunch, I was concerned about the time and effort required to raise equity from a group of angels.</span><span class="sent" data-sid="s18-p1-1"> Given that most angel investors invest between $50,000 and $1 million, we would have to sell our plan to 5 or 10 or even 20 different angels in order to raise $3-$4 million.</span><span class="sent" data-sid="s18-p1-2"> The upside is that most angel investors really appreciated our concept and business model —they wanted to be &quot;partners&quot; rather than just &quot;investors&quot; in the company.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s18-p1-0">현금 압박 상황이라 여러 엔젤로부터 자기자본을 유치하는 데 드는 시간과 노력이 걱정됐습니다.</span><span class="sent" data-sid="s18-p1-1"> 대부분의 엔젤 투자자들이 5만~100만 달러를 투자하기 때문에, 300만~400만 달러를 모으려면 5명에서 10명, 심지어 20명의 엔젤에게 사업계획을 제시해야 합니다.</span><span class="sent" data-sid="s18-p1-2"> 그래도 좋은 점은, 대부분의 엔젤 투자자들이 우리의 사업 개념과 비즈니스 모델에 진심으로 공감하며 단순한 &#x27;투자자&#x27;가 아닌 회사의 &#x27;파트너&#x27;가 되고자 했다는 것입니다.</span></p></div>
 </div>
-
+<div class="section-divider">Commercial banks / 상업은행</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="23425">Tami Anderson (33) is responsible for marketing and brand development at Athleta. Ms. Anderson has ten years of experience in advertising and public relations and most recently served as Vice-President /Group Manager for the Silicon Valley office of Ketchum where her clients included Levi Strauss, Intuit and Visa. Prior to joining Ketchum, she served as Public Relations Manger for Gryphon Software, a San Diego-based developer/ publisher. She began her career in marketing as a broadcast media buyer at Oster &amp; Associates, Inc., where she later founded the public relations department. Ms. Anderson is responsible for developing and executing all internal and external communications for Athleta, including brand building via advertising, public relations and online partnerships.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="20004">Tami Anderson(33)은 Athleta의 마케팅 및 브랜드 개발을 총괄한다. 광고·홍보 분야 10년 경력을 보유한 그녀는 가장 최근에 Ketchum 실리콘밸리 오피스의 부사장/그룹 매니저로 근무하며 Levi Strauss, Intuit, Visa 등을 주요 고객사로 담당했다. Ketchum 합류 이전에는 샌디에이고의 소프트웨어 개발·퍼블리싱사 Gryphon Software의 홍보 매니저를 역임했으며, 커리어 초기에는 Oster &amp; Associates의 방송 미디어 바이어로 시작해 홍보 부서를 직접 설립했다. 현재 Athleta의 광고·홍보·온라인 파트너십을 통한 브랜드 구축을 포함한 모든 내·외부 커뮤니케이션을 기획·실행하는 역할을 맡고 있다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s19-p0-0">Another financing option was to negotiate credit lines with one or several different commercial banks in order to finance the company&#x27;s growing inventory.</span><span class="sent" data-sid="s19-p0-1"> Based on Athleta&#x27;s total sales and inventory figures for 2001, Kerslake estimated that the company could raise between $750,000 and $2 million in credit facilities.</span><span class="sent" data-sid="s19-p0-2"> However, the credit markets had tightened during 2001, and commercial banks were reluctant to open large credit lines with early-stage or higher-risk companies.</span><span class="sent" data-sid="s19-p0-3"> Kerslake explained:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s19-p0-0">또 다른 자금 조달 방안은 성장하는 재고를 담보로 하나 이상의 상업은행과 신용 한도를 협상하는 것이었다.</span><span class="sent" data-sid="s19-p0-1"> 2001년 Athleta의 총 매출과 재고 수치를 바탕으로, Kerslake는 75만~200만 달러의 신용 시설을 확보할 수 있을 것으로 추산했다.</span><span class="sent" data-sid="s19-p0-2"> 그러나 2001년 신용 시장이 경색되면서 상업은행들은 초기 단계이거나 위험도가 높은 기업과의 대규모 신용 한도 개설을 꺼렸다.</span><span class="sent" data-sid="s19-p0-3"> Kerslake는 이렇게 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="23310">Ellen Krimmel (42) is responsible for Athleta’s customer service operations. Ms. Krimmel most recently was a professional cyclist and raced for the Saeco-Timex Women’s Cycling Team. Prior to racing professionally, Ms. Krimmel gained extensive experience in all phases of apparel design and product development, including serving as a design consultant to The North Face, and Head Technical Designer for Esprit De Corp. In addition Ms. Krimmel was a designer for apparel maker San Francisco Blue and a Merchandiser for Swatch Watch, USA. Ms. Krimmel still devotes time to cycling and was MVP and Captain of her collegiate soccer team at University of Vermont.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="35022">Ellen Krimmel(42)은 Athleta의 고객 서비스 운영을 총괄한다. 가장 최근에 프로 사이클리스트로 활동하며 Saeco-Timex 여성 사이클링 팀에서 경기에 참가했다. 선수 생활 이전에는 The North Face 디자인 컨설턴트, Esprit De Corp의 수석 테크니컬 디자이너를 포함해 의류 디자인 및 제품 개발 전 분야에서 풍부한 경험을 쌓았다. 또한 San Francisco Blue의 의류 디자이너, Swatch Watch USA의 머천다이저를 역임했다. 현재도 사이클링에 꾸준히 시간을 할애하며, 버몬트 대학교 재학 시절 여자 축구팀의 MVP 및 주장을 맡았다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s19-p1-0">Securing credit lines was a last resort for us—mainly because we were unlikely to raise the full amount we required from a commercial bank. While we needed to secure credit lines for Athleta&#x27;s growing inventory, we also viewed the commercial banks as a viable source of bridge financing. Raising a small amount of debt would buy us enough time to raise the Series E from other sources. Unfortunately, commercial banks were very tight-fisted in 2002.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s19-p1-0">신용 한도 확보는 저희에게 최후의 수단이었습니다 — 주로 상업은행에서 필요한 전액을 조달할 가능성이 낮았기 때문입니다. 성장하는 재고를 위한 신용 한도가 필요했지만, 상업은행을 시리즈 E를 다른 곳에서 조달하는 동안의 브리지 파이낸싱 수단으로도 활용할 수 있다고 봤습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="16324">Source: Company.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="12057">출처: 회사 내부 자료.</span></p></div></div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-13">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 2 Wome</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="13"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="13"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="13"></label>
-      <button class="ex-reset" data-id="13">초기화</button>
-      <span class="ex-zoom-label" id="zoom-13">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-13">
-      <img src="Captures/Screenshot 2026-03-17 162859.png" class="exhibit-img" id="img-13" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
+  <div class="cell en"><p><span class="sent" data-sid="s19-p2-0">Kerslake was eager to develop a sound financing plan for Athleta.</span><span class="sent" data-sid="s19-p2-1"> Every day, his company helped hundreds of women find athletic apparel that met their needs.</span><span class="sent" data-sid="s19-p2-2"> And, Kerslake was convinced that bringing Athleta into physical retail outlets would open up dozens of new opportunities for the company to serve female athletes.</span><span class="sent" data-sid="s19-p2-3"> Now all he had to do was secure the capital necessary to take Athleta to the next level.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s19-p2-0">그러나 상업은행들은 2002년 들어 자금 대출에 매우 인색했습니다.</span><span class="sent" data-sid="s19-p2-1"> Kerslake는 Athleta를 위한 탄탄한 자금 조달 계획을 수립하고자 했다.</span><span class="sent" data-sid="s19-p2-2"> 매일 그의 회사는 수백 명의 여성이 자신에게 맞는 스포츠 의류를 찾도록 돕고 있었다. 그리고 Athleta가 오프라인 리테일 매장으로 확장된다면 여성 운동선수들을 위한 수십 가지 새로운 기회가 열릴 것이라고 확신했다.</span><span class="sent" data-sid="s19-p2-3"> 이제 남은 것은 Athleta를 다음 단계로 이끌기 위한 자본을 확보하는 일이었다.</span></p></div>
 </div>
 
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-14">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 3 Athleta Historical Fi</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="14"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="14"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="14"></label>
-      <button class="ex-reset" data-id="14">초기화</button>
-      <span class="ex-zoom-label" id="zoom-14">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-14">
-      <img src="Captures/Screenshot 2026-03-17 162905.png" class="exhibit-img" id="img-14" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
 </div>
 
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-15">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 3 (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="15"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="15"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="15"></label>
-      <button class="ex-reset" data-id="15">초기화</button>
-      <span class="ex-zoom-label" id="zoom-15">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-15">
-      <img src="Captures/Screenshot 2026-03-17 162924.png" class="exhibit-img" id="img-15" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-16">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 3 (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="16"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="16"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="16"></label>
-      <button class="ex-reset" data-id="16">초기화</button>
-      <span class="ex-zoom-label" id="zoom-16">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-16">
-      <img src="Captures/Screenshot 2026-03-17 162935.png" class="exhibit-img" id="img-16" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-17">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4 Athleta Fi</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="17"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="17"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="17"></label>
-      <button class="ex-reset" data-id="17">초기화</button>
-      <span class="ex-zoom-label" id="zoom-17">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-17">
-      <img src="Captures/Screenshot 2026-03-17 163026.png" class="exhibit-img" id="img-17" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-18">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4 (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="18"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="18"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="18"></label>
-      <button class="ex-reset" data-id="18">초기화</button>
-      <span class="ex-zoom-label" id="zoom-18">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-18">
-      <img src="Captures/Screenshot 2026-03-17 163110.png" class="exhibit-img" id="img-18" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-19">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4 (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="19"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="19"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="19"></label>
-      <button class="ex-reset" data-id="19">초기화</button>
-      <span class="ex-zoom-label" id="zoom-19">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-19">
-      <img src="Captures/Screenshot 2026-03-17 163135.png" class="exhibit-img" id="img-19" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-20">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4 (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="20"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="20"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="20"></label>
-      <button class="ex-reset" data-id="20">초기화</button>
-      <span class="ex-zoom-label" id="zoom-20">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-20">
-      <img src="Captures/Screenshot 2026-03-17 163151.png" class="exhibit-img" id="img-20" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-21">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit5 Ve</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="21"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="21"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="21"></label>
-      <button class="ex-reset" data-id="21">초기화</button>
-      <span class="ex-zoom-label" id="zoom-21">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-21">
-      <img src="Captures/Screenshot 2026-03-17 163157.png" class="exhibit-img" id="img-21" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-22">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit6 Specialty Retail Compariso</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="22"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="22"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="22"></label>
-      <button class="ex-reset" data-id="22">초기화</button>
-      <span class="ex-zoom-label" id="zoom-22">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-22">
-      <img src="Captures/Screenshot 2026-03-17 163204.png" class="exhibit-img" id="img-22" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-</div>
 <div id="ai-panel">
   <div id="ai-panel-header">
     <span class="ai-label">AI 설명</span>
     <span id="ai-term">--</span>
     <span id="ai-model-tag">--</span>
-    <button id="ai-close" onclick="closeAI()">x</button>
+    <button id="ai-close" onclick="closeAI()">X</button>
   </div>
   <div id="ai-body"><span id="ai-spinner"></span><span id="ai-content"></span><span id="ai-cursor" style="display:none"></span><span id="ai-error"></span></div>
 </div>
 <button id="clear-btn" onclick="clearAll()">선택 해제 (Esc)</button>
+
 <script>
 document.querySelectorAll('.sent').forEach(el=>{
   const sid=el.dataset.sid;
@@ -726,7 +396,7 @@ function openAI(text,context){
   aiModelTag.textContent='연결 중';aiPanel.classList.add('open');
   ctrl=new AbortController();
   fetch('/api/explain',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({text,context,model:'qwen2.5:1.5b'}),signal:ctrl.signal})
+    body:JSON.stringify({text,context}),signal:ctrl.signal})
   .then(async r=>{
     if(!r.ok)throw new Error('HTTP '+r.status);
     aiSpinner.textContent='';
@@ -773,90 +443,33 @@ window.addEventListener('load',async()=>{
   try{
     const r=await fetch('http://localhost:11434/api/tags');
     const d=await r.json(),names=d.models?.map(m=>m.name)||[];
-    const has=n=>names.some(x=>x===n||x.startsWith(n.split(':')[0]));
-    const m=has('qwen2.5:1.5b')?'qwen2.5:1.5b':has('llama3.2:1b')?'llama3.2:1b':null;
-    document.getElementById('model-display').textContent=m?'AI: '+m:'AI: 모델 없음';
+    const prio=['qwen3.5:2b','qwen3.5:4b','qwen2.5:1.5b','llama3.2:1b'];
+    let found=null;
+    for(const p of prio){if(names.some(x=>x===p||x.startsWith(p.split(':')[0]))){found=p;break;}}
+    document.getElementById('model-display').textContent=found?'AI: '+found:'AI: 모델 없음';
   }catch{
     const b=document.getElementById('model-display');
     b.textContent='AI: server.py 필요';b.style.background='#4f1a1a';b.style.color='#ff9090';
   }
 });
-
-// ── Image Enhancer ─────────────────────────────────────────────────────
-(function() {
-  const state = {};
-
-  function getState(id) {
-    if (!state[id]) state[id] = { scale: 1, x: 0, y: 0, bright: 100, contrast: 110, sharp: 0 };
-    return state[id];
-  }
-
-  const SHARP_FILTERS = [
-    '',
-    'url(#sh1)',
-    'url(#sh2)',
-    'url(#sh3)',
-    'url(#sh4)',
-    'url(#sh5)',
-  ];
-
-  function applyState(id) {
-    const s = getState(id);
-    const img = document.getElementById('img-' + id);
-    const zl  = document.getElementById('zoom-' + id);
-    if (!img) return;
-    img.style.filter = `brightness(${s.bright}%) contrast(${s.contrast}%) ${SHARP_FILTERS[s.sharp] || ''}`;
-    img.style.transform = `translate(${s.x}px, ${s.y}px) scale(${s.scale})`;
-    if (zl) zl.textContent = Math.round(s.scale * 100) + '%';
-  }
-
-  function resetState(id) {
-    state[id] = { scale: 1, x: 0, y: 0, bright: 100, contrast: 110, sharp: 0 };
-    // reset sliders
-    document.querySelectorAll('.ex-bright[data-id="' + id + '"]').forEach(el => el.value = 100);
-    document.querySelectorAll('.ex-contrast[data-id="' + id + '"]').forEach(el => el.value = 110);
-    document.querySelectorAll('.ex-sharp[data-id="' + id + '"]').forEach(el => el.value = 0);
-    applyState(id);
-  }
-
-  document.querySelectorAll('.ex-bright').forEach(el => {
-    el.addEventListener('input', () => { getState(el.dataset.id).bright = +el.value; applyState(el.dataset.id); });
-  });
-  document.querySelectorAll('.ex-contrast').forEach(el => {
-    el.addEventListener('input', () => { getState(el.dataset.id).contrast = +el.value; applyState(el.dataset.id); });
-  });
-  document.querySelectorAll('.ex-sharp').forEach(el => {
-    el.addEventListener('input', () => { getState(el.dataset.id).sharp = +el.value; applyState(el.dataset.id); });
-  });
-  document.querySelectorAll('.ex-reset').forEach(el => {
-    el.addEventListener('click', () => resetState(el.dataset.id));
-  });
-
-  // Zoom + pan per stage
-  document.querySelectorAll('.exhibit-stage').forEach(stage => {
-    const id = stage.id.replace('stage-', '');
-    let dragging = false, lx = 0, ly = 0;
-
-    stage.addEventListener('wheel', e => {
-      e.preventDefault();
-      const s = getState(id);
-      s.scale = Math.min(8, Math.max(0.3, s.scale * (e.deltaY < 0 ? 1.12 : 0.89)));
-      applyState(id);
-    }, { passive: false });
-
-    stage.addEventListener('mousedown', e => {
-      dragging = true; lx = e.clientX; ly = e.clientY;
-      stage.classList.add('dragging');
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const s = getState(id);
-      s.x += e.clientX - lx; s.y += e.clientY - ly;
-      lx = e.clientX; ly = e.clientY;
-      applyState(id);
-    });
-    window.addEventListener('mouseup', () => { dragging = false; stage.classList.remove('dragging'); });
-    stage.addEventListener('dblclick', () => resetState(id));
+// Image Enhancer
+(function(){
+  const state={};
+  function gs(id){if(!state[id])state[id]={scale:1,x:0,y:0,bright:100,contrast:110,sharp:0};return state[id];}
+  const SF=['','url(#sh1)','url(#sh2)','url(#sh3)','url(#sh4)','url(#sh5)'];
+  function ap(id){const s=gs(id),img=document.getElementById('img-'+id),zl=document.getElementById('zoom-'+id);if(!img)return;img.style.filter='brightness('+s.bright+'%) contrast('+s.contrast+'%) '+(SF[s.sharp]||'');img.style.transform='translate('+s.x+'px,'+s.y+'px) scale('+s.scale+')';if(zl)zl.textContent=Math.round(s.scale*100)+'%';}
+  function rs(id){state[id]={scale:1,x:0,y:0,bright:100,contrast:110,sharp:0};document.querySelectorAll('.ex-bright[data-id="'+id+'"]').forEach(el=>el.value=100);document.querySelectorAll('.ex-contrast[data-id="'+id+'"]').forEach(el=>el.value=110);document.querySelectorAll('.ex-sharp[data-id="'+id+'"]').forEach(el=>el.value=0);ap(id);}
+  document.querySelectorAll('.ex-bright').forEach(el=>{el.addEventListener('input',()=>{gs(el.dataset.id).bright=+el.value;ap(el.dataset.id);});});
+  document.querySelectorAll('.ex-contrast').forEach(el=>{el.addEventListener('input',()=>{gs(el.dataset.id).contrast=+el.value;ap(el.dataset.id);});});
+  document.querySelectorAll('.ex-sharp').forEach(el=>{el.addEventListener('input',()=>{gs(el.dataset.id).sharp=+el.value;ap(el.dataset.id);});});
+  document.querySelectorAll('.ex-reset').forEach(el=>{el.addEventListener('click',()=>rs(el.dataset.id));});
+  document.querySelectorAll('.exhibit-stage').forEach(stage=>{
+    const id=stage.id.replace('stage-','');let dragging=false,lx=0,ly=0;
+    stage.addEventListener('wheel',e=>{e.preventDefault();const s=gs(id);s.scale=Math.min(8,Math.max(.3,s.scale*(e.deltaY<0?1.12:.89)));ap(id);},{passive:false});
+    stage.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;stage.classList.add('dragging');});
+    window.addEventListener('mousemove',e=>{if(!dragging)return;const s=gs(id);s.x+=e.clientX-lx;s.y+=e.clientY-ly;lx=e.clientX;ly=e.clientY;ap(id);});
+    window.addEventListener('mouseup',()=>{dragging=false;stage.classList.remove('dragging');});
+    stage.addEventListener('dblclick',()=>rs(id));
   });
 })();
 

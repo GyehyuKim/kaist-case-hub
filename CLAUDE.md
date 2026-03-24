@@ -4,18 +4,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-Multi-course case study hub for KAIST MBA Spring 2026. Serves bilingual (EN/KR) case viewers with AI term explanation via local Ollama.
+KAIST MBA 수업에서 요구되는 긴 영문 아티클/케이스를 수강생 전체가 쉽게 읽을 수 있는 웹 서비스.
+
+핵심 기능:
+1. 영한 대조 읽기 — 좌측 영어 원문 / 우측 한국어 번역 (전체 맥락 기반 번역)
+2. 문장 대응 하이라이트 — 마우스 호버 시 좌우 원문/번역 문장 동시 하이라이트 (data-sid 매칭)
+3. AI 맥락 설명 — 로컬 Ollama(qwen3.5)로 단어 더블클릭 시 맥락 설명 + AI 질문 기능
 
 ## Structure
 
 ```
-/                       Top-level hub (course selector + login gate)
-/venture-capital/       BIZ.60010 VC course hub (Prof. 백용욱)
-/venture-capital/athleta/       Athleta case viewer
-/venture-capital/timecredit/    TimeCredit case viewer
-/ai-evolution/          BIZ.69911 AI Evolution course hub (Prof. 이지수)
-/ai-evolution/manno/            Manna case (pending)
-/ai-evolution/navigating/       Navigating the Jagged Frontier (pending)
+/                             Top-level hub (course selector + login gate)
+/venture-capital/             BIZ.60010 VC (Prof. 백용욱)
+  athleta/                    Athleta Corporation (HBS 9-803-045)
+  timecredit/                 TimeCredit (HBS 9-824-073)
+  coupa/                      Coupa Software
+/ai-evolution/                BIZ.69911 AI Evolution (Prof. 이지수)
+  manna/                      Manna (Marshall Brain)
+  navigating/                 Navigating the Jagged Frontier + MoLG (2탭)
+  something-big/              Something Big Is Happening (소스만, 뷰어 미완)
 ```
 
 ## Running Locally
@@ -23,11 +30,8 @@ Multi-course case study hub for KAIST MBA Spring 2026. Serves bilingual (EN/KR) 
 Each course has its own server. Run from the course directory:
 
 ```bash
-# Venture Capital (port 8080)
-cd venture-capital && python server.py
-
-# AI Evolution (port 8081)
-cd ai-evolution && python server.py
+cd venture-capital && python server.py   # port 8080
+cd ai-evolution && python server.py      # port 8081
 ```
 
 The server auto-opens the browser. Static files are served from the same directory. Ollama must be running separately (`ollama serve`).
@@ -55,12 +59,22 @@ Each `index.html` case viewer is self-contained. Key structural elements:
 
 **Multi-reading tab variant** (`navigating/index.html`): uses `.reading-tabs` / `.tab-btn` to switch between multiple readings within one viewer — a superset of the standard bilingual layout.
 
+## Automation
+
+| Skill | 용도 |
+|-------|------|
+| `/translate-case` | HBS 케이스: 스캔 OCR → 번역 → 뷰어 빌드 (7단계) |
+| `/translate-reading` | 학술 리딩: 맥락 번역 → KR.md 생성 |
+
+도구 체인: `~/.claude/tools/` — ocr_to_md, ocr_cleanup, identify_pages, build_viewer, translate
+
 ## Adding a New Case
 
 1. Create folder: `<course>/<case-slug>/`
 2. Place `index.html` (bilingual viewer), `Captures/` (screenshots), optional `*_KR.md`
 3. Update course hub's `CASES` array: set `status: 'available'`, `url: '<case-slug>/'`
 4. Viewer must use `AUTH_KEY = 'kaist-case-auth'` and `fetch('../terms.json')`
+5. 또는 `/translate-case` 스킬로 전체 파이프라인 자동 실행
 
 ## Navigation Rules
 

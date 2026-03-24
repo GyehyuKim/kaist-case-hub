@@ -2,13 +2,14 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Coupa — 영한 대조 + AI 용어 설명</title>
+<title>Coupa -- 영한 대조 + AI 용어 설명</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Georgia,serif;font-size:14px;line-height:1.75;background:#f5f5f5;color:#222;padding-bottom:260px}
 header{background:#1a1a2e;color:#eee;padding:14px 32px;display:flex;align-items:center;gap:20px}
 header h1{font-size:18px}
-.back-btn{margin-left:auto;font-size:11px;color:#aaa;text-decoration:none;padding:4px 12px;border:1px solid #444;border-radius:5px}
+header .sub{font-size:11px;color:#999}
+.back-btn{margin-left:auto;font-size:11px;color:#aaa;text-decoration:none;padding:4px 12px;border:1px solid #444;border-radius:5px;white-space:nowrap}
 .back-btn:hover{color:#fff;border-color:#58a6ff}
 .help-bar{background:#2d2d44;color:#aaa;font-size:11px;padding:5px 32px;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
 .help-bar kbd{background:#444;color:#eee;padding:1px 6px;border-radius:3px;font-family:monospace;font-size:10px}
@@ -16,54 +17,34 @@ header h1{font-size:18px}
 .lang-bar{display:grid;grid-template-columns:1fr 1fr;background:#2d2d44;border-bottom:2px solid #555}
 .lang-bar div{padding:5px 32px;font-size:11px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#aaa}
 .lang-bar .kr{border-left:1px solid #444}
+.section-divider{background:#e8e8f0;padding:7px 28px;font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:1px;color:#666;border-bottom:1px solid #ddd}
 .container{max-width:1500px;margin:0 auto}
 .bi-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #ddd}
 .cell{padding:20px 28px}
 .cell.en{background:#fff;border-right:1px solid #ddd}
 .cell.kr{background:#f8f8fc}
 .cell.full{grid-column:1/-1;background:#111;padding:16px 28px}
+.cell h2{font-size:13px;font-weight:bold;color:#1a1a2e;margin-bottom:12px;padding-bottom:5px;border-bottom:2px solid #1a1a2e;text-transform:uppercase;letter-spacing:.5px}
 .cell h3{font-size:12px;font-weight:bold;color:#444;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.5px}
 .cell p{margin-bottom:10px}
 .cell blockquote{margin:10px 0;padding:8px 14px;border-left:3px solid #888;color:#555;font-style:italic;background:rgba(0,0,0,.03);font-size:13px}
 .sent{cursor:pointer;border-radius:2px;transition:background .1s}
 .sent.h-on{background:rgba(255,215,0,.38)}
 .sent.on{background:rgba(60,130,255,.22);outline:1px solid rgba(60,130,255,.4)}
-
-/* ── Exhibit Image Enhancer ── */
-.exhibit-wrap { width: 100%; }
-.exhibit-toolbar {
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  padding: 8px 12px; background: #1a1a2e; border-radius: 6px 6px 0 0;
-  font-size: 11px; color: #ccc;
-}
-.ex-label { font-weight: bold; color: #ffd700; margin-right: 6px; }
-.exhibit-toolbar label { display: flex; align-items: center; gap: 5px; }
-.exhibit-toolbar input[type=range] { width: 80px; accent-color: #7ec8ff; }
-.ex-reset {
-  background: #2d2d44; color: #aaa; border: 1px solid #444;
-  border-radius: 3px; padding: 2px 8px; cursor: pointer; font-size: 10px;
-}
-.ex-reset:hover { color: #fff; background: #3a3a6a; }
-.ex-zoom-label { margin-left: auto; font-family: monospace; color: #6eff8a; }
-.exhibit-stage {
-  overflow: hidden; background: #111; border: 1px solid #333;
-  cursor: grab; position: relative; height: 640px;
-  display: flex; align-items: center; justify-content: center;
-}
-.exhibit-stage.dragging { cursor: grabbing; }
-.exhibit-img {
-  max-width: none; max-height: none;
-  transform-origin: center center;
-  user-select: none; pointer-events: none;
-  transition: filter 0.1s;
-}
-.exhibit-hint {
-  font-size: 10px; color: #888; text-align: center;
-  padding: 4px; background: #1a1a2e; border-radius: 0 0 6px 6px;
-}
-/* SVG sharpness filters (hidden) */
-svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-
+/* Exhibit image enhancer */
+.exhibit-wrap{width:100%}
+.exhibit-toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:8px 12px;background:#1a1a2e;border-radius:6px 6px 0 0;font-size:11px;color:#ccc}
+.ex-label{font-weight:bold;color:#ffd700;margin-right:6px}
+.exhibit-toolbar label{display:flex;align-items:center;gap:5px}
+.exhibit-toolbar input[type=range]{width:80px;accent-color:#7ec8ff}
+.ex-reset{background:#2d2d44;color:#aaa;border:1px solid #444;border-radius:3px;padding:2px 8px;cursor:pointer;font-size:10px}
+.ex-reset:hover{color:#fff;background:#3a3a6a}
+.ex-zoom-label{margin-left:auto;font-family:monospace;color:#6eff8a}
+.exhibit-stage{overflow:hidden;background:#111;border:1px solid #333;cursor:grab;position:relative;height:640px;display:flex;align-items:center;justify-content:center}
+.exhibit-stage.dragging{cursor:grabbing}
+.exhibit-img{max-width:none;max-height:none;transform-origin:center center;user-select:none;pointer-events:none;transition:filter .1s}
+.exhibit-hint{font-size:10px;color:#888;text-align:center;padding:4px;background:#1a1a2e;border-radius:0 0 6px 6px}
+svg.sharpen-defs{position:absolute;width:0;height:0;overflow:hidden}
 /* AI panel */
 #ai-panel{position:fixed;bottom:0;left:0;right:0;z-index:800;background:#0f0f1e;border-top:2px solid #3a3a6a;transform:translateY(100%);transition:transform .25s ease;display:flex;flex-direction:column;max-height:55vh}
 #ai-panel.open{transform:translateY(0)}
@@ -78,10 +59,10 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 #ai-cursor{display:inline-block;width:2px;height:1em;background:#7ec8ff;animation:blink .7s infinite;vertical-align:text-bottom;margin-left:1px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 #clear-btn{position:fixed;bottom:20px;right:20px;background:#1a1a2e;color:#eee;border:none;border-radius:4px;padding:7px 14px;font-size:11px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.3);z-index:500}
+
 </style>
 </head>
 <body>
-
 <svg class="sharpen-defs" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="sh1"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="0 -0.3 0 -0.3 2.2 -0.3 0 -0.3 0"/></filter>
@@ -92,8 +73,8 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
   </defs>
 </svg>
 <header>
-  <h1>Coupa — 영한 대조 + AI 용어 설명</h1>
-  <a class="back-btn" href="../index.html">← 목록</a>
+  <h1>Coupa -- 영한 대조 + AI 용어 설명</h1>
+  <a class="back-btn" href="../index.html">&#8592; 목록</a>
 </header>
 <div class="help-bar">
   <span><kbd>hover</kbd> 하이라이트</span>
@@ -108,409 +89,535 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 <div class="container">
 
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="56408">Rob Bernshteyn was looking forward to the weekend and some free time to think about the year ahead for Coupa, the software as a service (SaaS) firm he ran in San Mateo, California. Coupa was a young, VC-backed venture that had developed a successful platform in the “eProcurement” space. Coupa offered a service that helped companies consolidate and manage their purchasing of “indirect” goods and supplies, i.e., items that were not part of a company’s costs of goods sold but were used in general and administrative activities. For example, instead of having 12 different office managers in 12 different office locations negotiate and buy copier paper or bottled water from different suppliers, Coupa’s platform directed those purchases to a common pre-selected vendor, electronically routed the purchase requests to the appropriate manager(s), generated a purchase order and, ultimately, a payment request and approval.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="8215">Rob Bernshteyn은 캘리포니아주 샌머테이오에서 자신이 이끄는 서비스형 소프트웨어(SaaS) 기업 Coupa의 한 해를 차분히 돌아보며 다가올 주말을 기대하고 있었다. Coupa는 벤처캐피털(VC)이 투자한 신생 기업으로, &quot;전자 구매(eProcurement)&quot; 분야에서 성공적인 플랫폼을 구축해 왔다. Coupa는 기업들이 &quot;간접(indirect)&quot; 물품 및 소모품 구매를 통합·관리할 수 있도록 돕는 서비스를 제공했다. 즉, 제품 원가나 자재 명세서에 포함되지 않고 일반관리(G&amp;A) 활동에 사용되는 물품들을 대상으로 했다. 예컨대 12개 사무소의 각 담당자가 복사용지나 생수를 서로 다른 공급업체에서 따로 구매하는 대신, Coupa의 플랫폼이 그 구매를 사전 선정된 단일 공급업체로 집중시키고, 구매 요청을 담당 관리자에게 전자적으로 전달하며, 구매 주문서와 최종 결제 요청·승인까지 자동으로 처리했다.</span></p></div></div>
+  <div class="cell en"><h3>Coupa</h3></div>
+  <div class="cell kr"><h3>Coupa</h3></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="32025">Bernshteyn had become Coupa’s CEO after some of its early struggles, and in four years had grown the company from a few hundred thousand dollars in revenue to a $12 million (recurring revenue) business. He had helped the company raise $41.5 million in VC. The company was a leading competitor in this growing space. Now —in January, 2013—there were important issues on the table around the company’s growth strategy:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="2212">Bernshteyn은 Coupa 초기의 시행착오를 수습하기 위해 최고경영자(CEO)로 영입된 이후 4년 만에 연매출 수십만 달러에 불과했던 회사를 1,200만 달러(반복 매출 기준)의 기업으로 성장시켰다. 그는 VC로부터 총 4,150만 달러를 유치하는 데도 기여했다. 이제 Coupa는 빠르게 성장하는 이 분야의 선두 주자로 자리잡았다. 그리고 2013년 1월, 회사의 성장 전략과 관련한 중요한 선택지들이 테이블 위에 놓여 있었다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p0-0">Rob Bernshteyn was looking forward to the weekend and some free time to think about the year ahead for Coupa, the software as a service (SaaS) firm he ran in San Mateo, California.</span><span class="sent" data-sid="s0-p0-1"> Coupa was a young, VC-backed venture that had developed a successful platform in the &quot;eProcurement&quot; space.</span><span class="sent" data-sid="s0-p0-2"> Coupa offered a service that helped companies consolidate and manage their purchasing of &quot;indirect&quot; goods and supplies, i.e., items that were not part of a company&#x27;s costs of goods sold but were used in general and administrative activities.</span><span class="sent" data-sid="s0-p0-3"> For example, instead of having 12 different office managers in 12 different office locations negotiate and buy copier paper or bottled water from different suppliers, Coupa&#x27;s platform directed those purchases to a common pre-selected vendor, electronically routed the purchase requests to the appropriate manager(s), generated a purchase order and, ultimately, a payment request and approval.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p0-0">Rob Bernshteyn은 캘리포니아주 샌머테이오에서 자신이 이끄는 서비스형 소프트웨어(SaaS) 기업 Coupa의 한 해를 차분히 돌아보며 다가올 주말을 기대하고 있었다.</span><span class="sent" data-sid="s0-p0-1"> Coupa는 벤처캐피털(VC)이 투자한 신생 기업으로, &quot;전자 구매(eProcurement)&quot; 분야에서 성공적인 플랫폼을 구축해 왔다.</span><span class="sent" data-sid="s0-p0-2"> Coupa는 기업들이 &quot;간접(indirect)&quot; 물품 및 소모품 구매를 통합·관리할 수 있도록 돕는 서비스를 제공했다. 즉, 제품 원가나 자재 명세서에 포함되지 않고 일반관리(G&amp;A) 활동에 사용되는 물품들을 대상으로 했다.</span><span class="sent" data-sid="s0-p0-3"> 예컨대 12개 사무소의 각 담당자가 복사용지나 생수를 서로 다른 공급업체에서 따로 구매하는 대신, Coupa의 플랫폼이 그 구매를 사전 선정된 단일 공급업체로 집중시키고, 구매 요청을 담당 관리자에게 전자적으로 전달하며, 구매 주문서와 최종 결제 요청·승인까지 자동으로 처리했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="48560">We can continue our organic growth, put some more feet on the street and ramp up sales as we have been doing. Alternatively, we could be much more aggressive, doubling down on this organic strategy and hiring more salespeople and even expanding overseas. There is also an opportunity to acquire some of the small players in this space at an attractive price, and immediately bring that revenue to our P&amp;L. And of course, there is always the option of exiting as other, bigger players see this opportunity and view us as an attractive foothold.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="22511">우리는 지금처럼 영업 인력을 늘리며 유기적 성장을 이어갈 수 있습니다. 아니면 더 공격적으로, 영업 인력을 대폭 늘리고 해외로도 확장하는 방식으로 이 전략을 밀어붙일 수 있죠. 또한 이 분야의 소규모 플레이어들을 매력적인 가격에 인수해 곧바로 그 매출을 우리 손익계산서(P&amp;L)에 얹는 방법도 있습니다. 물론 다른 대형 플레이어들이 이 시장을 주목하면서 우리를 매력적인 발판으로 보는 시점에 엑싯(exit)하는 선택지도 항상 열려 있습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p1-0">Bernshteyn had become Coupa&#x27;s CEO after some of its early struggles, and in four years had grown the company from a few hundred thousand dollars in revenue to a $12 million (recurring revenue) business.</span><span class="sent" data-sid="s0-p1-1"> He had helped the company raise $41.5 million in VC.</span><span class="sent" data-sid="s0-p1-2"> The company was a leading competitor in this growing space.</span><span class="sent" data-sid="s0-p1-3"> Now —in January, 2013—there were important issues on the table around the company&#x27;s growth strategy:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p1-0">Bernshteyn은 Coupa 초기의 시행착오를 수습하기 위해 최고경영자(CEO)로 영입된 이후 4년 만에 연매출 수십만 달러에 불과했던 회사를 1,200만 달러(반복 매출 기준)의 기업으로 성장시켰다.</span><span class="sent" data-sid="s0-p1-1"> 그는 VC로부터 총 4,150만 달러를 유치하는 데도 기여했다.</span><span class="sent" data-sid="s0-p1-2"> 이제 Coupa는 빠르게 성장하는 이 분야의 선두 주자로 자리잡았다.</span><span class="sent" data-sid="s0-p1-3"> 그리고 2013년 1월, 회사의 성장 전략과 관련한 중요한 선택지들이 테이블 위에 놓여 있었다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Background: Rob Bernshteyn</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>Background: Rob Bernshteyn</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s0-p2-0">We can continue our organic growth, put some more feet on the street and ramp up sales as we have been doing.</span><span class="sent" data-sid="s0-p2-1"> Alternatively, we could be much more aggressive, doubling down on this organic strategy and hiring more salespeople and even expanding overseas.</span><span class="sent" data-sid="s0-p2-2"> There is also an opportunity to acquire some of the small players in this space at an attractive price, and immediately bring that revenue to our P&amp;L. And of course, there is always the option of exiting as other, bigger players see this opportunity and view us as an attractive foothold.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s0-p2-0">우리는 지금처럼 영업 인력을 늘리며 유기적 성장을 이어갈 수 있습니다.</span><span class="sent" data-sid="s0-p2-1"> 아니면 더 공격적으로, 영업 인력을 대폭 늘리고 해외로도 확장하는 방식으로 이 전략을 밀어붙일 수 있죠.</span><span class="sent" data-sid="s0-p2-2"> 또한 이 분야의 소규모 플레이어들을 매력적인 가격에 인수해 곧바로 그 매출을 우리 손익계산서(P&amp;L)에 얹는 방법도 있습니다. 물론 다른 대형 플레이어들이 이 시장을 주목하면서 우리를 매력적인 발판으로 보는 시점에 엑싯(exit)하는 선택지도 항상 열려 있습니다.</span></p></div>
 </div>
-
+<div class="section-divider">Background: Rob Bernshteyn / Background: Rob Bernshteyn</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="54998">Bernshteyn had emigrated from St. Petersburg Russia with his parents in 1980, at the age of 6: “Russia wasn’t a great place to be as a Jewish family, and we were lucky to get permission to leave. We landed at JFK with $1,000 and my dad got a job as an electrical engineer. It wasn’t easy to show up at school and not speak English, but gradually, I assimilated.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="54864">Bernshteyn은 1980년, 여섯 살 때 부모님과 함께 러시아 상트페테르부르크에서 미국으로 이민을 왔다. &quot;유대인 가족에게 러시아는 그다지 좋은 환경이 아니었고, 우리는 운 좋게 출국 허가를 받을 수 있었습니다. 1,000달러를 들고 JFK에 내렸고, 아버지는 전기 엔지니어로 취직하셨어요. 영어를 한마디도 못한 채 학교에 다니는 건 쉬운 일이 아니었지만, 서서히 적응해 나갔습니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p0-0">Bernshteyn had emigrated from St.</span><span class="sent" data-sid="s1-p0-1"> Petersburg Russia with his parents in 1980, at the age of 6: &quot;Russia wasn&#x27;t a great place to be as a Jewish family, and we were lucky to get permission to leave.</span><span class="sent" data-sid="s1-p0-2"> We landed at JFK with $1,000 and my dad got a job as an electrical engineer.</span><span class="sent" data-sid="s1-p0-3"> It wasn&#x27;t easy to show up at school and not speak English, but gradually, I assimilated.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p0-0">Bernshteyn은 1980년, 여섯 살 때 부모님과 함께 러시아 상트페테르부르크에서 미국으로 이민을 왔다.</span><span class="sent" data-sid="s1-p0-1"> &quot;유대인 가족에게 러시아는 그다지 좋은 환경이 아니었고, 우리는 운 좋게 출국 허가를 받을 수 있었습니다.</span><span class="sent" data-sid="s1-p0-2"> 1,000달러를 들고 JFK에 내렸고, 아버지는 전기 엔지니어로 취직하셨어요.</span><span class="sent" data-sid="s1-p0-3"> 영어를 한마디도 못한 채 학교에 다니는 건 쉬운 일이 아니었지만, 서서히 적응해 나갔습니다.&quot;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="42580">Bernshteyn put himself through college with income generated from a sports memorabilia business he had started. Following graduation, he went to work for Andersen Consulting, principally doing SAP implementations (i.e., helping companies implement this enterprise resource planning software). “1 was interested in the tech underpinnings of the software I was working with, and developed this idea that I wanted to go to business school and then to Silicon Valley. I had a year between my acceptance at HBS and the start of school, so I got ajob with McKinsey for a few months and then spent part of my summer at Goldman Sachs.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="9684">Bernshteyn은 대학 시절 직접 시작한 스포츠 기념품 사업으로 학비를 마련했다. 졸업 후에는 주로 SAP 구현을 담당하는 Andersen Consulting에 입사했고, 기업들이 전사적 자원 관리(ERP) 소프트웨어를 도입하는 작업을 지원했다. &quot;제가 다루는 소프트웨어의 기술적 토대에 관심이 많았고, 경영대학원에 진학한 뒤 실리콘밸리로 가고 싶다는 생각을 키워 나갔습니다. HBS 입학 허가를 받고 실제 입학까지 1년의 공백이 있었는데, 그 기간에 McKinsey에서 몇 달 일하다가 여름 일부는 Goldman Sachs에서 보냈습니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p1-0">Bernshteyn put himself through college with income generated from a sports memorabilia business he had started.</span><span class="sent" data-sid="s1-p1-1"> Following graduation, he went to work for Andersen Consulting, principally doing SAP implementations (i.e., helping companies implement this enterprise resource planning software).</span><span class="sent" data-sid="s1-p1-2"> &quot;I was interested in the tech underpinnings of the software I was working with, and developed this idea that I wanted to go to business school and then to Silicon Valley.</span><span class="sent" data-sid="s1-p1-3"> I had a year between my acceptance at HBS and the start of school, so I got a job with McKinsey for a few months and then spent part of my summer at Goldman Sachs.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p1-0">Bernshteyn은 대학 시절 직접 시작한 스포츠 기념품 사업으로 학비를 마련했다.</span><span class="sent" data-sid="s1-p1-1"> 졸업 후에는 주로 SAP 구현을 담당하는 Andersen Consulting에 입사했고, 기업들이 전사적 자원 관리(ERP) 소프트웨어를 도입하는 작업을 지원했다.</span><span class="sent" data-sid="s1-p1-2"> &quot;제가 다루는 소프트웨어의 기술적 토대에 관심이 많았고, 경영대학원에 진학한 뒤 실리콘밸리로 가고 싶다는 생각을 키워 나갔습니다.</span><span class="sent" data-sid="s1-p1-3"> HBS 입학 허가를 받고 실제 입학까지 1년의 공백이 있었는데, 그 기간에 McKinsey에서 몇 달 일하다가 여름 일부는 Goldman Sachs에서 보냈습니다.&quot;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51648">Following his graduation from HBS in 2001, Bernshteyn took a job with Siebel Software, a relatively young company in the sales force automation/customer relationship management space. (It was ultimately sold to Oracle for $5.8 billion in 2005.)</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="53302">2001년 HBS를 졸업한 뒤 Bernshteyn은 영업 자동화·고객관계관리(CRM) 분야의 신생 기업 Siebel Software에 입사했다. (이 회사는 결국 2005년 Oracle에 58억 달러에 인수됐다.)</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p2-0">Following his graduation from HBS in 2001, Bernshteyn took a job with Siebel Software, a relatively young company in the sales force automation/customer relationship management space. (It was ultimately sold to Oracle for $5.8 billion in 2005.)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p2-0">2001년 HBS를 졸업한 뒤 Bernshteyn은 영업 자동화·고객관계관리(CRM) 분야의 신생 기업 Siebel Software에 입사했다. (이 회사는 결국 2005년 Oracle에 58억 달러에 인수됐다.)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="22734">Siebel hired 23 HBS grads that year, and I was one of many HBSers working in product management and biz dev. Tom Siebel was always looking to expand into new businesses, and so a few of us got to work developing a new set of modules in the human capital management (HCM) space. We made progress, but Siebel was so invested in the customer relationship management (CRM) business that it was going to be hard to move the needle in HCM. While at Siebel, I saw the tremendous potential and competitive success that Salesforce.com was proving by delivering CRM via the yet unproven SaaS model. I figured that the same model could be applied to HCM. I contacted the CEO of a local HCM startup called SuccessFactors and pitched the idea of pursuing this with me driving product marketing and management. SuccessFactors had basically automated the performance review process—collecting information from a variety of sources and integrating it flexibly into a very user-friendly format. I was the head of product marketing and product management there for 4.5 years—from early 2004, when I left Siebel, until late 2008. We took the business from $6 to $120 million; it was a 1,000-person company by the time I left. It was sold two years later to SAP for $3.4 billion.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="52299">그해 Siebel은 HBS 출신 23명을 채용했고, 저를 포함한 많은 HBS 동문이 제품 관리와 사업 개발 업무를 맡았습니다. Tom Siebel은 늘 새로운 사업으로 확장하려 했고, 우리 중 몇 명은 인적 자본 관리(HCM) 분야의 새로운 모듈을 개발하는 일을 맡게 됐습니다. 나름의 성과를 냈지만, Siebel은 CRM 사업에 너무 깊이 투자되어 있어서 HCM에서 유의미한 성과를 내기가 어려웠습니다. Siebel에 있는 동안, 저는 Salesforce.com이 아직 검증되지 않은 SaaS 모델로 CRM을 제공하며 거두는 엄청난 성공 가능성을 직접 목격했습니다. 그 모델이 HCM에도 적용될 수 있다고 판단했고, 한 지역 HCM 스타트업 SuccessFactors의 CEO에게 연락해 제가 제품 마케팅과 관리를 이끄는 조건으로 함께 도전하자고 제안했습니다. SuccessFactors는 기본적으로 성과 평가 프로세스를 자동화한 회사로, 다양한 소스의 정보를 통합해 매우 직관적인 형태로 제공했습니다. 저는 그곳에서 2004년 초 Siebel을 떠날 때부터 2008년 말까지 4년 반 동안 제품 마케팅 및 제품 관리 총괄을 맡았습니다. 회사 매출은 600만 달러에서 1억 2,000만 달러로 성장했고, 제가 떠날 때는 직원 수가 1,000명이었습니다. 2년 뒤 SAP에 34억 달러에 매각됐습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p3-0">Siebel hired 23 HBS grads that year, and I was one of many HBSers working in product management and biz dev.</span><span class="sent" data-sid="s1-p3-1"> Tom Siebel was always looking to expand into new businesses, and so a few of us got to work developing a new set of modules in the human capital management (HCM) space.</span><span class="sent" data-sid="s1-p3-2"> We made progress, but Siebel was so invested in the customer relationship management (CRM) business that it was going to be hard to move the needle in HCM.</span><span class="sent" data-sid="s1-p3-3"> While at Siebel, I saw the tremendous potential and competitive success that Salesforce.com was proving by delivering CRM via the yet unproven SaaS model.</span><span class="sent" data-sid="s1-p3-4"> I figured that the same model could be applied to HCM.</span><span class="sent" data-sid="s1-p3-5"> I contacted the CEO of a local HCM startup called SuccessFactors and pitched the idea of pursuing this with me driving product marketing and management.</span><span class="sent" data-sid="s1-p3-6"> SuccessFactors had basically automated the performance review process—collecting information from a variety of sources and integrating it flexibly into a very user-friendly format.</span><span class="sent" data-sid="s1-p3-7"> I was the head of product marketing and product management there for 4.5 years—from early 2004, when I left Siebel, until late 2008. We took the business from $6 to $120 million; it was a 1,000-person company by the time I left.</span><span class="sent" data-sid="s1-p3-8"> It was sold two years later to SAP for $3.4 billion.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p3-0">그해 Siebel은 HBS 출신 23명을 채용했고, 저를 포함한 많은 HBS 동문이 제품 관리와 사업 개발 업무를 맡았습니다.</span><span class="sent" data-sid="s1-p3-1"> Tom Siebel은 늘 새로운 사업으로 확장하려 했고, 우리 중 몇 명은 인적 자본 관리(HCM) 분야의 새로운 모듈을 개발하는 일을 맡게 됐습니다.</span><span class="sent" data-sid="s1-p3-2"> 나름의 성과를 냈지만, Siebel은 CRM 사업에 너무 깊이 투자되어 있어서 HCM에서 유의미한 성과를 내기가 어려웠습니다.</span><span class="sent" data-sid="s1-p3-3"> Siebel에 있는 동안, 저는 Salesforce.com이 아직 검증되지 않은 SaaS 모델로 CRM을 제공하며 거두는 엄청난 성공 가능성을 직접 목격했습니다.</span><span class="sent" data-sid="s1-p3-4"> 그 모델이 HCM에도 적용될 수 있다고 판단했고, 한 지역 HCM 스타트업 SuccessFactors의 CEO에게 연락해 제가 제품 마케팅과 관리를 이끄는 조건으로 함께 도전하자고 제안했습니다.</span><span class="sent" data-sid="s1-p3-5"> SuccessFactors는 기본적으로 성과 평가 프로세스를 자동화한 회사로, 다양한 소스의 정보를 통합해 매우 직관적인 형태로 제공했습니다.</span><span class="sent" data-sid="s1-p3-6"> 저는 그곳에서 2004년 초 Siebel을 떠날 때부터 2008년 말까지 4년 반 동안 제품 마케팅 및 제품 관리 총괄을 맡았습니다.</span><span class="sent" data-sid="s1-p3-7"> 회사 매출은 600만 달러에서 1억 2,000만 달러로 성장했고, 제가 떠날 때는 직원 수가 1,000명이었습니다.</span><span class="sent" data-sid="s1-p3-8"> 2년 뒤 SAP에 34억 달러에 매각됐습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="27717">Believing that I had solid experience in most of the functional areas of the enterprise software industry, I wanted to be a CEO and looked at a few opportunities, but | was most excited by Coupa. It was an interesting application of SaaS technology, and I believed it was a very promising space, requiring an evangelistic disruptive mindset.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="60806">기업 소프트웨어 산업 대부분의 직무 영역에서 탄탄한 경험을 쌓았다는 자신감이 생겼고, CEO가 되고 싶었습니다. 몇 가지 기회를 검토했지만, Coupa에 가장 마음이 끌렸습니다. SaaS 기술의 흥미로운 적용 사례였고, 복음을 전하는 듯한 파괴적 마인드셋이 필요한 매우 유망한 분야라고 생각했습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p4-0">Believing that I had solid experience in most of the functional areas of the enterprise software industry, I wanted to be a CEO and looked at a few opportunities, but I was most excited by Coupa.</span><span class="sent" data-sid="s1-p4-1"> It was an interesting application of SaaS technology, and I believed it was a very promising space, requiring an evangelistic disruptive mindset.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p4-0">기업 소프트웨어 산업 대부분의 직무 영역에서 탄탄한 경험을 쌓았다는 자신감이 생겼고, CEO가 되고 싶었습니다. 몇 가지 기회를 검토했지만, Coupa에 가장 마음이 끌렸습니다.</span><span class="sent" data-sid="s1-p4-1"> SaaS 기술의 흥미로운 적용 사례였고, 복음을 전하는 듯한 파괴적 마인드셋이 필요한 매우 유망한 분야라고 생각했습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="9748">When I got to Coupa in January of 2009 it was a group of about 19 people and $400,000 of revenue (for calendar 2008). 1 thought there was a tremendous opportunity in this space, and the team had carved out an interesting niche and a decent tech platform. Unfortunately there were all sorts of execution problems, which is why the VCs had been out looking for a proven leader.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="9645">2009년 1월 Coupa에 합류했을 때 직원은 약 19명이었고, 매출(2008년 기준)은 40만 달러였습니다. 이 분야에 엄청난 기회가 있다고 생각했고, 팀은 흥미로운 틈새시장을 개척하고 적당한 기술 플랫폼을 구축해 놓은 상태였습니다. 그러나 안타깝게도 실행 면에서 온갖 문제가 산재해 있었고, 그래서 VC들이 검증된 리더를 외부에서 영입하려 했던 것입니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s1-p5-0">When I got to Coupa in January of 2009 it was a group of about 19 people and $400,000 of revenue (for calendar 2008).</span><span class="sent" data-sid="s1-p5-1"> I thought there was a tremendous opportunity in this space, and the team had carved out an interesting niche and a decent tech platform.</span><span class="sent" data-sid="s1-p5-2"> Unfortunately there were all sorts of execution problems, which is why the VCs had been out looking for a proven leader.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s1-p5-0">2009년 1월 Coupa에 합류했을 때 직원은 약 19명이었고, 매출(2008년 기준)은 40만 달러였습니다.</span><span class="sent" data-sid="s1-p5-1"> 이 분야에 엄청난 기회가 있다고 생각했고, 팀은 흥미로운 틈새시장을 개척하고 적당한 기술 플랫폼을 구축해 놓은 상태였습니다.</span><span class="sent" data-sid="s1-p5-2"> 그러나 안타깝게도 실행 면에서 온갖 문제가 산재해 있었고, 그래서 VC들이 검증된 리더를 외부에서 영입하려 했던 것입니다.</span></p></div>
 </div>
-
+<div class="section-divider">Background: SaaS and the eProcurement Space / Background: SaaS와 전자 구매 시장</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Background: SaaS and the eProcurement Space</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>Background: SaaS와 전자 구매 시장</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p0-0">With the advent of the Internet and ubiquitous broadband access, it became possible for users to access software that was not resident on their computer, but which resided in &quot;the cloud.&quot;</span><span class="sent" data-sid="s2-p0-1"> It took some time for business users to get comfortable having their data on a third-party computer network, but the advantages made for a compelling argument.</span><span class="sent" data-sid="s2-p0-2"> There were far fewer issues around installation, version control, upgrades or service than existed in the classic desktop software environment.</span><span class="sent" data-sid="s2-p0-3"> A single, up-to date version of the software simply lived on the servers of the software provider, and was accessed by the user.</span><span class="sent" data-sid="s2-p0-4"> This came to be known as &quot;software as a service&quot; (SaaS) and was typically purchased on a monthly or annual subscription basis by the user. Early competitors in the eProcurement space included Ariba, which built an early client-server based product.</span><span class="sent" data-sid="s2-p0-5"> Bernshteyn offered a perspective on the early activity in the space:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p0-0">인터넷의 등장과 광대역 접속의 보편화로, 사용자들은 자신의 컴퓨터가 아닌 &quot;클라우드&quot;에 존재하는 소프트웨어에 접근할 수 있게 됐다.</span><span class="sent" data-sid="s2-p0-1"> 기업 사용자들이 제3자 컴퓨터 네트워크에 자사 데이터를 올리는 것에 익숙해지기까지 시간이 걸렸지만, 그 장점은 설득력이 있었다.</span><span class="sent" data-sid="s2-p0-2"> 설치, 버전 관리, 업그레이드, 서비스와 관련된 문제가 기존 데스크톱 소프트웨어 환경에 비해 훨씬 적었다.</span><span class="sent" data-sid="s2-p0-3"> 소프트웨어의 최신 버전 하나가 공급자의 서버에 올라가 있고, 사용자는 그것에 접속하기만 하면 됐다.</span><span class="sent" data-sid="s2-p0-4"> 이것이 바로 &quot;서비스형 소프트웨어(SaaS)&quot;로 불리게 됐고, 일반적으로 사용자가 월별 또는 연간 구독 방식으로 이용료를 지불했다.</span><span class="sent" data-sid="s2-p0-5"> 전자 구매 분야의 초기 경쟁자로는</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="10358">With the advent of the Internet and ubiquitous broadband access, it became possible for users to access software that was not resident on their computer, but which resided in “the cloud.” It took some time for business users to get comfortable having their data on a third-party computer network, but the advantages made for a compelling argument. There were far fewer issues around installation, version control, upgrades or service than existed in the classic desktop software environment. A single, up-to date version of the software simply lived on the servers of the software provider, and was accessed by the user. This came to be known as “software as a service” (SaaS) and was typically purchased on a monthly or annual subscription basis by the user. Early competitors in the</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="59247">인터넷의 등장과 광대역 접속의 보편화로, 사용자들은 자신의 컴퓨터가 아닌 &quot;클라우드&quot;에 존재하는 소프트웨어에 접근할 수 있게 됐다. 기업 사용자들이 제3자 컴퓨터 네트워크에 자사 데이터를 올리는 것에 익숙해지기까지 시간이 걸렸지만, 그 장점은 설득력이 있었다. 설치, 버전 관리, 업그레이드, 서비스와 관련된 문제가 기존 데스크톱 소프트웨어 환경에 비해 훨씬 적었다. 소프트웨어의 최신 버전 하나가 공급자의 서버에 올라가 있고, 사용자는 그것에 접속하기만 하면 됐다. 이것이 바로 &quot;서비스형 소프트웨어(SaaS)&quot;로 불리게 됐고, 일반적으로 사용자가 월별 또는 연간 구독 방식으로 이용료를 지불했다. 전자 구매 분야의 초기 경쟁자로는</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p1-0">Ariba&#x27;s first product was focused on the same indirect spend arena that Coupa ultimately pursued.</span><span class="sent" data-sid="s2-p1-1"> But then, with the success of eBay, people saw big potential in the business to business (B-to-B) supply chain management space.</span><span class="sent" data-sid="s2-p1-2"> With eBay&#x27;s rapid growth proving there was a fast-growing network effect of helping buyers find sellers, the logic went that the same dynamics in the larger B-to-B market would command a similar valuation multiple.</span><span class="sent" data-sid="s2-p1-3"> Ariba climbed to a $40 billion market cap at the height of the dot com boom.</span><span class="sent" data-sid="s2-p1-4"> And when it went bust, Ariba dropped to a $1 billion market cap.</span><span class="sent" data-sid="s2-p1-5"> So, that pretty well poisoned the space for a while - no one would invest in eProcurement.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p1-0">클라이언트-서버 기반 제품을 초기에 구축한 Ariba가 있었다.</span><span class="sent" data-sid="s2-p1-1"> Bernshteyn은 이 분야의 초기 상황을 다음과 같이 설명했다.</span><span class="sent" data-sid="s2-p1-2"> Ariba의 첫 제품은 Coupa가 결국 공략한 것과 같은 간접 지출 분야에 집중했습니다.</span><span class="sent" data-sid="s2-p1-3"> 그런데 eBay의 성공을 보면서 사람들이 기업 간(B2B) 공급망 관리 분야에 엄청난 잠재력이 있다고 봤습니다. eBay의 폭발적 성장이 구매자와 판매자를 연결하는 네트워크 효과를 입증하면서, 더 큰 B2B 시장에서도 같은 역학 관계가 유사한 밸류에이션 배수를 이끌어낼 것이라는 논리가 형성됐습니다.</span><span class="sent" data-sid="s2-p1-4"> Ariba는 닷컴 버블의 정점에서 시가총액 400억 달러까지 치솟았다가, 거품이 꺼지면서 10억 달러로 추락했습니다.</span><span class="sent" data-sid="s2-p1-5"> 그 여파로 이 분야 전체가 오랫동안 독이 든 것처럼 취급받았습니다. 아무도 전자 구매에 투자하려 하지 않았습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="30914">eProcurement space included Ariba, which built an early client-server based product. Bernshteyn offered a perspective on the early activity in the space:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="24120">클라이언트-서버 기반 제품을 초기에 구축한 Ariba가 있었다. Bernshteyn은 이 분야의 초기 상황을 다음과 같이 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p2-0">Salesforce.com was one of the early successes in the SaaS space serving companies with a streamlined set of sales force management tools via the cloud.</span><span class="sent" data-sid="s2-p2-1"> Other notable successes in the space included NetSuite, Concur and Cornerstone OnDemand.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p2-0">Salesforce.com은 클라우드로 간소화된 영업 관리 툴을 제공하며 SaaS 분야에서 초기 성공을 거둔 기업 중 하나였다.</span><span class="sent" data-sid="s2-p2-1"> 그 밖에 NetSuite, Concur, Cornerstone OnDemand 등도 주목할 만한 성공 사례였다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51658">Ariba’s first product was focused on the same indirect spend arena that Coupa ultimately pursued. But then, with the success of eBay, people saw big potential in the business to business (B-to-B) supply chain management space. With eBay&#x27;s rapid growth proving there was a fast-growing network effect of helping buyers find sellers, the logic went that the same dynamics in the larger B-to-B market would command a similar valuation multiple. Ariba climbed to a $40 billion market cap at the height of the dot com boom. And when it went bust, Ariba dropped to a $1 billion market cap. So, that pretty well poisoned the space for a while - no one would invest in eProcurement.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="32916">Ariba의 첫 제품은 Coupa가 결국 공략한 것과 같은 간접 지출 분야에 집중했습니다. 그런데 eBay의 성공을 보면서 사람들이 기업 간(B2B) 공급망 관리 분야에 엄청난 잠재력이 있다고 봤습니다. eBay의 폭발적 성장이 구매자와 판매자를 연결하는 네트워크 효과를 입증하면서, 더 큰 B2B 시장에서도 같은 역학 관계가 유사한 밸류에이션 배수를 이끌어낼 것이라는 논리가 형성됐습니다. Ariba는 닷컴 버블의 정점에서 시가총액 400억 달러까지 치솟았다가, 거품이 꺼지면서 10억 달러로 추락했습니다. 그 여파로 이 분야 전체가 오랫동안 독이 든 것처럼 취급받았습니다. 아무도 전자 구매에 투자하려 하지 않았습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p3-0">A September 2011 report on the eProcurement market! found 30 vendors above $5 million in revenues, or with more than 150 customers. The report described the market as &quot;highly fragmented, with approximately 100 active suppliers.&quot; Vendors tend to focus on one geographic region or industry segment (or both). The researchers rated each of the 30 vendors along 11 different dimensions. Coupa was the most highly rated of these firms, as measured by the highest overall ranking on the 11 different dimensions. See below for a table describing the dimensions along which several firms were highly ranked.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p3-0">2011년 9월에 발표된 전자 구매 시장 보고서는 연매출 500만 달러 이상이거나 고객사 150개 이상인 벤더를 30개사로 집계했다. 이 보고서는 시장을 &quot;약 100개의 활성 공급업체가 존재하는 고도로 분산된 구조&quot;로 묘사했다. 벤더들은 특정 지역이나 산업 분야(또는 둘 다)에 집중하는 경향이 있었다. 연구진은 30개 벤더를 11개 항목으로 평가했는데, Coupa는 11개 항목의 종합 순위에서 가장 높은 점수를 받았다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="56622">Salesforce.com was one of the early successes in the SaaS space serving companies with a streamlined set of sales force management tools via the cloud. Other notable successes in the space included NetSuite, Concur and Cornerstone OnDemand.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="51982">Salesforce.com은 클라우드로 간소화된 영업 관리 툴을 제공하며 SaaS 분야에서 초기 성공을 거둔 기업 중 하나였다. 그 밖에 NetSuite, Concur, Cornerstone OnDemand 등도 주목할 만한 성공 사례였다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p4-0">Firms with Top 5 Rankings in... Coupa Oracle Ariba SAP Ease of use Breadth &#x27;Scope Breath E-requisition support Technology Platform &#x27;Supplier integration Control Time to Value Product viability</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p4-0">각 항목 상위 5개 기업: Coupa — 사용 편의성, 기술 플랫폼, 도입 시간 단축, 제품 경쟁력 / Oracle — 범위의 폭(Breadth) / Ariba — 범위(Scope) / SAP — 범위의 폭(Breadth), 전자 구매 요청 지원, 공급업체 통합, 통제</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="48347">A September 2011 report on the eProcurement market! found 30 vendors above $5 million in revenues, or with more than 150 customers. The report described the market as “highly fragmented, with approximately 100 active suppliers.” Vendors tend to focus on one geographic region or industry segment (or both). The researchers rated each of the 30 vendors along 11 different dimensions. Coupa was the most highly rated of these firms, as measured by the highest overall ranking on the 11 different dimensions. See below for a table describing the dimensions along which several firms were highly ranked.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="55582">2011년 9월에 발표된 전자 구매 시장 보고서는 연매출 500만 달러 이상이거나 고객사 150개 이상인 벤더를 30개사로 집계했다. 이 보고서는 시장을 &quot;약 100개의 활성 공급업체가 존재하는 고도로 분산된 구조&quot;로 묘사했다. 벤더들은 특정 지역이나 산업 분야(또는 둘 다)에 집중하는 경향이 있었다. 연구진은 30개 벤더를 11개 항목으로 평가했는데, Coupa는 11개 항목의 종합 순위에서 가장 높은 점수를 받았다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p5-0">Customer Satisfaction</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p5-0">고객 만족도</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="22346">Firms with Top 5 Rankings in... Coupa Oracle Ariba SAP Ease of use Breadth ‘Scope Breath E-requisition support Technology Platform ‘Supplier integration Control Time to Value Product viability</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="3960">각 항목 상위 5개 기업: Coupa — 사용 편의성, 기술 플랫폼, 도입 시간 단축, 제품 경쟁력 / Oracle — 범위의 폭(Breadth) / Ariba — 범위(Scope) / SAP — 범위의 폭(Breadth), 전자 구매 요청 지원, 공급업체 통합, 통제</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s2-p6-0">Source: The Gartner Group, &quot;The E-Procurement Market and Vendor Landscape,&quot; by Debra Wilson and Nigel Raynor, September 2, 2011.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s2-p6-0">출처: The Gartner Group, &quot;The E-Procurement Market and Vendor Landscape,&quot; Debra Wilson·Nigel Raynor 저, 2011년 9월 2일.</span></p></div>
 </div>
-
+<div class="section-divider">Background: Coupa / Background: Coupa</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Customer Satisfaction</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>고객 만족도</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p0-0">Coupa was founded in 2006 by two product managers from Oracle. It was originally targeted at the procurement process in small businesses, e.g. generating purchase orders and integrating with Quickbooks and other small business accounting programs. It also began as an open source project in the belief that developers would build out the product and its features. The founders had raised $8 million (in a $1 million A and $7 million B round) in VC by early 2009, but progress seemed stalled. The VCs pushed for a new CEO and hired a recruiter, and Bernshteyn was on their radar based upon his role at SuccessFactors and his industry reputation:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p0-0">Coupa는 2006년 Oracle 출신 두 명의 제품 관리자에 의해 설립됐다. 초기에는 소기업의 구매 프로세스(구매 주문서 생성, Quickbooks 등 소기업 회계 프로그램 연동)를 지원하는 데 집중했다. 또한 개발자들이 제품과 기능을 자유롭게 확장할 수 있도록 오픈소스 프로젝트로 시작했다. 창업자들은 2009년 초까지 100만 달러의 시리즈 A와 700만 달러의 시리즈 B로 총 800만 달러를 VC로부터 유치했지만, 성장이 정체된 것처럼 보였다. VC들은 새로운 CEO를 찾기 위해 헤드헌터를 고용했고, SuccessFactors에서의 역할과 업계 평판 덕분에 Bernshteyn이 그들의 레이더망에 포착됐다. SaaS가 성공한 분야들을 살펴봤습니다. CRM은 이미 완성됐고, ERP도 마찬가지였으며, HR도 그랬습니다. 그런데 지출 관리(spending management) 분야는 아직 정리가 되지 않은 상태였습니다. 이 시장은</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="54100">Source: TheGartner Group, “The E-Procurement Market and Vendor Landscape,” by Debra Wilson and Nigel Raynor, September 2, 2011.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="19333">출처: The Gartner Group, &quot;The E-Procurement Market and Vendor Landscape,&quot; Debra Wilson·Nigel Raynor 저, 2011년 9월 2일.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p1-0">I looked at the various spaces where SaaS had succeeded. CRM was done. ERP—done. HR —done. But spending management was still sorting itself out. The space was being held captive by Ariba: lots of people had bought their product, but it was difficult to use and was rarely fully adopted or used effectively. But, when other companies came along with a better product, Ariba would either squash them or buy them. I thought a real focus on usability and adoption and a true cloud-based platform could make Coupa the winner in this space. Bernshteyn described how he thought about the pros and cons of starting a company from scratch vs. stepping into an existing situation:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p1-0">Ariba에 볼모로 잡혀 있었습니다. 많은 기업이 Ariba 제품을 구매했지만, 사용하기 어렵고 완전히 도입되거나 효과적으로 활용되는 경우가 드물었습니다. 그런데 더 나은 제품을 들고 나온 경쟁사가 등장하면, Ariba는 그 회사를 짓누르거나 인수해버렸습니다. 탁월한 사용성과 도입률, 그리고 진정한 클라우드 기반 플랫폼에 집중한다면 Coupa가 이 분야의 승자가 될 수 있다고 생각했습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Background: Coupa</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>Background: Coupa</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p2-0">I was excited about the potential of building a company during the economic downturn, and wanted a running start.</span><span class="sent" data-sid="s3-p2-1"> I had seen the math of founders equity play out plenty of times: you start out with a big slice but between co-founders, option pools and 4 or 5 rounds of VC, you end up with 6 or 8 or perhaps 10%.</span><span class="sent" data-sid="s3-p2-2"> The board at Coupa had agreed to give me a fair stake in the business in the form of options.</span><span class="sent" data-sid="s3-p2-3"> So, I felt like this situation had more momentum and less risk than a raw start-up, and was a fair deal.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p2-0">처음부터 시작하는 것 대 기존 상황에 뛰어드는 것의 장단점에 대해 이렇게 생각했습니다.</span><span class="sent" data-sid="s3-p2-1"> 경기 침체 속에서 회사를 세우는 일의 잠재력에 가슴이 뛰었고, 처음부터 다시 시작하기보다는 어느 정도 기반이 갖춰진 곳에서 출발하고 싶었습니다.</span><span class="sent" data-sid="s3-p2-2"> 저는 공동창업자 지분, 옵션 풀, 4~5 라운드의 VC 투자를 거치다 보면 결국 창업자 지분이 6~8%, 기껏해야 10% 남는 과정을 여러 번 봐왔습니다.</span><span class="sent" data-sid="s3-p2-3"> Coupa 이사회는 스톡옵션 형태로 저에게 공정한 지분을 부여하는 데 동의했습니다. 그래서 저는 이 상황이 아무것도 없는 스타트업보다 모멘텀이 있고 리스크가 낮으며, 조건도 공정하다고 판단했습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="56308">Coupa was founded in 2006 by two product managers from Oracle. It was originally targeted at the procurement process in small businesses, e.g. generating purchase orders and integrating with Quickbooks and other small business accounting programs. It also began as an open source project in the belief that developers would build out the product and its features. The founders had raised $8 million (in a $1 million A and $7 million B round) in VC by early 2009, but progress seemed stalled. The VCs pushed for a new CEO and hired a recruiter, and Bernshteyn was on their radar based upon his role at SuccessFactors and his industry reputation:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="40096">Coupa는 2006년 Oracle 출신 두 명의 제품 관리자에 의해 설립됐다. 초기에는 소기업의 구매 프로세스(구매 주문서 생성, Quickbooks 등 소기업 회계 프로그램 연동)를 지원하는 데 집중했다. 또한 개발자들이 제품과 기능을 자유롭게 확장할 수 있도록 오픈소스 프로젝트로 시작했다. 창업자들은 2009년 초까지 100만 달러의 시리즈 A와 700만 달러의 시리즈 B로 총 800만 달러를 VC로부터 유치했지만, 성장이 정체된 것처럼 보였다. VC들은 새로운 CEO를 찾기 위해 헤드헌터를 고용했고, SuccessFactors에서의 역할과 업계 평판 덕분에 Bernshteyn이 그들의 레이더망에 포착됐다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p3-0">Coupa 2009-2012 Bernshteyn described the evolution of Coupa since his arrival there:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p3-0">Coupa 2009–2012: Bernshteyn은 합류 이후 Coupa의 변화를 다음과 같이 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="55902">I looked at the various spaces where SaaS had succeeded. CRM was done. ERP—done. HR —done. But spending management was still sorting itself out. The space was being</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="32273">SaaS가 성공한 분야들을 살펴봤습니다. CRM은 이미 완성됐고, ERP도 마찬가지였으며, HR도 그랬습니다. 그런데 지출 관리(spending management) 분야는 아직 정리가 되지 않은 상태였습니다. 이 시장은</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p4-0">When I arrived, it was really a restart.</span><span class="sent" data-sid="s3-p4-1"> There were 19 employees, and we whittled it down to 5 within the first few months.</span><span class="sent" data-sid="s3-p4-2"> I began working on building a real sales team, building market awareness, and developing a customer service team.</span><span class="sent" data-sid="s3-p4-3"> We needed money to grow the company, and the winter of 2009 was a terrible time to raise capital.</span><span class="sent" data-sid="s3-p4-4"> But, I was inspired by this challenge.</span><span class="sent" data-sid="s3-p4-5"> I remember hanging out at a coffee shop on Sand Hill Road, having meeting after meeting and just getting rejection after rejection.</span><span class="sent" data-sid="s3-p4-6"> It was right after the infamous Sequoia memo? came out advising all their companies to prepare for nuclear winter, and no one was putting any money out into new investments.</span><span class="sent" data-sid="s3-p4-7"> Everyone was saving their dry powder for their existing portfolio companies.</span><span class="sent" data-sid="s3-p4-8"> Finally, in the third quarter of 2009, we raised a $7.5 million series C from El Dorado Ventures at a $15.5 million post-money valuation.</span><span class="sent" data-sid="s3-p4-9"> Coupa&#x27;s follow-on financings included:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p4-0">내가 합류했을 때는 사실상 재창업이나 다름없었습니다.</span><span class="sent" data-sid="s3-p4-1"> 직원 19명이 있었는데, 처음 몇 달 안에 5명으로 줄였습니다.</span><span class="sent" data-sid="s3-p4-2"> 실제 영업 팀을 꾸리고, 시장 인지도를 높이고, 고객 서비스 팀을 조직하는 작업을 시작했습니다.</span><span class="sent" data-sid="s3-p4-3"> 회사를 키우려면 자금이 필요했는데, 2009년 겨울은 투자 유치에 최악의 시기였습니다.</span><span class="sent" data-sid="s3-p4-4"> 하지만 이 도전이 오히려 저를 자극했습니다.</span><span class="sent" data-sid="s3-p4-5"> 샌드 힐 로드의 커피숍에서 미팅을 반복하며 거절의 연속을 경험했던 기억이 납니다.</span><span class="sent" data-sid="s3-p4-6"> 악명 높은 Sequoia 메모가 포트폴리오 기업들에게 &#x27;핵겨울&#x27;을 대비하라고 촉구하던 직후였고, 아무도 신규 투자에 나서려 하지 않았습니다.</span><span class="sent" data-sid="s3-p4-7"> 모두 기존 포트폴리오 기업들을 위해 실탄을 아끼고 있었습니다.</span><span class="sent" data-sid="s3-p4-8"> 마침내 2009년 3분기에 El Dorado Ventures로부터 시리즈 C 750만 달러를 투자 후 기업가치(post-money valuation) 1,550만 달러에 유치했습니다.</span><span class="sent" data-sid="s3-p4-9"> 이후 Coupa의 후속 투자 유치는 다음과 같았습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="53820">held captive by Ariba: lots of people had bought their product, but it was difficult to use and was rarely fully adopted or used effectively. But, when other companies came along with a better product, Ariba would either squash them or buy them. I thought a real focus on usability and adoption and a true cloud-based platform could make Coupa the winner in this space. Bernshteyn described how he thought about the pros and cons of starting a company from scratch vs. stepping into an existing situation:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="39696">Ariba에 볼모로 잡혀 있었습니다. 많은 기업이 Ariba 제품을 구매했지만, 사용하기 어렵고 완전히 도입되거나 효과적으로 활용되는 경우가 드물었습니다. 그런데 더 나은 제품을 들고 나온 경쟁사가 등장하면, Ariba는 그 회사를 짓누르거나 인수해버렸습니다. 탁월한 사용성과 도입률, 그리고 진정한 클라우드 기반 플랫폼에 집중한다면 Coupa가 이 분야의 승자가 될 수 있다고 생각했습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p5-0">¢ In 2011, a $12 million series D round led by Mohr Davidow Ventures, at a $32 million post-money valuation;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p5-0">2011년, Mohr Davidow Ventures가 주도한 시리즈 D 1,200만 달러 — 투자 후 기업가치(Post-money valuation) 3,200만 달러;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="60314">I was excited about the potential of building a company during the economic downturn, and wanted a running start. I had seen the math of founders equity play out plenty of times: you start out with a big slice but between co-founders, option pools and 4 or 5 rounds of VC, you end up with 6 or 8 or perhaps 10%. The board at Coupa had agreed to give me a fair stake in the business in the form of options. So, I felt like this situation had more momentum and less risk than a raw start-up, and was a fair deal.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="38850">처음부터 시작하는 것 대 기존 상황에 뛰어드는 것의 장단점에 대해 이렇게 생각했습니다. 경기 침체 속에서 회사를 세우는 일의 잠재력에 가슴이 뛰었고, 처음부터 다시 시작하기보다는 어느 정도 기반이 갖춰진 곳에서 출발하고 싶었습니다. 저는 공동창업자 지분, 옵션 풀, 4~5 라운드의 VC 투자를 거치다 보면 결국 창업자 지분이 6~8%, 기껏해야 10% 남는 과정을 여러 번 봐왔습니다. Coupa 이사회는 스톡옵션 형태로 저에게 공정한 지분을 부여하는 데 동의했습니다. 그래서 저는 이 상황이 아무것도 없는 스타트업보다 모멘텀이 있고 리스크가 낮으며, 조건도 공정하다고 판단했습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p6-0">* In 2012, a $22 million Series E round lead by Crosslink Ventures, at a $102 million post-money valuation. (See Exhibit 1 for cap table.)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p6-0">2012년, Crosslink Ventures가 주도한 시리즈 E 2,200만 달러 — 투자 후 기업가치 1억 200만 달러. (자본구조표(Cap Table)는 Exhibit 1 참조.)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="3142">Coupa 2009-2012 Bernshteyn described the evolution of Coupa since his arrival there:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="30845">Coupa 2009–2012: Bernshteyn은 합류 이후 Coupa의 변화를 다음과 같이 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p7-0">As 2012 drew to a close, Coupa had not yet spent the funds from its last financing: &quot;We had raised $41.5 million since I came aboard in 2009 and $23 million was still in the bank. It was obvious that we would need more funding, and 2012 was a good time to raise money, so we went out into the market and raised our $22 million then. At this point, we are burning about $1 million per month.&quot; (See Exhibit 2 for historical financials.)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p7-0">2012년이 저물어 갈 무렵, Coupa는 마지막 투자 유치 자금을 아직 다 쓰지 않은 상태였다. &quot;2009년 합류 이후 총 4,150만 달러를 유치했고 2,300만 달러가 아직 통장에 있었습니다. 추가 자금이 필요하다는 것은 명확했고, 2012년은 투자 유치에 좋은 환경이었기에 시장에 나가 2,200만 달러를 조달했습니다. 현재 월 소진율(Burn Rate)은 약 100만 달러입니다.&quot; (과거 재무 현황은 Exhibit 2 참조.) 이 최근 투자금은 영업 인력을 확충하는 데 사용되고 있었다. Coupa의 핵심 제품은 이른바 &quot;간접 구매(indirect purchasing)&quot;에 집중했다. 즉</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1673">When I arrived, it was really a restart. There were 19 employees, and we whittled it down to 5 within the first few months. | began working on building a real sales team, building market awareness, and developing a customer service team. We needed money to grow the company, and the winter of 2009 was a terrible time to raise capital. But, | was inspired by this challenge. I remember hanging out at a coffee shop on Sand Hill Road, having meeting after meeting and just getting rejection after rejection. It was right after the infamous Sequoia memo? came out advising all their companies to prepare for nuclear winter, and no one was putting any money out into new investments. Everyone was saving their dry powder for their existing portfolio companies. Finally, in the third quarter of 2009, we raised a $7.5 million series C from El Dorado Ventures at a $15.5 million post- money valuation. Coupa’s follow-on financings included:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="16588">내가 합류했을 때는 사실상 재창업이나 다름없었습니다. 직원 19명이 있었는데, 처음 몇 달 안에 5명으로 줄였습니다. 실제 영업 팀을 꾸리고, 시장 인지도를 높이고, 고객 서비스 팀을 조직하는 작업을 시작했습니다. 회사를 키우려면 자금이 필요했는데, 2009년 겨울은 투자 유치에 최악의 시기였습니다. 하지만 이 도전이 오히려 저를 자극했습니다. 샌드 힐 로드의 커피숍에서 미팅을 반복하며 거절의 연속을 경험했던 기억이 납니다. 악명 높은 Sequoia 메모가 포트폴리오 기업들에게 &#x27;핵겨울&#x27;을 대비하라고 촉구하던 직후였고, 아무도 신규 투자에 나서려 하지 않았습니다. 모두 기존 포트폴리오 기업들을 위해 실탄을 아끼고 있었습니다. 마침내 2009년 3분기에 El Dorado Ventures로부터 시리즈 C 750만 달러를 투자 후 기업가치(post-money valuation) 1,550만 달러에 유치했습니다. 이후 Coupa의 후속 투자 유치는 다음과 같았습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p8-0">This most recent round of funding was being used to scale the company&#x27;s sales force. Coupa&#x27;s basic product focused on what it termed &quot;indirect purchasing&quot;; that is, items that were not part of a company&#x27;s &quot;costs of goods sold&quot; or bill of materials, but were in the G&amp;A component of the P&amp;L. &quot;We focused on indirect purchases because we knew it was a pain in the neck — the process was broken, but we knew how to fix it and create a demonstrable ROI And, we focused on making it extremely user- friendly. Most companies in the space built the back office first and then a self-service user interface, but we started with the user and worked out from there.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p8-0">회사의 매출원가(COGS)나 자재 명세서에 포함되지 않고 손익계산서의 일반관리비(G&amp;A) 항목에 속하는 물품들이 대상이었다. &quot;간접 구매에 집중한 것은 그 프로세스가 깨져 있다는 것을 알았기 때문입니다. 우리는 그것을 어떻게 고쳐야 하는지, 그리고 측정 가능한 ROI를 어떻게 만들어낼 수 있는지 알고 있었습니다. 또한 사용자 친화성을 극도로 중시했습니다. 이 분야의 대부분의 기업들이 백오피스부터 먼저 구축하고 자기 서비스 사용자 인터페이스를 나중에 붙이는 방식으로 개발하는 데 반해, 우리는 사용자로부터 출발해 밖으로 확장해 나갔습니다.&quot;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="39341">¢  In2011,a $12 million series D round led by Mohr Davidow Ventures, at a $32 million post- money valuation;</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="18745">2011년, Mohr Davidow Ventures가 주도한 시리즈 D 1,200만 달러 — 투자 후 기업가치(Post-money valuation) 3,200만 달러;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p9-0">Coupa&#x27;s value proposition had several elements:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p9-0">Coupa의 가치 제안은 여러 요소로 구성됐다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="41779">* In 2012, a $22 million Series E round lead by Crosslink Ventures, at a $102 million post- money valuation. (See Exhibit 1 for cap table.)</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="17667">2012년, Crosslink Ventures가 주도한 시리즈 E 2,200만 달러 — 투자 후 기업가치 1억 200만 달러. (자본구조표(Cap Table)는 Exhibit 1 참조.)</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p10-0">© Gather a higher fraction of indirect spending under common control/ oversight so it could be more effectively managed;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p10-0">간접 지출의 더 많은 부분을 공통 관리·감독 체계 아래로 편입시켜 보다 효과적으로 관리;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="37873">As 2012 drew to a close, Coupa had not yet spent the funds from its last financing: “We had raised $41.5 million since I came aboard in 2009 and $23 million was still in the bank. It was obvious that we would need more funding, and 2012 was a good time to raise money, so we went out into the market and raised our $22 million then. At this point, we are burning about $1 million per month.” (See Exhibit 2 for historical financials.)</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="58738">2012년이 저물어 갈 무렵, Coupa는 마지막 투자 유치 자금을 아직 다 쓰지 않은 상태였다. &quot;2009년 합류 이후 총 4,150만 달러를 유치했고 2,300만 달러가 아직 통장에 있었습니다. 추가 자금이 필요하다는 것은 명확했고, 2012년은 투자 유치에 좋은 환경이었기에 시장에 나가 2,200만 달러를 조달했습니다. 현재 월 소진율(Burn Rate)은 약 100만 달러입니다.&quot; (과거 재무 현황은 Exhibit 2 참조.)</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p11-0">e Reduce the time spent on purchasing activities by automating the process;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p11-0">구매 프로세스를 자동화해 구매 활동에 소비되는 시간 절감;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="64815">This most recent round of funding was being used to scale the company’s sales force. Coupa’s basic product focused on what it termed “indirect purchasing”; that is, items that were not part of a</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="21655">이 최근 투자금은 영업 인력을 확충하는 데 사용되고 있었다. Coupa의 핵심 제품은 이른바 &quot;간접 구매(indirect purchasing)&quot;에 집중했다. 즉</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p12-0">e Reduce cycle time from decision through receipt of goods by automating steps in the purchase cycle;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p12-0">구매 사이클의 단계를 자동화해 의사 결정부터 물품 수령까지의 처리 시간(cycle time) 단축;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="20292">company’s “costs of goods sold” or bill of materials, but were in the G&amp;A component of the P&amp;L. “We focused on indirect purchases because we knew it was a pain in the neck — the process was broken, but we knew how to fix it and create a demonstrable ROL And, we focused on making it extremely user- friendly. Most companies in the space built the back office first and then a self-service user interface, but we started with the user and worked out from there.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="19383">회사의 매출원가(COGS)나 자재 명세서에 포함되지 않고 손익계산서의 일반관리비(G&amp;A) 항목에 속하는 물품들이 대상이었다. &quot;간접 구매에 집중한 것은 그 프로세스가 깨져 있다는 것을 알았기 때문입니다. 우리는 그것을 어떻게 고쳐야 하는지, 그리고 측정 가능한 ROI를 어떻게 만들어낼 수 있는지 알고 있었습니다. 또한 사용자 친화성을 극도로 중시했습니다. 이 분야의 대부분의 기업들이 백오피스부터 먼저 구축하고 자기 서비스 사용자 인터페이스를 나중에 붙이는 방식으로 개발하는 데 반해, 우리는 사용자로부터 출발해 밖으로 확장해 나갔습니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p13-0">* Lower average costs of goods ordered by pooling purchases previously made across multiple vendors; and,</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p13-0">여러 공급업체에 분산됐던 구매를 통합함으로써 평균 구매 단가 인하; 그리고</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="18290">Coupa’s value proposition had several elements:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="49979">Coupa의 가치 제안은 여러 요소로 구성됐다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p14-0">© Reducing &quot;maverick&quot; spending i.e., unapproved purchases or purchases of goods from unapproved vendors.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p14-0">&quot;일탈적(maverick)&quot; 지출, 즉 미승인 구매 또는 미승인 벤더로부터의 구매 억제.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="45632">© Gather a higher fraction of indirect spending under common control/ oversight so it could be more effectively managed;</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="41512">간접 지출의 더 많은 부분을 공통 관리·감독 체계 아래로 편입시켜 보다 효과적으로 관리;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p15-0">&quot;We do well in the upper middle market— medium-sized to large companies.</span><span class="sent" data-sid="s3-p15-1"> The really small competitors can&#x27;t scale up to serve these companies, and the bigger competitors can&#x27;t scale down.</span><span class="sent" data-sid="s3-p15-2"> We also do well with &quot;distributed&quot; users—the software is easy to deploy and use, so it&#x27;s well suited to being used by a wide swath of employees far from headquarters.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p15-0">&quot;저희는 중상위 시장에서 강점을 보입니다.</span><span class="sent" data-sid="s3-p15-1"> 즉 중견에서 대기업 규모의 회사들이 대상입니다. 소규모 경쟁사들은 이 기업들을 서비스할 만큼 확장하지 못하고, 대형 경쟁사들은 아래로 내려오지 못합니다.</span><span class="sent" data-sid="s3-p15-2"> 또한 본사에서 멀리 떨어진 직원들도 쉽게 사용할 수 있는 &#x27;분산형&#x27; 사용자 환경에서 강점을 발휘합니다.&quot;</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="62807">e Reduce the time spent on purchasing activities by automating the process;</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="1818">구매 프로세스를 자동화해 구매 활동에 소비되는 시간 절감;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p16-0">Coupa had well over 250 customers that ranged from small, single-location businesses like Pandora to large retail chains with thousands of locations.</span><span class="sent" data-sid="s3-p16-1"> McDonalds, for instance had 3,000 locations on the system and the large insurer Chubb, 5,000.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p16-0">Coupa는 Pandora처럼 단일 사무소를 가진 소규모 기업부터 수천 개의 매장을 거느린 대형 유통 체인에 이르기까지 250개 이상의 고객사를 확보했다.</span><span class="sent" data-sid="s3-p16-1"> 예컨대 McDonald&#x27;s는 3,000개 매장을, 대형 보험사 Chubb은 5,000개 사업장을 시스템에 연결했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="46517">e Reduce cycle time from decision through receipt of goods by automating steps in the purchase cycle;</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="27263">구매 사이클의 단계를 자동화해 의사 결정부터 물품 수령까지의 처리 시간(cycle time) 단축;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p17-0">Bernshteyn explained how Coupa priced its products:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p17-0">Bernshteyn은 제품 가격 책정 방식을 다음과 같이 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="57283">* Lower average costs of goods ordered by pooling purchases previously made across multiple vendors; and,</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>여러 공급업체에 분산됐던 구매를 통합함으로써 평균 구매 단가 인하; 그리고</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p18-0">Pricing is based on the number of people in the organization covered by the buying activity.</span><span class="sent" data-sid="s3-p18-1"> For example, a company of 500 people might have 10 admins who did all the indirect purchasing, and we&#x27;d get roughly $75,000 per year for serving that account.</span><span class="sent" data-sid="s3-p18-2"> We typically sign companies up for 2-3 year contracts. Typically there is a one-time set-up fee averaging 30%-40% of the first year Annual Contract Value (or &quot;ACV,&quot; which was the annual recurring revenue from a customer contract, excluding the one-time set-up fee).</span><span class="sent" data-sid="s3-p18-3"> Average deal size is about $150,000 per year, with the smallest customers at about $20,000 and the largest a bit over $1,000,000.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p18-0">가격은 구매 활동의 적용을 받는 조직 인원 수를 기준으로 합니다.</span><span class="sent" data-sid="s3-p18-1"> 예를 들어 500명 규모의 회사에서 10명의 담당자가 모든 간접 구매를 처리한다면, 해당 고객사로부터 연간 약 75,000달러를 받게 됩니다.</span><span class="sent" data-sid="s3-p18-2"> 통상 2~3년 계약을 체결하며, 계약 첫 해 연간 계약 가치(ACV, Annual Contract Value)의 30~40%에 해당하는 일회성 초기 설정 비용이 발생합니다.</span><span class="sent" data-sid="s3-p18-3"> 평균 계약 규모는 연간 약 15만 달러이고, 최소 고객사는 약 2만 달러, 최대 고객사는 100만 달러를 약간 넘습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="28565">© Reducing “maverick” spending i.e., unapproved purchases or purchases of goods from unapproved vendors.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="43614">&quot;일탈적(maverick)&quot; 지출, 즉 미승인 구매 또는 미승인 벤더로부터의 구매 억제.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s3-p19-0">One of the keys to the Coupa offering was that it gave management visibility on what was happening: &quot;We went to a big investment bank, and they saved $100,000 the first week just on their purchases of bottled water.</span><span class="sent" data-sid="s3-p19-1"> Salesforce.com saved $10 million in the first year rejecting purchases of ineligible goods and services that would otherwise have been made.</span><span class="sent" data-sid="s3-p19-2"> Other companies are able to cut out administrative headcount because the process becomes so streamlined.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s3-p19-0">Coupa 솔루션의 핵심 중 하나는 경영진에게 실시간 현황 파악 수단을 제공한다는 점이었다.</span><span class="sent" data-sid="s3-p19-1"> &quot;한 대형 투자은행에서 첫 주에만 생수 구매 절감으로 10만 달러를 아꼈습니다. Salesforce.com은 첫 해에 부적격 물품 및 서비스 구매 차단으로 1,000만 달러를 절감했습니다.</span><span class="sent" data-sid="s3-p19-2"> 프로세스가 효율화되면서 관리 인력을 줄이는 기업들도 있습니다.&quot;</span></p></div>
 </div>
-
+<div class="section-divider">Sales and Marketing / Sales and Marketing</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="5715">“We do well in the upper middle market— medium-sized to large companies. The really small competitors can’t scale up to serve these companies, and the bigger competitors can’t scale down. We also do well with “distributed” users—the software is easy to deploy and use, so it’s well suited to being used by a wide swath of employees far from headquarters.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="25327">&quot;저희는 중상위 시장에서 강점을 보입니다. 즉 중견에서 대기업 규모의 회사들이 대상입니다. 소규모 경쟁사들은 이 기업들을 서비스할 만큼 확장하지 못하고, 대형 경쟁사들은 아래로 내려오지 못합니다. 또한 본사에서 멀리 떨어진 직원들도 쉽게 사용할 수 있는 &#x27;분산형&#x27; 사용자 환경에서 강점을 발휘합니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p0-0">Coupa had two different selling organizations: the &quot;enterprise&quot; sales team sold to businesses with more than 2,000 to 2,500 people, and the &quot;mid-market&quot; (MM) team sold to businesses of smaller size.</span><span class="sent" data-sid="s4-p0-1"> Bernshteyn described the sales process:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p0-0">Coupa는 두 개의 영업 조직을 운영했다. &quot;엔터프라이즈(enterprise)&quot; 영업 팀은 직원 2,000~2,500명 이상의 대기업을 대상으로, &quot;중견 시장(mid-market, MM)&quot; 팀은 그보다 작은 규모의 기업을 대상으로 영업했다.</span><span class="sent" data-sid="s4-p0-1"> Bernshteyn은 영업 프로세스를 다음과 같이 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="19035">Coupa had well over 250 customers that ranged from small, single-location businesses like Pandora to large retail chains with thousands of locations. McDonalds, for instance had 3,000 locations on the system and the large insurer Chubb, 5,000.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="54441">Coupa는 Pandora처럼 단일 사무소를 가진 소규모 기업부터 수천 개의 매장을 거느린 대형 유통 체인에 이르기까지 250개 이상의 고객사를 확보했다. 예컨대 McDonald&#x27;s는 3,000개 매장을, 대형 보험사 Chubb은 5,000개 사업장을 시스템에 연결했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p1-0">On the enterprise side, there is a sales cycle of 4 to 5 months.</span><span class="sent" data-sid="s4-p1-1"> The average enterprise deal is for 3 years at $500,000 per year, with a $150,000 to $200,000 one-time fee.</span><span class="sent" data-sid="s4-p1-2"> The average quota on the enterprise side is between $800,000 and $1,000,000 per year.</span><span class="sent" data-sid="s4-p1-3"> These folks get their leads via trade shows, customer references, our own lead gen process, and old-fashioned cold-calling.</span><span class="sent" data-sid="s4-p1-4"> On the mid-market side, the deals average a bit less than $100,000 and the quotas are correspondingly lower.</span><span class="sent" data-sid="s4-p1-5"> Often, we can close a deal like this over the phone.</span><span class="sent" data-sid="s4-p1-6"> As of the end of 2012, we have 10 enterprise sales reps and 7 middle market, and a group of another dozen or so people who support them.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p1-0">엔터프라이즈 쪽은 영업 사이클이 4~5개월입니다.</span><span class="sent" data-sid="s4-p1-1"> 엔터프라이즈 평균 계약은 3년, 연간 50만 달러이며, 일회성 설정 비용은 15~20만 달러입니다.</span><span class="sent" data-sid="s4-p1-2"> 엔터프라이즈 측 영업 담당자의 평균 목표 실적(quota)은 연간 80~100만 달러입니다.</span><span class="sent" data-sid="s4-p1-3"> 리드는 트레이드쇼, 고객 추천, 자체 리드 생성 프로세스, 그리고 전통적인 콜드콜을 통해 발굴합니다.</span><span class="sent" data-sid="s4-p1-4"> 중견 시장 쪽은 계약 규모가 평균 10만 달러를 약간 밑돌고 목표 실적도 그에 맞게 낮습니다.</span><span class="sent" data-sid="s4-p1-5"> 전화로 거래를 마무리하는 경우도 많습니다.</span><span class="sent" data-sid="s4-p1-6"> 2012년 말 기준 엔터프라이즈 영업 담당자 10명, 중견 시장 7명, 그리고 이들을 지원하는 약 12명이 있습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="32681">Bernshteyn explained how Coupa priced its products:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="35779">Bernshteyn은 제품 가격 책정 방식을 다음과 같이 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s4-p2-0">Most of our salespeople come from a background in sales with specializations in finance, procurement, or expense management.</span><span class="sent" data-sid="s4-p2-1"> Note that we pay commission on &quot;annual contract value.&quot;</span><span class="sent" data-sid="s4-p2-2"> Let&#x27;s say a $600,000 contract is signed on December 1.</span><span class="sent" data-sid="s4-p2-3"> We pay the salesperson a commission based on the $600,000 ACV.</span><span class="sent" data-sid="s4-p2-4"> But, under GAAP, we can only recognize one-twelfth — $50,000 —in that calendar year, and the rest in the following year.</span><span class="sent" data-sid="s4-p2-5"> On average, we are paying commission on 100 cents on the dollar of ACV, but recognizing significantly less in the year in which the contract is signed.</span><span class="sent" data-sid="s4-p2-6"> That is because sales are skewed towards the last half of the year—in part because that is when customers tend to spend, and in part, because we are growing rapidly, so sales are naturally higher later in the year.</span><span class="sent" data-sid="s4-p2-7"> On the plus side, we pay commission only one time on that sale. We don&#x27;t pay any commission on renewals, but there is always the incentive of increasing ACV at existing customers, which we believe keeps the salesperson involved in their accounts.</span><span class="sent" data-sid="s4-p2-8"> Our average renewal rate is 95%, and with a 5% or so price increase each year, we keep 100% of our revenue/contract value in successive years, and are not paying any commission on those follow-on years.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s4-p2-0">영업 인력의 대부분은 재무, 구매 또는 비용 관리 분야의 영업 경력자들입니다.</span><span class="sent" data-sid="s4-p2-1"> 커미션은 &quot;연간 계약 가치(ACV)&quot;를 기준으로 지급됩니다.</span><span class="sent" data-sid="s4-p2-2"> 예컨대 12월 1일에 60만 달러짜리 계약을 체결하면, 담당자에게는 60만 달러 ACV를 기준으로 커미션이 지급됩니다.</span><span class="sent" data-sid="s4-p2-3"> 하지만 GAAP 기준으로는 해당 연도에 12분의 1, 즉 5만 달러만 매출로 인식하고 나머지는 이듬해에 인식합니다.</span><span class="sent" data-sid="s4-p2-4"> 평균적으로 저희는 ACV의 100%를 기준으로 커미션을 지급하지만, 계약 체결 연도에 실제로 인식되는 매출은 훨씬 적습니다.</span><span class="sent" data-sid="s4-p2-5"> 매출이 연간 하반기에 집중되는 경향이 있고, 빠르게 성장 중이기 때문에 자연스럽게 후반부로 갈수록 매출이 높습니다.</span><span class="sent" data-sid="s4-p2-6"> 긍정적인 측면은 해당 계약에 대해 커미션을 단 한 번만 지급한다는 점입니다.</span><span class="sent" data-sid="s4-p2-7"> 갱신 계약에 대해서는 커미션을 지급하지 않지만, 기존 고객사에서 ACV를 늘릴 유인이 있기 때문에 영업 담당자가 계속 계정에 관여하게 됩니다.</span><span class="sent" data-sid="s4-p2-8"> 평균 갱신율은 95%이며, 매년 약 5%의 단가 인상으로 후속 연도에도 매출·계약 가치를 100% 유지하면서 추가 커미션 없이 운영됩니다.</span></p></div>
 </div>
-
+<div class="section-divider">The Coupa Sales Model / The Coupa Sales Model</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="18602">Pricing is based on the number of people in the organization covered by the buying activity. For example, a company of 500 people might have 10 admins who did all the indirect purchasing, and we&#x27;d get roughly $75,000 per year for serving that account. We typically sign companies up for 2-3 year contracts. Typically there is a one-time set-up fee averaging 30%-40% of the first year Annual Contract Value (or “ACV,” which was the annual recurring revenue from a customer contract, excluding the one-time set-up fee). Average deal size is about $150,000 per year, with the smallest customers at about $20,000 and the largest a bit over $1,000,000.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="10240">가격은 구매 활동의 적용을 받는 조직 인원 수를 기준으로 합니다. 예를 들어 500명 규모의 회사에서 10명의 담당자가 모든 간접 구매를 처리한다면, 해당 고객사로부터 연간 약 75,000달러를 받게 됩니다. 통상 2~3년 계약을 체결하며, 계약 첫 해 연간 계약 가치(ACV, Annual Contract Value)의 30~40%에 해당하는 일회성 초기 설정 비용이 발생합니다. 평균 계약 규모는 연간 약 15만 달러이고, 최소 고객사는 약 2만 달러, 최대 고객사는 100만 달러를 약간 넘습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p0-0">Exhibit 3 describes the Coupa sales and revenue model.</span><span class="sent" data-sid="s5-p0-1"> The model takes as inputs the number of sales reps that are hired over time, and shows how they move through the system to become productive sellers, and what they book each quarter, and how those ACV bookings translate into GAAP revenue.</span><span class="sent" data-sid="s5-p0-2"> It relies on a number of assumptions some of which are slightly simplified for the sake of the model:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p0-0">Exhibit 3은 Coupa의 영업 및 매출 모델을 설명한다.</span><span class="sent" data-sid="s5-p0-1"> 이 모델은 시간에 따라 채용되는 영업 담당자 수를 입력값으로 삼아, 담당자들이 어떤 과정을 거쳐 실제 판매를 담당하는 단계로 성장하는지, 분기별로 얼마나 예약(booking)하는지, 그리고 그 ACV 예약이 GAAP 매출로 어떻게 전환되는지를 보여 준다.</span><span class="sent" data-sid="s5-p0-2"> 모델은 다음과 같은 가정들(일부는 단순화됨)을 토대로 한다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1287">One of the keys to the Coupa offering was that it gave management visibility on what was happening: “We went to a big investment bank, and they saved $100,000 the first week just on their purchases of bottled water. Salesforce.com saved $10 million in the first year rejecting purchases of ineligible goods and services that would otherwise have been made. Other companies are able to cut out administrative headcount because the process becomes so streamlined.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="38092">Coupa 솔루션의 핵심 중 하나는 경영진에게 실시간 현황 파악 수단을 제공한다는 점이었다. &quot;한 대형 투자은행에서 첫 주에만 생수 구매 절감으로 10만 달러를 아꼈습니다. Salesforce.com은 첫 해에 부적격 물품 및 서비스 구매 차단으로 1,000만 달러를 절감했습니다. 프로세스가 효율화되면서 관리 인력을 줄이는 기업들도 있습니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p1-0">New reps take 6 months to &quot;ramp&quot; and become productive.</span><span class="sent" data-sid="s5-p1-1"> About 65% succeed in &quot;ramping&quot; and about 35% wash out and leave before they ever become productive.</span><span class="sent" data-sid="s5-p1-2"> Of ramped reps, about 3% leave each quarter for other opportunities. Thus, the new reps hired each quarter take 2 quarters before they really have an impact on sales revenue.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p1-0">신규 담당자는 &quot;적응(ramp)&quot;까지 6개월이 걸리며, 약 65%만 성공적으로 적응하고 35%는 생산적인 담당자가 되기 전에 퇴직한다.</span><span class="sent" data-sid="s5-p1-1"> 적응 완료 담당자 중 약 3%가 매 분기 다른 기회를 찾아 떠난다.</span><span class="sent" data-sid="s5-p1-2"> 따라서 분기별로 신규 채용된 담당자는 2분기가 지나야 실제 영업 매출에 기여하기 시작한다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Sales and Marketing</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>Sales and Marketing</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p2-0">Ramped reps cost about $90,000 per quarter, unramped reps about $35,000 per quarter, and the cost of a new hire is about $55,000 for recruiters&#x27; fees and other one-time expenses. In addition to these expenses that varied according to the number of reps, there were other fixed expenses of the sales function.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p2-0">적응 완료 담당자의 분기당 비용은 약 9만 달러, 미완료 담당자는 약 3만 5,000달러이며, 신규 채용 비용은 헤드헌터 수수료 등 일회성 비용을 포함해 약 5만 5,000달러다. 담당자 수에 따라 변동하는 이 비용 외에, 영업 기능에는 별도의 고정 비용도 존재한다. 적응 완료 담당자는 2013년 약 62만 5,000달러, 2014년 약 64만 5,000달러의 ACV를 목표로 설정됐다. 그 ACV는 Coupa 고객사의 예산 수립·도입 주기에 맞춰 연간 4개</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1054">Coupa had two different selling organizations: the “enterprise” sales team sold to businesses with more than 2,000 to 2,500 people, and the “mid-market” (MM) team sold to businesses of smaller size. Bernshteyn described the sales process:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="46694">Coupa는 두 개의 영업 조직을 운영했다. &quot;엔터프라이즈(enterprise)&quot; 영업 팀은 직원 2,000~2,500명 이상의 대기업을 대상으로, &quot;중견 시장(mid-market, MM)&quot; 팀은 그보다 작은 규모의 기업을 대상으로 영업했다. Bernshteyn은 영업 프로세스를 다음과 같이 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p3-0">Once they became productive, ramped reps were targeted to hit about $625,000 of ACV in 2013, and about $645,000 in ACV in 2014. That ACV was spread unevenly over the 4 quarters in a year, based on the budgeting and implementation cycles of Coupa&#x27;s customers, with far more sales in the second and especially the fourth quarter.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p3-0">분기에 불균등하게 배분됐으며, 2분기 특히 4분기에 매출이 집중됐다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="60367">On the enterprise side, there is a sales cycle of 4 to 5 months. The average enterprise deal is for 3 years at $500,000 per year, with a $150,000 to $200,000 one-time fee. The average quota on the enterprise side is between $800,000 and $1,000,000 per year. These folks get their leads via trade shows, customer references, our own lead gen process, and old-fashioned cold-calling. On the mid-market side, the deals average a bit less than $100,000 and the quotas are correspondingly lower. Often, we can close a deal like this over the phone. As of the end of 2012, we have 10 enterprise sales reps and 7 middle market, and a group of another dozen or so people who support them.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="57671">엔터프라이즈 쪽은 영업 사이클이 4~5개월입니다. 엔터프라이즈 평균 계약은 3년, 연간 50만 달러이며, 일회성 설정 비용은 15~20만 달러입니다. 엔터프라이즈 측 영업 담당자의 평균 목표 실적(quota)은 연간 80~100만 달러입니다. 리드는 트레이드쇼, 고객 추천, 자체 리드 생성 프로세스, 그리고 전통적인 콜드콜을 통해 발굴합니다. 중견 시장 쪽은 계약 규모가 평균 10만 달러를 약간 밑돌고 목표 실적도 그에 맞게 낮습니다. 전화로 거래를 마무리하는 경우도 많습니다. 2012년 말 기준 엔터프라이즈 영업 담당자 10명, 중견 시장 7명, 그리고 이들을 지원하는 약 12명이 있습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p4-0">* The impact of $1 of newly acquired ACV on quarterly GAAP revenue (for the quarter in which it was signed) was about $0.083 (one-twelfth).</span><span class="sent" data-sid="s5-p4-1"> GAAP required booking the revenue in the month in which the service was actually delivered, so—on an annual contract—12 months&#x27; worth of ACV was spread evenly over the succeeding 12 months.</span><span class="sent" data-sid="s5-p4-2"> Because the quarter was, of course, shorter than a year, the company couldn&#x27;t book a full year&#x27;s worth of revenue in any quarter anyway.</span><span class="sent" data-sid="s5-p4-3"> But sales tended to happen disproportionately towards the end of the quarter, so the fraction of booked ACV that turned into quarterly GAAP revenue was even less.</span><span class="sent" data-sid="s5-p4-4"> For example, if Coupa signed a contract worth $120,000 of ACV on March 1, then it could book one-twelfth—$10,000—as Q1 revenue.</span><span class="sent" data-sid="s5-p4-5"> However, fully one- quarter of the ACV—$30,000—rolled forward to become part of Q2&#x27;s new recurring revenue base.</span><span class="sent" data-sid="s5-p4-6"> In general, the company started each quarter with a revenue base that then grew by 8.3% (one-twelfth) of the ACV booked in that quarter.</span><span class="sent" data-sid="s5-p4-7"> On a cash basis, however, Coupa usually collected the full year&#x27;s value of the contract within 30 days of signing.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p4-0">새로 체결된 ACV 1달러가 해당 분기 GAAP 매출에 미치는 영향은 약 0.083달러(12분의 1)였다.</span><span class="sent" data-sid="s5-p4-1"> GAAP은 서비스가 실제로 제공되는 달에 매출을 인식하도록 요구하므로, 연간 계약의 경우 12개월치 ACV가 이후 12개월에 걸쳐 균등하게 배분됐다.</span><span class="sent" data-sid="s5-p4-2"> 분기는 1년보다 짧기 때문에 어떤 분기에도 1년치 매출 전액을 인식할 수는 없었다.</span><span class="sent" data-sid="s5-p4-3"> 더욱이 영업이 분기 말에 집중되는 경향이 있어, 예약 ACV 대비 분기 GAAP 매출 비율은 더욱 낮았다.</span><span class="sent" data-sid="s5-p4-4"> 예컨대 3월 1일에 ACV 12만 달러 계약을 체결하면 12분의 1, 즉 1만 달러를 1분기 매출로 인식할 수 있다.</span><span class="sent" data-sid="s5-p4-5"> 반면 ACV의 4분의 1인 3만 달러는 2분기 신규 반복 매출 기반의 일부가 된다.</span><span class="sent" data-sid="s5-p4-6"> 일반적으로 회사는 매 분기 초의 매출 기반에서 시작해 해당 분기 예약 ACV의 8.3%(12분의 1)만큼 성장한다.</span><span class="sent" data-sid="s5-p4-7"> 그러나 현금 기준으로는, Coupa가 계약 체결 후 30일 이내에 연간 계약 전액을 회수하는 것이 일반적이었다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="35848">Most of our salespeople come from a background in sales with specializations in finance, procurement, or expense management. Note that we pay commission on “annual contract value.” Let&#x27;s say a $600,000 contract is signed on December 1. We pay the salesperson a commission based on the $600,000 ACV. But, under GAAP, we can only recognize one-twelfth — $50,000 —in that calendar year, and the rest in the following year. On average, we are paying commission on 100 cents on the dollar of ACV, but recognizing significantly less in the year in which the contract is signed. That is because sales are skewed towards the last half of the year—in part because that is when customers tend to spend, and in part, because we are growing rapidly, so sales are naturally higher later in the year. On the plus side, we pay commission only one time on that sale. We don’t pay any commission on renewals, but there is always the incentive of increasing ACV at existing customers, which we believe keeps the salesperson involved in their accounts. Our average renewal rate is 95%, and with a 5% or so price increase each year, we keep 100% of our revenue/contract value in successive years, and are not paying any commission on those follow-on years.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="30639">영업 인력의 대부분은 재무, 구매 또는 비용 관리 분야의 영업 경력자들입니다. 커미션은 &quot;연간 계약 가치(ACV)&quot;를 기준으로 지급됩니다. 예컨대 12월 1일에 60만 달러짜리 계약을 체결하면, 담당자에게는 60만 달러 ACV를 기준으로 커미션이 지급됩니다. 하지만 GAAP 기준으로는 해당 연도에 12분의 1, 즉 5만 달러만 매출로 인식하고 나머지는 이듬해에 인식합니다. 평균적으로 저희는 ACV의 100%를 기준으로 커미션을 지급하지만, 계약 체결 연도에 실제로 인식되는 매출은 훨씬 적습니다. 매출이 연간 하반기에 집중되는 경향이 있고, 빠르게 성장 중이기 때문에 자연스럽게 후반부로 갈수록 매출이 높습니다. 긍정적인 측면은 해당 계약에 대해 커미션을 단 한 번만 지급한다는 점입니다. 갱신 계약에 대해서는 커미션을 지급하지 않지만, 기존 고객사에서 ACV를 늘릴 유인이 있기 때문에 영업 담당자가 계속 계정에 관여하게 됩니다. 평균 갱신율은 95%이며, 매년 약 5%의 단가 인상으로 후속 연도에도 매출·계약 가치를 100% 유지하면서 추가 커미션 없이 운영됩니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s5-p5-0">Bernshteyn explained: &quot;As you can tell, it is a complex equation to manage. You want to grow as quickly as you can, subject to the organization&#x27;s ability to execute and to managing the economics — You don&#x27;t want to blow the business model economics. A high growth rate helps the valuation, but not if your underlying metrics are collapsing.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s5-p5-0">Bernshteyn은 이렇게 설명했다. &quot;아시다시피, 이것은 관리해야 할 복잡한 방정식입니다. 조직의 실행 역량이 허용하는 한도 내에서, 그리고 비즈니스 모델 경제성을 지키면서 가능한 한 빠르게 성장해야 합니다. 비즈니스 모델 경제성을 무너뜨리면서까지 성장해서는 안 됩니다. 높은 성장률이 밸류에이션에 도움이 되지만, 핵심 지표들이 무너지는 상황에서는 그렇지 않습니다.&quot;</span></p></div>
 </div>
-
+<div class="section-divider">An Example: Workday / An Example: Workday</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>The Coupa Sales Model</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>The Coupa Sales Model</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p0-0">Workday (ticker symbol WDAY) was a SaaS company in the human capital management space.</span><span class="sent" data-sid="s6-p0-1"> The company had grown successfully and gone public and was one of the &quot;hot&quot; SaaS companies in 2012.</span><span class="sent" data-sid="s6-p0-2"> It was an example of how rapid growth could translate into significant value creation.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p0-0">Workday(티커: WDAY)는 인적 자본 관리(HCM) 분야의 SaaS 기업이었다.</span><span class="sent" data-sid="s6-p0-1"> 회사는 빠르게 성장해 상장에 성공했고, 2012년 가장 주목받는 SaaS 기업 중 하나였다.</span><span class="sent" data-sid="s6-p0-2"> 급속한 성장이 어떻게 대규모 가치를 창출할 수 있는지를 보여 주는 사례였다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="50616">Exhibit 3 describes the Coupa sales and revenue model. The model takes as inputs the number of sales reps that are hired over time, and shows how they move through the system to become productive sellers, and what they book each quarter, and how those ACV bookings translate into GAAP revenue. It relies on a number of assumptions some of which are slightly simplified for the sake of the model:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="37719">Exhibit 3은 Coupa의 영업 및 매출 모델을 설명한다. 이 모델은 시간에 따라 채용되는 영업 담당자 수를 입력값으로 삼아, 담당자들이 어떤 과정을 거쳐 실제 판매를 담당하는 단계로 성장하는지, 분기별로 얼마나 예약(booking)하는지, 그리고 그 ACV 예약이 GAAP 매출로 어떻게 전환되는지를 보여 준다. 모델은 다음과 같은 가정들(일부는 단순화됨)을 토대로 한다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p1-0">Workday competed with Oracle/SAP, Kronos, Concur, and others in the $7.4 billion market.</span><span class="sent" data-sid="s6-p1-1"> Workday had a 2% market share compared to over 40% for Oracle/SAP (p 13) with a value proposition that emphasized lower cost and better functionality.</span><span class="sent" data-sid="s6-p1-2"> Workday had been founded in 2005 by Peoplesoft founder Dave Duffield and Aneel Bhursi (former head of product strategy under Duffield at Peoplesoft).</span><span class="sent" data-sid="s6-p1-3"> Peoplesoft had been founded in 1987 and it went public in 1987. It was acquired by Oracle in early 2005 for $10.5 billion.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p1-0">Workday는 74억 달러 규모의 시장에서 Oracle/SAP, Kronos, Concur 등과 경쟁했으며, Oracle/SAP의 40% 이상 점유율에 비해 약 2%의 시장 점유율을 보유했다.</span><span class="sent" data-sid="s6-p1-1"> 더 낮은 비용과 우수한 기능을 앞세운 가치 제안을 내걸었다.</span><span class="sent" data-sid="s6-p1-2"> Workday는 2005년 Peoplesoft 창업자 Dave Duffield와 Peoplesoft 시절 그의 제품 전략 총괄이었던 Aneel Bhusri가 공동으로 창업했다.</span><span class="sent" data-sid="s6-p1-3"> Peoplesoft는 1987년에 설립됐고, 2005년 초 Oracle에 105억 달러에 인수됐다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1732">New reps take 6 months to “ramp” and become productive. About 65% succeed in “ramping” and about 35% wash out and leave before they ever become productive. Of ramped reps, about 3% leave each quarter for other opportunities. Thus, the new reps hired each quarter take 2 quarters before they really have an impact on sales revenue.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="3632">신규 담당자는 &quot;적응(ramp)&quot;까지 6개월이 걸리며, 약 65%만 성공적으로 적응하고 35%는 생산적인 담당자가 되기 전에 퇴직한다. 적응 완료 담당자 중 약 3%가 매 분기 다른 기회를 찾아 떠난다. 따라서 분기별로 신규 채용된 담당자는 2분기가 지나야 실제 영업 매출에 기여하기 시작한다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p2-0">Workday had grown rapidly, reaching $134 million in revenues for fiscal 2012 (figures quoted here and below are for Workday&#x27;s fiscal year ending Jan 31, i.e., fiscal 2012 is 11/12ths 2011).</span><span class="sent" data-sid="s6-p2-1"> The company went public on October 11, 2012, at $28 a share; Workday closed that day at $48.69, up 74% percent.</span><span class="sent" data-sid="s6-p2-2"> By early November, the stock was trading in the $50 range, implying a market cap of approximately $8 billion and an enterprise value of approximately $700 million less (after adding net debt and subtracting excess cash).</span><span class="sent" data-sid="s6-p2-3"> Analysts were targeting calendar 2012 revenues of $252 million, and forecast 2013 revenues of $408 million.</span><span class="sent" data-sid="s6-p2-4"> This enterprise valuation reflected a multiple of approximately 29x 2012 revenues and 18x expected 2013 revenues.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p2-0">Workday는 빠르게 성장해 회계연도(FY) 2012 매출 1억 3,400만 달러를 기록했다(이하 수치는 1월 31일 마감 회계연도 기준으로, FY2012는 2011년의 11/12에 해당).</span><span class="sent" data-sid="s6-p2-1"> 회사는 2012년 10월 11일 주당 28달러에 기업공개(IPO)를 진행했고, 당일 주가는 74% 급등한 48.69달러로 마감했다.</span><span class="sent" data-sid="s6-p2-2"> 11월 초에는 주가가 50달러대에서 거래됐으며, 이는 약 80억 달러의 시가총액과 그보다 약 7억 달러 낮은 기업가치(EV)를 의미했다.</span><span class="sent" data-sid="s6-p2-3"> 애널리스트들은 2012년 매출을 2억 5,200만 달러, 2013년 매출을 4억 800만 달러로 전망했다.</span><span class="sent" data-sid="s6-p2-4"> 이 기업가치는 2012년 매출의 약 29배, 2013년 예상 매출의 약 18배에 해당하는 배수를 반영했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="47702">Ramped reps cost about $90,000 per quarter, unramped reps about $35,000 per quarter, and the cost of a new hire is about $55,000 for recruiters’ fees and other one-time expenses. In addition to these expenses that varied according to the number of reps, there were other fixed expenses of the sales function.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="48341">적응 완료 담당자의 분기당 비용은 약 9만 달러, 미완료 담당자는 약 3만 5,000달러이며, 신규 채용 비용은 헤드헌터 수수료 등 일회성 비용을 포함해 약 5만 5,000달러다. 담당자 수에 따라 변동하는 이 비용 외에, 영업 기능에는 별도의 고정 비용도 존재한다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p3-0">Analysts offered their perspectives on the Workday valuation: Cowen and Company rated the stock an &quot;outperform&quot; and shared their view:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p3-0">Cowen and Company의 애널리스트는 Workday 밸류에이션에 대해 다음과 같은 견해를 밝혔으며, 투자 등급 &quot;outperform&quot;을 유지했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="49479">Once they became productive, ramped reps were targeted to hit about $625,000 of ACV in 2013, and about $645,000 in ACV in 2014. That ACV was spread unevenly over the 4</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="36755">적응 완료 담당자는 2013년 약 62만 5,000달러, 2014년 약 64만 5,000달러의 ACV를 목표로 설정됐다. 그 ACV는 Coupa 고객사의 예산 수립·도입 주기에 맞춰 연간 4개</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p4-0">Due to the reinvestment of cash into its business, the company is likely to have significant cash use, which may be irrelevant in the near term given the significant opportunity in enterprise applications.</span><span class="sent" data-sid="s6-p4-1"> Hence, we cannot value the company on the FCF multiple we prefer for subscription firms.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p4-0">현금의 사업 재투자로 인해 회사는 상당한 현금 소비가 예상되지만, 엔터프라이즈 애플리케이션에서의 대규모 기회를 고려할 때 이는 단기적으로 큰 문제가 아닐 수 있습니다.</span><span class="sent" data-sid="s6-p4-1"> 따라서 구독 기업에 우리가 선호하는 잉여현금흐름(FCF) 배수로는 이 회사를 평가하기 어렵습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="30045">quarters in a year, based on the budgeting and implementation cycles of Coupa’s customers, with far more sales in the second and especially the fourth quarter.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="828">분기에 불균등하게 배분됐으며, 2분기 특히 4분기에 매출이 집중됐다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p5-0">We therefore value the company on an EV/revenue multiple.</span><span class="sent" data-sid="s6-p5-1"> WDAY trades at an EV of 19x our CY 13 revenue estimate of $391 million (+60%) compared to the high growth subscription group [see Exhibit 4 for Cowen&#x27;s analysis of Workday and comps] average of 6.9x for 25% growth.</span><span class="sent" data-sid="s6-p5-2"> We note that demand for the stock coupled with high investor expectations have driven its share price well beyond comps.</span><span class="sent" data-sid="s6-p5-3"> However, we believe there is opportunity for the company to grow into this valuation given its favorable differentiation relative to its competition in a very large market for enterprise software.$</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p5-0">그래서 우리는 EV/매출 배수를 기준으로 평가합니다.</span><span class="sent" data-sid="s6-p5-1"> WDAY는 우리의 CY2013 매출 예상치 3억 9,100만 달러(+60%)에 대해 19배 EV를 기록하고 있는데, 이는 25% 성장 구독 기업군 평균인 6.9배를 크게 상회합니다.</span><span class="sent" data-sid="s6-p5-2"> 주식 수요와 높은 투자자 기대가 주가를 비교 기업들보다 훨씬 높은 수준으로 끌어올렸음을 인정합니다.</span><span class="sent" data-sid="s6-p5-3"> 그러나 우리는 거대한 엔터프라이즈 소프트웨어 시장에서 경쟁사 대비 유리한 차별화를 감안할 때, 회사가 이 밸류에이션에 걸맞게 성장할 수 있는 기회가 있다고 봅니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="18691">* The impact of $1 of newly acquired ACV on quarterly GAAP revenue (for the quarter in which it was signed) was about $0.083 (one-twelfth). GAAP required booking the revenue in the month in which the service was actually delivered, so—on an annual contract—12 months’ worth of ACV was spread evenly over the succeeding 12 months. Because the quarter was, of course, shorter than a year, the company couldn&#x27;t book a full year’s worth of revenue in any quarter anyway. But sales tended to happen disproportionately towards the end of the quarter, so the fraction of booked ACV that turned into quarterly GAAP revenue was even less. For example, if Coupa signed a contract worth $120,000 of ACV on March 1, then it could book one-twelfth—$10,000—as Q1 revenue. However, fully one- quarter of the ACV—$30,000—rolled forward to become part of Q2’s new recurring revenue base. In general, the company started each quarter with a revenue base that then grew by 8.3% (one-twelfth) of the ACV booked in that quarter. On a cash basis, however, Coupa usually collected the full year’s value of the contract within 30 days of signing.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="47186">새로 체결된 ACV 1달러가 해당 분기 GAAP 매출에 미치는 영향은 약 0.083달러(12분의 1)였다. GAAP은 서비스가 실제로 제공되는 달에 매출을 인식하도록 요구하므로, 연간 계약의 경우 12개월치 ACV가 이후 12개월에 걸쳐 균등하게 배분됐다. 분기는 1년보다 짧기 때문에 어떤 분기에도 1년치 매출 전액을 인식할 수는 없었다. 더욱이 영업이 분기 말에 집중되는 경향이 있어, 예약 ACV 대비 분기 GAAP 매출 비율은 더욱 낮았다. 예컨대 3월 1일에 ACV 12만 달러 계약을 체결하면 12분의 1, 즉 1만 달러를 1분기 매출로 인식할 수 있다. 반면 ACV의 4분의 1인 3만 달러는 2분기 신규 반복 매출 기반의 일부가 된다. 일반적으로 회사는 매 분기 초의 매출 기반에서 시작해 해당 분기 예약 ACV의 8.3%(12분의 1)만큼 성장한다. 그러나 현금 기준으로는, Coupa가 계약 체결 후 30일 이내에 연간 계약 전액을 회수하는 것이 일반적이었다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p6-0">An analyst from William Blair, who had rated the company an &quot;outperform,&quot; explained:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p6-0">&quot;outperform&quot; 등급을 부여한 William Blair의 애널리스트는 다음과 같이 설명했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="11446">Bernshteyn explained: “As you can tell, it is a complex equation to manage. You want to grow as quickly as you can, subject to the organization&#x27;s ability to execute and to managing the economics — You don’t want to blow the business model economics. A high growth rate helps the valuation, but not if your underlying metrics are collapsing.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="63997">Bernshteyn은 이렇게 설명했다. &quot;아시다시피, 이것은 관리해야 할 복잡한 방정식입니다. 조직의 실행 역량이 허용하는 한도 내에서, 그리고 비즈니스 모델 경제성을 지키면서 가능한 한 빠르게 성장해야 합니다. 비즈니스 모델 경제성을 무너뜨리면서까지 성장해서는 안 됩니다. 높은 성장률이 밸류에이션에 도움이 되지만, 핵심 지표들이 무너지는 상황에서는 그렇지 않습니다.&quot;</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p7-0">We struggle with our one-year rating, considering that Workday&#x27;s valuation is at levels we have never seen before, even in the highly values SaaS universe. Our greatest concern is that Workday will never be a better value, and we worry that if we initiate with a neutral rating, we will never find the appropriate point at which to upgrade the stock . . . we believe Workday&#x27;s opportunity trumps our short term valuation concerns—we see Workday as extremely well positioned to take advantage of what we believe will be a long-term shift to the cloud.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p7-0">1년 투자 등급을 정하는 데 어려움이 있습니다. Workday의 밸류에이션이 고평가된 SaaS 주식들 사이에서도 이전에 본 적 없는 수준에 있기 때문입니다. 가장 큰 우려는 지금보다 더 좋은 진입 시점이 없을 수도 있다는 점과, 중립 등급으로 시작할 경우 적절한 업그레이드 시점을 영원히 찾지 못할 수 있다는 점입니다. 결국 저희는 Workday의 기회가 단기 밸류에이션 우려를 압도한다고 봅니다. 클라우드로의 장기적 전환이라는 흐름을 타기에 Workday는 최적의 위치에 있습니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>An Example: Workday</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>An Example: Workday</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p8-0">An analyst from Cannacord Equity, who rated the stock a &quot;buy,&quot; offered his perspective:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p8-0">&quot;매수(buy)&quot; 등급을 부여한 Cannacord Equity의 애널리스트는 다음과 같은 견해를 제시했다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="43094">Workday (ticker symbol WDAY) was a SaaS company in the human capital management space. The company had grown successfully and gone public and was one of the “hot” SaaS companies in 2012. It was an example of how rapid growth could translate into significant value creation.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="7330">Workday(티커: WDAY)는 인적 자본 관리(HCM) 분야의 SaaS 기업이었다. 회사는 빠르게 성장해 상장에 성공했고, 2012년 가장 주목받는 SaaS 기업 중 하나였다. 급속한 성장이 어떻게 대규모 가치를 창출할 수 있는지를 보여 주는 사례였다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s6-p9-0">We are initiating coverage with a BUY and a $60 target. . . .</span><span class="sent" data-sid="s6-p9-1"> There is no scenario where you can argue WDAY is cheap.</span><span class="sent" data-sid="s6-p9-2"> However, other than the 2000 bubble when stocks traded at 50X revenues, in software you are rarely get hurt buying high-quality franchises attacking big addressable markets with a differentiated product that legacy competitors cannot figure out how to defeat. . ..</span><span class="sent" data-sid="s6-p9-3"> Our $60 price target is based on a 12x multiple applied to our C2014 calculated billings estimate of $771M and adds back roughly $550M in prospective net cash.</span><span class="sent" data-sid="s6-p9-4"> On an EV/revenue basis, $60 is nearly 15x C2014E. . . .</span><span class="sent" data-sid="s6-p9-5"> Is Workday expensive?</span><span class="sent" data-sid="s6-p9-6"> By every conceivable measure we can think of, yes.</span><span class="sent" data-sid="s6-p9-7"> Could the shares collapse if the firm fails to execute?</span><span class="sent" data-sid="s6-p9-8"> Of course.</span><span class="sent" data-sid="s6-p9-9"> Is collapse likely?</span><span class="sent" data-sid="s6-p9-10"> No. Why?</span><span class="sent" data-sid="s6-p9-11"> Because the firm is still small, and whatever you believe about the real size of the addressable market, WDAY has a long way to go before it hits a glass ceiling. . . .</span><span class="sent" data-sid="s6-p9-12"> In summary, what do you need to have the opportunity to become a very big company?</span><span class="sent" data-sid="s6-p9-13"> Here&#x27;s our checklist:</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s6-p9-0">매수 등급과 목표 주가 60달러로 커버리지를 시작합니다.</span><span class="sent" data-sid="s6-p9-1"> WDAY가 싸다고 주장할 수 있는 시나리오는 없습니다.</span><span class="sent" data-sid="s6-p9-2"> 그러나 2000년 버블 당시처럼 주가가 매출의 50배에 거래되던 시절을 제외하면, 소프트웨어 업종에서 레거시 경쟁자들이 복제하지 못하는 차별화 제품으로 대규모 시장을 공략하는 고품질 프랜차이즈에 높은 가격을 지불하고 손해 보는 경우는 드뭅니다.</span><span class="sent" data-sid="s6-p9-3"> 목표 주가 60달러는 우리의 CY2014 청구액(billings) 예상치 7억 7,100만 달러에 12배 배수를 적용하고 약 5억 5,000만 달러의 순현금을 더한 값입니다.</span><span class="sent" data-sid="s6-p9-4"> EV/매출 기준으로 60달러는 CY2014 예상치의 약 15배입니다.</span><span class="sent" data-sid="s6-p9-5"> Workday는 비싼가요?</span><span class="sent" data-sid="s6-p9-6"> 저희가 생각할 수 있는 모든 기준에서 그렇습니다.</span><span class="sent" data-sid="s6-p9-7"> 실적이 부진할 경우 주가가 급락할 수 있을까요?</span><span class="sent" data-sid="s6-p9-8"> 물론입니다.</span><span class="sent" data-sid="s6-p9-9"> 급락 가능성이 높은가요?</span><span class="sent" data-sid="s6-p9-10"> 아닙니다.</span><span class="sent" data-sid="s6-p9-11"> 왜냐하면 회사는 아직 작고, 아무리 시장 규모를 보수적으로 봐도 성장할 여지가 충분하기 때문입니다.</span><span class="sent" data-sid="s6-p9-12"> 요약하면, 대형 기업으로 성장할 기회를 갖추려면 어떤 조건이 필요할까요?</span><span class="sent" data-sid="s6-p9-13"> 다음은 그 체크리스트입니다.</span></p></div>
 </div>
-
+<div class="section-divider">How to Become a Big Cap Rockstar in 13 Easy Steps / 대형 우량주가 되기 위한 13가지 조건</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="31246">Workday competed with Oracle/SAP, Kronos, Concur, and others in the $7.4 billion market. Workday had a 2% market share compared to over 40% for Oracle/SAP (p 13) witha value proposition that emphasized lower cost and better functionality. Workday had been founded in 2005 by Peoplesoft founder Dave Duffield and Annee! Bhursi (former head of product strategy under Duffield at Peoplesoft). Peoplesoft had been founded in 1987 and it went public in 1987. It was acquired by Oracle in early 2005 for $10.5 billion.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="53577">Workday는 74억 달러 규모의 시장에서 Oracle/SAP, Kronos, Concur 등과 경쟁했으며, Oracle/SAP의 40% 이상 점유율에 비해 약 2%의 시장 점유율을 보유했다. 더 낮은 비용과 우수한 기능을 앞세운 가치 제안을 내걸었다. Workday는 2005년 Peoplesoft 창업자 Dave Duffield와 Peoplesoft 시절 그의 제품 전략 총괄이었던 Aneel Bhusri가 공동으로 창업했다. Peoplesoft는 1987년에 설립됐고, 2005년 초 Oracle에 105억 달러에 인수됐다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s7-p0-0">Capturing Investor&#x27;s Imaginations Does WDAY Have It? 1.</span><span class="sent" data-sid="s7-p0-1"> Big Addressable market x</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s7-p0-0">투자자의 상상력을 사로잡는 요소 / WDAY 해당 여부: 1.</span><span class="sent" data-sid="s7-p0-1"> 대규모 시장 ✓</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51237">Workday had grown rapidly, reaching $134 million in revenues for fiscal 2012 (figures quoted here and below are for Workday’s fiscal year ending Jan 31, i.e., fiscal 2012 is 11/12ths 2011). The company went public on October 11, 2012, at $28 a share; Workday closed that day at $48.69, up 74% percent. By early November, the stock was trading in the $50 range, implying a market cap of approximately $8 billion and an enterprise value of approximately $700 million less (after adding net debt and subtracting excess cash). Analysts were targeting calendar 2012 revenues of $252 million, and forecast 2013 revenues of $408 million.&gt; This enterprise valuation reflected a multiple of approximately 29x 2012 revenues and 18x expected 2013 revenues.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="9202">Workday는 빠르게 성장해 회계연도(FY) 2012 매출 1억 3,400만 달러를 기록했다(이하 수치는 1월 31일 마감 회계연도 기준으로, FY2012는 2011년의 11/12에 해당). 회사는 2012년 10월 11일 주당 28달러에 기업공개(IPO)를 진행했고, 당일 주가는 74% 급등한 48.69달러로 마감했다. 11월 초에는 주가가 50달러대에서 거래됐으며, 이는 약 80억 달러의 시가총액과 그보다 약 7억 달러 낮은 기업가치(EV)를 의미했다. 애널리스트들은 2012년 매출을 2억 5,200만 달러, 2013년 매출을 4억 800만 달러로 전망했다. 이 기업가치는 2012년 매출의 약 29배, 2013년 예상 매출의 약 18배에 해당하는 배수를 반영했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s7-p1-0">2.</span><span class="sent" data-sid="s7-p1-1"> Previously successful management team x 3.</span><span class="sent" data-sid="s7-p1-2"> Next generation software technology x 4.</span><span class="sent" data-sid="s7-p1-3"> The market is ready to make a change x 5.</span><span class="sent" data-sid="s7-p1-4"> You are not in a severe recession x Getting a Big IPO Valuation Does WDAY Have It? 1.</span><span class="sent" data-sid="s7-p1-5"> Credible management team in 1-on-1&#x27;s x 2.</span><span class="sent" data-sid="s7-p1-6"> Good &quot;window dressing&quot; —brand VC&#x27;s, IPO banks x 3.</span><span class="sent" data-sid="s7-p1-7"> Some comparable IPO&#x27;s have recently worked x 4.</span><span class="sent" data-sid="s7-p1-8"> The Fed is pumping the economy with money x Sustaining the Valuation Does WDAY Have It? 1.</span><span class="sent" data-sid="s7-p1-9"> Beat the consensus estimates x 2.</span><span class="sent" data-sid="s7-p1-10"> Be financially transparent.</span><span class="sent" data-sid="s7-p1-11"> Don&#x27;t hide stuff x 3. Judiciously, but aggressively do M&amp;A x 4.</span><span class="sent" data-sid="s7-p1-12"> Sell the &quot;Big Dream&quot; to customers and investors x</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s7-p1-0">2.</span><span class="sent" data-sid="s7-p1-1"> 과거에 성공한 경영진 ✓ / 3.</span><span class="sent" data-sid="s7-p1-2"> 차세대 소프트웨어 기술 ✓ / 4.</span><span class="sent" data-sid="s7-p1-3"> 시장이 변화를 맞이할 준비가 됐음 ✓ / 5.</span><span class="sent" data-sid="s7-p1-4"> 심각한 경기침체 상황이 아님 ✓ / 대형 IPO 밸류에이션을 얻기 위한 요소 / WDAY 해당 여부: 1.</span><span class="sent" data-sid="s7-p1-5"> 1대1 면담에서 신뢰할 수 있는 경영진 ✓ / 2.</span><span class="sent" data-sid="s7-p1-6"> 우수한 &quot;윈도우 드레싱&quot; — 브랜드 있는 VC, IPO 주간사 ✓ / 3.</span><span class="sent" data-sid="s7-p1-7"> 최근 유사 IPO 성공 사례 존재 ✓ / 4.</span><span class="sent" data-sid="s7-p1-8"> 연준의 경기 부양책 ✓ / 밸류에이션을 유지하기 위한 요소 / WDAY 해당 여부: 1.</span><span class="sent" data-sid="s7-p1-9"> 컨센서스 추정치 초과 달성 ✓ / 2.</span><span class="sent" data-sid="s7-p1-10"> 재무 투명성 확보, 정보 숨기지 않음 ✓ / 3.</span><span class="sent" data-sid="s7-p1-11"> 신중하되 적극적인 M&amp;A ✓ / 4.</span><span class="sent" data-sid="s7-p1-12"> 고객과 투자자에게 &quot;큰 꿈&quot; 제시 ✓</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="3780">Analysts offered their perspectives on the Workday valuation: Cowen and Company rated the stock an “outperform” and shared their view:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="19526">Cowen and Company의 애널리스트는 Workday 밸류에이션에 대해 다음과 같은 견해를 밝혔으며, 투자 등급 &quot;outperform&quot;을 유지했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s7-p2-0">Source: Cannacord Equity, Workday, November 5, 2012, p. 6.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s7-p2-0">출처: Cannacord Equity, Workday, 2012년 11월 5일, p. 6.</span></p></div>
 </div>
-
+<div class="section-divider">Coupa: Planning for 2013 / Coupa: 2013년 계획</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="62931">Due to the reinvestment of cash into its business, the company is likely to have significant cash use, which may be irrelevant in the near term given the significant opportunity in enterprise applications. Hence, we cannot value the company on the FCF multiple we prefer for subscription firms.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="30901">현금의 사업 재투자로 인해 회사는 상당한 현금 소비가 예상되지만, 엔터프라이즈 애플리케이션에서의 대규모 기회를 고려할 때 이는 단기적으로 큰 문제가 아닐 수 있습니다. 따라서 구독 기업에 우리가 선호하는 잉여현금흐름(FCF) 배수로는 이 회사를 평가하기 어렵습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s8-p0-0">In the fall of 2012, Bernshteyn and his team began working on their planning and budgeting for the following year.</span><span class="sent" data-sid="s8-p0-1"> The process brought certain strategic questions to a head —namely, what growth target to set and what kind of strategy to use to achieve it.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s8-p0-0">2012년 가을, Bernshteyn과 그의 팀은 이듬해 계획과 예산 수립 작업에 착수했다.</span><span class="sent" data-sid="s8-p0-1"> 이 과정에서 성장 목표를 어떻게 설정하고 어떤 전략으로 달성할지에 관한 핵심 전략적 질문들이 수면 위로 떠올랐다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="33679">We therefore value the company on an EV/revenue multiple. WDAY trades at an EV of 19x our CY 13 revenue estimate of $391 million (+60%) compared to the high growth subscription group [see Exhibit 4 for Cowen’s analysis of Workday and comps] average of 6.9x for 25% growth. We note that demand for the stock coupled with high investor expectations have driven its share price well beyond comps. However, we believe there is opportunity for the company to grow into this valuation given its favorable differentiation relative to its competition in a very large market for enterprise software.$</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="60765">그래서 우리는 EV/매출 배수를 기준으로 평가합니다. WDAY는 우리의 CY2013 매출 예상치 3억 9,100만 달러(+60%)에 대해 19배 EV를 기록하고 있는데, 이는 25% 성장 구독 기업군 평균인 6.9배를 크게 상회합니다. 주식 수요와 높은 투자자 기대가 주가를 비교 기업들보다 훨씬 높은 수준으로 끌어올렸음을 인정합니다. 그러나 우리는 거대한 엔터프라이즈 소프트웨어 시장에서 경쟁사 대비 유리한 차별화를 감안할 때, 회사가 이 밸류에이션에 걸맞게 성장할 수 있는 기회가 있다고 봅니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s8-p1-0">The team developed a baseline plan (see Exhibit 3 for the 2013 and 2014 plan and the key assumptions behind it) calling for 2013 sales revenue of slightly over $21 million, and modeling 2014 revenues of roughly $35 million.</span><span class="sent" data-sid="s8-p1-1"> This put Coupa on a growth path (for recurring revenue) in the 65% range, a target that gave Bernshteyn optimism about the kind of multiple Coupa could garner in an IPO: &quot;The investment bankers are already in here making their pitch and talking about growth rates and valuations in the sector.</span><span class="sent" data-sid="s8-p1-2"> A high growth rate for recurring revenue gives us a lot of control over our own destiny, whether it is an IPO, a strategic M&amp;A transaction, or simply raising more capital at a strong valuation.&quot;</span><span class="sent" data-sid="s8-p1-3"> High growth recurring revenue was one of the keys to the SaaS model.</span><span class="sent" data-sid="s8-p1-4"> While the costs of customer acquisition might be high, the cost to keep customers on the platform once deployed were very measured.</span><span class="sent" data-sid="s8-p1-5"> Therefore, the fundamentals underlying a valuable company were highly correlated with the growth rate of recurring revenue.</span><span class="sent" data-sid="s8-p1-6"> The fact is, it recurs without much additional effort. (See Exhibit 5 for a list of some SAAS firms and their financial and operating statistics and valuation metrics.)</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s8-p1-0">팀은 2013년 영업 매출 약 2,100만 달러, 2014년 매출 약 3,500만 달러를 예상하는 기준 계획(baseline plan)을 수립했다(2013~2014년 계획과 핵심 가정은 Exhibit 3 참조).</span><span class="sent" data-sid="s8-p1-1"> 이는 Coupa의 반복 매출 성장률을 약 65%로 유지하는 것으로, Bernshteyn은 이 수치가 IPO 시 기대할 수 있는 밸류에이션 배수에 낙관적인 전망을 갖게 해준다고 했다.</span><span class="sent" data-sid="s8-p1-2"> &quot;투자은행들이 이미 찾아와 섹터의 성장률과 밸류에이션을 이야기하고 있습니다.</span><span class="sent" data-sid="s8-p1-3"> 높은 반복 매출 성장률은 IPO든, 전략적 M&amp;A든, 아니면 단순히 좋은 조건으로 추가 자금을 조달하든, 우리 스스로 운명을 결정할 수 있는 힘을 줍니다.&quot;</span><span class="sent" data-sid="s8-p1-4"> 높은 성장률의 반복 매출은 SaaS 모델에서 가치 있는 기업의 핵심 요소 중 하나였다.</span><span class="sent" data-sid="s8-p1-5"> 고객 획득 비용(CAC)은 높을 수 있지만, 플랫폼에 고객이 일단 유입되면 유지 비용은 훨씬 적게 든다.</span><span class="sent" data-sid="s8-p1-6"> 따라서 가치 있는 기업의 핵심 요소는 반복 매출 성장률과 높은 상관관계를 보였다. 반복 매출은 별다른 추가 노력 없이 그 자체로 지속된다. (여러 SaaS 기업들의 재무·운영 지표 및 밸류에이션 메트릭은 Exhibit 5 참조.)</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="34509">An analyst from William Blair, who had rated the company an “outperform,” explained:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="50450">&quot;outperform&quot; 등급을 부여한 William Blair의 애널리스트는 다음과 같이 설명했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s8-p2-0">This baseline case was the &quot;Organic Growth&quot; option, which was based upon growing the sales force.</span><span class="sent" data-sid="s8-p2-1"> Coupa had added 2 or 3 reps per quarter during 2012, growing the sales force to about 18 by year end 2012.</span><span class="sent" data-sid="s8-p2-2"> The company&#x27;s plan for 2013 was to hire about 20 reps, growing the sales force to more than 32 by year end.</span><span class="sent" data-sid="s8-p2-3"> &quot;Growing the sales force each year is the classic growth model for young companies at our stage.&quot;</span><span class="sent" data-sid="s8-p2-4"> A more aggressive version of the organic growth strategy would be to simply add more sales people: &quot;We could grow our sales force from 20 to 60 or so.</span><span class="sent" data-sid="s8-p2-5"> That would include expanding internationally to a couple of key cities—Sydney, Frankfurt, Amsterdam perhaps.</span><span class="sent" data-sid="s8-p2-6"> We&#x27;d have to be careful —we don&#x27;t want to hire a bunch of unproductive people.</span><span class="sent" data-sid="s8-p2-7"> But I think we could pull this off.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s8-p2-0">이 기준 계획은 영업 인력 확충을 기반으로 한 &quot;유기적 성장(Organic Growth)&quot; 옵션이었다.</span><span class="sent" data-sid="s8-p2-1"> Coupa는 2012년 동안 분기당 2~3명의 영업 담당자를 추가해 2012년 말 기준 약 18명의 영업 인력을 보유했다.</span><span class="sent" data-sid="s8-p2-2"> 2013년 계획은 약 20명을 추가 채용해 연말까지 32명 이상으로 인력을 늘리는 것이었다.</span><span class="sent" data-sid="s8-p2-3"> &quot;매년 영업 인력을 늘리는 것은 우리 단계의 젊은 기업에서 전형적인 성장 모델입니다.&quot;</span><span class="sent" data-sid="s8-p2-4"> 유기적 성장 전략의 더 공격적인 버전은 단순히 더 많은 영업 인력을 추가하는 것이었다.</span><span class="sent" data-sid="s8-p2-5"> &quot;영업 인력을 20명에서 60명으로 늘릴 수 있습니다.</span><span class="sent" data-sid="s8-p2-6"> 여기에는 시드니, 프랑크푸르트, 암스테르담 등 몇 개 도시로의 해외 진출도 포함됩니다.</span><span class="sent" data-sid="s8-p2-7"> 생산성이 낮은 인력을 무분별하게 채용하지 않도록 주의해야 하지만, 충분히 실행 가능하다고 봅니다.&quot;</span></p></div>
 </div>
-
+<div class="section-divider">Roll-up strategy / Roll-up 전략</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="1709">We struggle with our one-year rating, considering that Workday’s valuation is at levels we have never seen before, even in the highly values SaaS universe. Our greatest concern is that Workday will never be a better value, and we worry that if we initiate with a neutral rating, we will never find the appropriate point at which to upgrade the stock . . . we believe Workday’s opportunity trumps our short term valuation concerns—we see Workday as extremely well positioned to take advantage of what we believe will be a long-term shift to the cloud.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="53810">1년 투자 등급을 정하는 데 어려움이 있습니다. Workday의 밸류에이션이 고평가된 SaaS 주식들 사이에서도 이전에 본 적 없는 수준에 있기 때문입니다. 가장 큰 우려는 지금보다 더 좋은 진입 시점이 없을 수도 있다는 점과, 중립 등급으로 시작할 경우 적절한 업그레이드 시점을 영원히 찾지 못할 수 있다는 점입니다. 결국 저희는 Workday의 기회가 단기 밸류에이션 우려를 압도한다고 봅니다. 클라우드로의 장기적 전환이라는 흐름을 타기에 Workday는 최적의 위치에 있습니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s9-p0-0">There are 15 or 20 small companies out there that we could buy pretty easily. They have $2 to $5 million of top-line revenue. A few of them even have features and functionality that we could integrate with our product and grow our suite. These are companies that started earlier than us, but grew more slowly and didn&#x27;t take VC. We should be able to buy these companies at 2 or 3 times revenues, especially if we add a small equity kicker. Generally, we could integrate their revenues into our P&amp;L at 50% plus gross margins, and keep a good fraction of their sales and marketing team productive. Most of the admin and tech spend would go away. This would obviously deplete our cash. We could probably even get some debt to do these deals.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s9-p0-0">이 분야에는 우리가 손쉽게 인수할 수 있는 소기업이 15~20개 정도 있습니다. 매출이 200만~500만 달러 수준이고, 그 중 일부는 우리 제품에 통합해 제품군을 확장할 수 있는 기능과 역량도 갖추고 있습니다. 이 기업들은 우리보다 먼저 시작했지만 더 느리게 성장했고, VC 투자를 받지 않은 곳들입니다. 작은 지분 인센티브를 더하면 매출의 2~3배에 인수가 가능할 것입니다. 일반적으로 이들의 매출을 50% 이상의 매출총이익률(Gross Margin)로 우리 손익계산서에 편입하고, 영업·마케팅 인력의 상당 부분을 유지해 생산성을 이어갈 수 있습니다. 관리 비용과 기술 비용의 대부분은 절감될 것입니다. 물론 이는 현금을 소진하겠지만, 일부 부채로 이러한 거래를 진행하는 것도 가능할 것입니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="10008">An analyst from Cannacord Equity, who rated the stock a “buy,” offered his perspective:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="62780">&quot;매수(buy)&quot; 등급을 부여한 Cannacord Equity의 애널리스트는 다음과 같은 견해를 제시했다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s9-p1-0">Bernshteyn also believed that there were other good reasons to consolidate the space: &quot;The customer is really waiting for a leader to emerge.</span><span class="sent" data-sid="s9-p1-1"> They want to rally around a winner.</span><span class="sent" data-sid="s9-p1-2"> It makes it easier to justify their purchase decision to their boss, and makes them more confident that the SaaS provider will be around in the future to service, support and enhance the product.&quot;</span><span class="sent" data-sid="s9-p1-3"> The downside of course is that the product gets integrated together vs. being built organically from the ground up, which had technical and usability value.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s9-p1-0">Bernshteyn은 시장 통합에 또 다른 중요한 이유가 있다고도 봤다.</span><span class="sent" data-sid="s9-p1-1"> &quot;고객들은 실제로 업계 리더가 나타나기를 기다리고 있습니다.</span><span class="sent" data-sid="s9-p1-2"> 그들은 승자 편에 서고 싶어합니다. 그래야 상사에게 구매 결정을 정당화하기 쉽고, SaaS 공급업체가 미래에도 남아서 제품을 서비스·지원·개선할 것이라는 확신도 생깁니다.&quot;</span><span class="sent" data-sid="s9-p1-3"> 물론 단점은 제품이 밑바닥부터 유기적으로 구축되는 것이 아니라 기술적으로 조각조각 통합된다는 점인데, 이는 기술적 완성도와 사용성 측면에서 가치를 잃을 수 있다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="35977">We are initiating coverage with a BUY and a $60 target. . . . There is no scenario where you can argue WDAY is cheap. However, other than the 2000 bubble when stocks traded at 50X revenues, in software you are rarely get hurt buying high-quality franchises attacking big addressable markets with a differentiated product that legacy competitors cannot figure out how to defeat. . ..Our $60 price target is based on a 12x multiple applied to our C2014 calculated billings estimate of $771M and adds back roughly $550M in prospective net cash. On an EV/revenue basis, $60 is nearly 15x C2014E. . . . ls Workday expensive? By every conceivable measure we can think of, yes. Could the shares collapse if the firm fails to execute? Of course. Is collapse likely? No. Why? Because the firm is still small, and whatever you believe about the real size of the addressable market, WDAY has a long way to go before it hits a glass ceiling. . . . In summary, what do you need to have the opportunity to become a very big company? Here&#x27;s our checklist:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="47768">매수 등급과 목표 주가 60달러로 커버리지를 시작합니다. WDAY가 싸다고 주장할 수 있는 시나리오는 없습니다. 그러나 2000년 버블 당시처럼 주가가 매출의 50배에 거래되던 시절을 제외하면, 소프트웨어 업종에서 레거시 경쟁자들이 복제하지 못하는 차별화 제품으로 대규모 시장을 공략하는 고품질 프랜차이즈에 높은 가격을 지불하고 손해 보는 경우는 드뭅니다. 목표 주가 60달러는 우리의 CY2014 청구액(billings) 예상치 7억 7,100만 달러에 12배 배수를 적용하고 약 5억 5,000만 달러의 순현금을 더한 값입니다. EV/매출 기준으로 60달러는 CY2014 예상치의 약 15배입니다. Workday는 비싼가요? 저희가 생각할 수 있는 모든 기준에서 그렇습니다. 실적이 부진할 경우 주가가 급락할 수 있을까요? 물론입니다. 급락 가능성이 높은가요? 아닙니다. 왜냐하면 회사는 아직 작고, 아무리 시장 규모를 보수적으로 봐도 성장할 여지가 충분하기 때문입니다. 요약하면, 대형 기업으로 성장할 기회를 갖추려면 어떤 조건이 필요할까요? 다음은 그 체크리스트입니다.</span></p></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s9-p2-0">As 2012 ended, Coupa was burning about $1 million per month, and Bernshteyn believed that &quot;each dollar of new first year revenue costs us about $1 of sales and marketing spend.&quot;</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s9-p2-0">2012년이 끝날 무렵 Coupa는 월 약 100만 달러를 소진하고 있었으며, Bernshteyn은 &quot;새로운 첫 해 매출 1달러를 올리는 데 영업·마케팅 비용도 약 1달러가 든다&quot;고 말했다.</span></p></div>
 </div>
-
+<div class="section-divider">Exit / 엑싯(Exit)</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>How to Become a Big Cap Rockstar in 13 Easy Steps</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>대형 우량주가 되기 위한 13가지 조건</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s10-p0-0">Of course, an IPO is the highest value outcome for investors.</span><span class="sent" data-sid="s10-p0-1"> We are shooting for $21 million of GAAP revenue next year under our baseline scenario, and that would take us to over $35 million the year after.</span><span class="sent" data-sid="s10-p0-2"> I think we could go file to go public if we hit our targets for the following year.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s10-p0-0">물론 IPO는 투자자에게 가장 높은 가치를 안겨 주는 결과입니다.</span><span class="sent" data-sid="s10-p0-1"> 기준 시나리오에서 내년 GAAP 매출 2,100만 달러를 목표로 하고 있으며, 이듬해에는 3,500만 달러를 넘어설 것입니다.</span><span class="sent" data-sid="s10-p0-2"> 다음 해 목표를 달성한다면 상장 신청서를 낼 수 있다고 봅니다.</span></p></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="61928">Capturing Investor&#x27;s Imaginations Does WDAY Have It? 1. Bie Addressable market x</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>투자자의 상상력을 사로잡는 요소 / WDAY 해당 여부: 1. 대규모 시장 ✓</h3></div></div>
+  <div class="cell en"><p><span class="sent" data-sid="s10-p1-0">Alternatively, there are—naturally—big companies out there who see this as an attractive space: Oracle, IBM, Concur, even Salesforce.com. There would be a lot of synergy —and thus value—in rolling out our product to their existing clients, along with adding our product to the list of modules their sales forces offer new customers.</span></p></div>
+  <div class="cell kr"><p><span class="sent" data-sid="s10-p1-0">대안으로, 물론 이 분야를 매력적으로 보는 대기업들이 있습니다. Oracle, IBM, Concur, 심지어 Salesforce.com도 그렇습니다. 우리 제품을 그들의 기존 고객에게 출시하고, 새로운 고객에게 제공하는 모듈 목록에 추가하는 데서 오는 시너지와 가치가 상당할 것입니다.</span></p></div>
 </div>
-
+<div class="section-divider">Exhibits</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="36490">2. Previously successful management team x 3. Next generation software technology x 4. The market is ready to make a change x 5. You are not ina severe recession x Getting a Big IPO Valuation Does WDAY Have It? 1. Credible management team in 1-on-1&#x27;s x 2. Good “window dressing” —brand VC&#x27;s, IPO banks x 3. Some comparable IPO’s have recently worked x 4. The Fed is pumping the economy with money x Sustaining the Valuation Does WDAY Have It? 1. Beat the consensus estimates x 2. Be financially transparent. Don&#x27;t hide stuff x 3. Judiciously, but aggressively do M&amp;A x 4. Sell the “Big Dream” to customers and investors x</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="44274">2. 과거에 성공한 경영진 ✓ / 3. 차세대 소프트웨어 기술 ✓ / 4. 시장이 변화를 맞이할 준비가 됐음 ✓ / 5. 심각한 경기침체 상황이 아님 ✓ / 대형 IPO 밸류에이션을 얻기 위한 요소 / WDAY 해당 여부: 1. 1대1 면담에서 신뢰할 수 있는 경영진 ✓ / 2. 우수한 &quot;윈도우 드레싱&quot; — 브랜드 있는 VC, IPO 주간사 ✓ / 3. 최근 유사 IPO 성공 사례 존재 ✓ / 4. 연준의 경기 부양책 ✓ / 밸류에이션을 유지하기 위한 요소 / WDAY 해당 여부: 1. 컨센서스 추정치 초과 달성 ✓ / 2. 재무 투명성 확보, 정보 숨기지 않음 ✓ / 3. 신중하되 적극적인 M&amp;A ✓ / 4. 고객과 투자자에게 &quot;큰 꿈&quot; 제시 ✓</span></p></div></div>
+  <div class="cell en"><h3>Exhibit 1: Coupa Capitalization Table</h3></div>
+  <div class="cell kr"><h3>Exhibit 1: Coupa 자본구조표 (Cap Table)</h3></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="65058">Source: Cannacord Equity, Workday, November 5, 2012, p. 6.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="56812">출처: Cannacord Equity, Workday, 2012년 11월 5일, p. 6.</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-1">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 1: Coupa Capitalization Table</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="1"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="1"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="1"></label>
+      <button class="ex-reset" data-id="1">초기화</button>
+      <span class="ex-zoom-label" id="zoom-1">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-1">
+      <img src="Captures/Screenshot 2026-03-20 020656.png" class="exhibit-img" id="img-1" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
 </div>
-
+</div>
+<div class="bi-row">
+  <div class="cell en"><h3>Exhibit 2a: Coupa 2012 Income Statement</h3></div>
+  <div class="cell kr"><h3>Exhibit 2a: Coupa 2012년 손익계산서</h3></div>
+</div>
+<div class="bi-row">
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-2">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 2a: Coupa 2012 Income Statement</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="2"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="2"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="2"></label>
+      <button class="ex-reset" data-id="2">초기화</button>
+      <span class="ex-zoom-label" id="zoom-2">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-2">
+      <img src="Captures/Screenshot 2026-03-20 020710.png" class="exhibit-img" id="img-2" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
+</div>
+</div>
+<div class="bi-row">
+  <div class="cell en"><h3>Exhibit 2b: Coupa 2012 Quarterly Balance Sheet</h3></div>
+  <div class="cell kr"><h3>Exhibit 2b: Coupa 2012년 분기별 대차대조표</h3></div>
+</div>
+<div class="bi-row">
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-3">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 2b: Coupa 2012 Quarterly Balance Sheet</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="3"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="3"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="3"></label>
+      <button class="ex-reset" data-id="3">초기화</button>
+      <span class="ex-zoom-label" id="zoom-3">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-3">
+      <img src="Captures/Screenshot 2026-03-20 020721.png" class="exhibit-img" id="img-3" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
+</div>
+</div>
+<div class="bi-row">
+  <div class="cell en"><h3>Exhibit 2c: Coupa 2012 Quarterly Cash Flow Statement</h3></div>
+  <div class="cell kr"><h3>Exhibit 2c: Coupa 2012년 분기별 현금흐름표</h3></div>
+</div>
+<div class="bi-row">
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-4">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 2c: Coupa 2012 Quarterly Cash Flow Statement</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="4"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="4"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="4"></label>
+      <button class="ex-reset" data-id="4">초기화</button>
+      <span class="ex-zoom-label" id="zoom-4">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-4">
+      <img src="Captures/Screenshot 2026-03-20 020807.png" class="exhibit-img" id="img-4" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
+</div>
+</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><h3>Coupa: Planning for 2013 — How and How Fast To Grow</h3></div></div>
-  <div class="cell kr"><div class="cell-inner"><h3>Coupa: 2013년 계획 — 어떻게, 얼마나 빠르게 성장할 것인가</h3></div></div>
+  <div class="cell en"><h3>Exhibit 3: Sales Rep, Revenue and Expense Model (Summary)</h3></div>
+  <div class="cell kr"><h3>Exhibit 3: 영업 담당자/매출/비용 모델 (요약)</h3></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="52629">In the fall of 2012, Bernshteyn and his team began working on their planning and budgeting for the following year. The process brought certain strategic questions to a head —namely, what growth target to set and what kind of strategy to use to achieve it.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="22389">2012년 가을, Bernshteyn과 그의 팀은 이듬해 계획과 예산 수립 작업에 착수했다. 이 과정에서 성장 목표를 어떻게 설정하고 어떤 전략으로 달성할지에 관한 핵심 전략적 질문들이 수면 위로 떠올랐다.</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-5">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 3: Sales Rep, Revenue and Expense Model (Summary)</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="5"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="5"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="5"></label>
+      <button class="ex-reset" data-id="5">초기화</button>
+      <span class="ex-zoom-label" id="zoom-5">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-5">
+      <img src="Captures/Screenshot 2026-03-20 020825.png" class="exhibit-img" id="img-5" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
 </div>
-
+</div>
+<div class="bi-row">
+  <div class="cell en"><h3>Exhibit 3: Sales Rep, Revenue and Expense Model (Monthly Detail)</h3></div>
+  <div class="cell kr"><h3>Exhibit 3: 영업 담당자/매출/비용 모델 (월별 상세)</h3></div>
+</div>
+<div class="bi-row">
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-6">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 3: Sales Rep, Revenue and Expense Model (Monthly Detail)</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="6"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="6"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="6"></label>
+      <button class="ex-reset" data-id="6">초기화</button>
+      <span class="ex-zoom-label" id="zoom-6">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-6">
+      <img src="Captures/Screenshot 2026-03-20 020945.png" class="exhibit-img" id="img-6" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
+</div>
+</div>
+<div class="bi-row">
+  <div class="cell en"><h3>Exhibit 4a: Cowen &amp; Company Workday Financial Model</h3></div>
+  <div class="cell kr"><h3>Exhibit 4a: Cowen &amp; Company Workday 재무 모델</h3></div>
+</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="36937">The team developed a baseline plan (see Exhibit 3 for the 2013 and 2014 plan and the key assumptions behind it) calling for 2013 sales revenue of slightly over $21 million, and modeling 2014 revenues of roughly $35 million. This put Coupa on a growth path (for recurring revenue) in the 65% range, a target that gave Bernshteyn optimism about the kind of multiple Coupa could garner in an IPO: “The investment bankers are already in here making their pitch and talking about growth rates and valuations in the sector. A high growth rate for recurring revenue gives us a lot of control over our own destiny, whether it is an IPO, a strategic M&amp;A transaction, or simply raising more capital at a strong valuation.” High growth recurring revenue was one of the keys to the SaaS model. While the costs of customer acquisition might be high, the cost to keep customers on the platform once deployed were very measured. Therefore, the fundamentals underlying a valuable company were highly correlated with the growth rate of recurring revenue. The fact is, it recurs without much additional effort. (See Exhibit 5 for a list of some SAAS firms and their financial and operating statistics and valuation metrics.)</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="54213">팀은 2013년 영업 매출 약 2,100만 달러, 2014년 매출 약 3,500만 달러를 예상하는 기준 계획(baseline plan)을 수립했다(2013~2014년 계획과 핵심 가정은 Exhibit 3 참조). 이는 Coupa의 반복 매출 성장률을 약 65%로 유지하는 것으로, Bernshteyn은 이 수치가 IPO 시 기대할 수 있는 밸류에이션 배수에 낙관적인 전망을 갖게 해준다고 했다. &quot;투자은행들이 이미 찾아와 섹터의 성장률과 밸류에이션을 이야기하고 있습니다. 높은 반복 매출 성장률은 IPO든, 전략적 M&amp;A든, 아니면 단순히 좋은 조건으로 추가 자금을 조달하든, 우리 스스로 운명을 결정할 수 있는 힘을 줍니다.&quot; 높은 성장률의 반복 매출은 SaaS 모델에서 가치 있는 기업의 핵심 요소 중 하나였다. 고객 획득 비용(CAC)은 높을 수 있지만, 플랫폼에 고객이 일단 유입되면 유지 비용은 훨씬 적게 든다. 따라서 가치 있는 기업의 핵심 요소는 반복 매출 성장률과 높은 상관관계를 보였다. 반복 매출은 별다른 추가 노력 없이 그 자체로 지속된다. (여러 SaaS 기업들의 재무·운영 지표 및 밸류에이션 메트릭은 Exhibit 5 참조.)</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-7">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 4a: Cowen &amp; Company Workday Financial Model</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="7"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="7"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="7"></label>
+      <button class="ex-reset" data-id="7">초기화</button>
+      <span class="ex-zoom-label" id="zoom-7">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-7">
+      <img src="Captures/Screenshot 2026-03-20 021008.png" class="exhibit-img" id="img-7" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
 </div>
-
+</div>
+<div class="bi-row">
+  <div class="cell en"><h3>Exhibit 4a (continued): Workday Balance Sheet</h3></div>
+  <div class="cell kr"><h3>Exhibit 4a (계속): Workday 대차대조표</h3></div>
+</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="9123">This baseline case was the “Organic Growth” option, which was based upon growing the sales force. Coupa had added 2 or 3 reps per quarter during 2012, growing the sales force to about 18 by year end 2012. The company’s plan for 2013 was to hire about 20 reps, growing the sales force to more than 32 by year end. “Growing the sales force each year is the classic growth model for young companies at our stage.” A more aggressive version of the organic growth strategy would be to simply add more sales people: “We could grow our sales force from 20 to 60 or so. That would include expanding internationally to a couple of key cities—Sydney, Frankfurt, Amsterdam perhaps. We&#x27;d have to be careful —we don’t want to hire a bunch of unproductive people. But I think we could pull this off.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="42418">이 기준 계획은 영업 인력 확충을 기반으로 한 &quot;유기적 성장(Organic Growth)&quot; 옵션이었다. Coupa는 2012년 동안 분기당 2~3명의 영업 담당자를 추가해 2012년 말 기준 약 18명의 영업 인력을 보유했다. 2013년 계획은 약 20명을 추가 채용해 연말까지 32명 이상으로 인력을 늘리는 것이었다. &quot;매년 영업 인력을 늘리는 것은 우리 단계의 젊은 기업에서 전형적인 성장 모델입니다.&quot; 유기적 성장 전략의 더 공격적인 버전은 단순히 더 많은 영업 인력을 추가하는 것이었다. &quot;영업 인력을 20명에서 60명으로 늘릴 수 있습니다. 여기에는 시드니, 프랑크푸르트, 암스테르담 등 몇 개 도시로의 해외 진출도 포함됩니다. 생산성이 낮은 인력을 무분별하게 채용하지 않도록 주의해야 하지만, 충분히 실행 가능하다고 봅니다.&quot;</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-8">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 4a (continued): Workday Balance Sheet</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="8"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="8"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="8"></label>
+      <button class="ex-reset" data-id="8">초기화</button>
+      <span class="ex-zoom-label" id="zoom-8">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-8">
+      <img src="Captures/Screenshot 2026-03-20 021021.png" class="exhibit-img" id="img-8" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
+</div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="40361">Roll-up strategy: Another strategy—one that could be carried out in conjunction with organic growth—was to acquire smaller companies in this space:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="43847">Roll-up 전략: 또 다른 전략 — 유기적 성장과 병행할 수 있는 방안으로 — 은 이 분야의 소규모 기업들을 인수하는 것이었다.</span></p></div></div>
+  <div class="cell en"><h3>Exhibit 4b: SaaS Company Valuation Comparison</h3></div>
+  <div class="cell kr"><h3>Exhibit 4b: SaaS 유사 기업 밸류에이션 비교</h3></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="51864">There are 15 or 20 small companies out there that we could buy pretty easily. They have $2 to $5 million of top-line revenue. A few of them even have features and functionality that we could integrate with our product and grow our suite. These are companies that started earlier than us, but grew more slowly and didn’t take VC. We should be able to buy these companies at 2 or 3 times revenues, especially if we add a small equity kicker. Generally, we could integrate their revenues into our P&amp;L at 50% plus gross margins, and keep a good fraction of their sales and marketing team productive. Most of the admin and tech spend would go away. This would obviously deplete our cash. We could probably even get some debt to do these deals.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="45316">이 분야에는 우리가 손쉽게 인수할 수 있는 소기업이 15~20개 정도 있습니다. 매출이 200만~500만 달러 수준이고, 그 중 일부는 우리 제품에 통합해 제품군을 확장할 수 있는 기능과 역량도 갖추고 있습니다. 이 기업들은 우리보다 먼저 시작했지만 더 느리게 성장했고, VC 투자를 받지 않은 곳들입니다. 작은 지분 인센티브를 더하면 매출의 2~3배에 인수가 가능할 것입니다. 일반적으로 이들의 매출을 50% 이상의 매출총이익률(Gross Margin)로 우리 손익계산서에 편입하고, 영업·마케팅 인력의 상당 부분을 유지해 생산성을 이어갈 수 있습니다. 관리 비용과 기술 비용의 대부분은 절감될 것입니다. 물론 이는 현금을 소진하겠지만, 일부 부채로 이러한 거래를 진행하는 것도 가능할 것입니다.</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-9">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 4b: SaaS Company Valuation Comparison</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="9"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="9"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="9"></label>
+      <button class="ex-reset" data-id="9">초기화</button>
+      <span class="ex-zoom-label" id="zoom-9">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-9">
+      <img src="Captures/Screenshot 2026-03-20 021046.png" class="exhibit-img" id="img-9" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
 </div>
-
+</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="65130">Bernshteyn also believed that there were other good reasons to consolidate the space: “The customer is really waiting for a leader to emerge. They want to rally around a winner. It makes it easier to justify their purchase decision to their boss, and makes them more confident that the SaaS provider will be around in the future to service, support and enhance the product.” The downside of course is that the product gets integrated together vs. being built organically from the ground up, which had technical and usability value.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="48946">Bernshteyn은 시장 통합에 또 다른 중요한 이유가 있다고도 봤다. &quot;고객들은 실제로 업계 리더가 나타나기를 기다리고 있습니다. 그들은 승자 편에 서고 싶어합니다. 그래야 상사에게 구매 결정을 정당화하기 쉽고, SaaS 공급업체가 미래에도 남아서 제품을 서비스·지원·개선할 것이라는 확신도 생깁니다.&quot; 물론 단점은 제품이 밑바닥부터 유기적으로 구축되는 것이 아니라 기술적으로 조각조각 통합된다는 점인데, 이는 기술적 완성도와 사용성 측면에서 가치를 잃을 수 있다.</span></p></div></div>
+  <div class="cell en"><h3>Exhibit 4b (continued): Revenue Growth vs. EV/Revenue Multiple</h3></div>
+  <div class="cell kr"><h3>Exhibit 4b (계속): 매출 성장률 vs. EV/매출 배수</h3></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="41775">As 2012 ended, Coupa was burning about $1 million per month, and Bernshteyn believed that “each dollar of new first year revenue costs us about $1 of sales and marketing spend.”</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="3082">2012년이 끝날 무렵 Coupa는 월 약 100만 달러를 소진하고 있었으며, Bernshteyn은 &quot;새로운 첫 해 매출 1달러를 올리는 데 영업·마케팅 비용도 약 1달러가 든다&quot;고 말했다.</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-10">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 4b (continued): Revenue Growth vs. EV/Revenue Multiple</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="10"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="10"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="10"></label>
+      <button class="ex-reset" data-id="10">초기화</button>
+      <span class="ex-zoom-label" id="zoom-10">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-10">
+      <img src="Captures/Screenshot 2026-03-20 021059.png" class="exhibit-img" id="img-10" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
+</div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="11206">Exit: Of course, another option that was always on the table—at least conceptually —was an exit. Bernshteyn talked about the ultimate game plan:</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="41240">엑싯(Exit): 물론, 적어도 개념적으로는 항상 테이블 위에 올라 있는 또 다른 선택지가 엑싯이었다. Bernshteyn은 최종 전략 구상을 다음과 같이 이야기했다.</span></p></div></div>
+  <div class="cell en"><h3>Exhibit 5: Comparable Companies -- Equity Data</h3></div>
+  <div class="cell kr"><h3>Exhibit 5: 유사 기업 -- 주가/밸류에이션 데이터</h3></div>
 </div>
-
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="18015">Of course, an IPO is the highest value outcome for investors. We are shooting for $21 million of GAAP revenue next year under our baseline scenario, and that would take us to over $35 million the year after. I think we could go file to go public if we hit our targets for the following year.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="65327">물론 IPO는 투자자에게 가장 높은 가치를 안겨 주는 결과입니다. 기준 시나리오에서 내년 GAAP 매출 2,100만 달러를 목표로 하고 있으며, 이듬해에는 3,500만 달러를 넘어설 것입니다. 다음 해 목표를 달성한다면 상장 신청서를 낼 수 있다고 봅니다.</span></p></div></div>
+<div class="cell full">
+  <div class="exhibit-wrap" id="ew-11">
+    <div class="exhibit-toolbar">
+      <span class="ex-label">Exhibit 5: Comparable Companies -- Equity Data</span>
+      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="11"></label>
+      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="11"></label>
+      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="11"></label>
+      <button class="ex-reset" data-id="11">초기화</button>
+      <span class="ex-zoom-label" id="zoom-11">100%</span>
+    </div>
+    <div class="exhibit-stage" id="stage-11">
+      <img src="Captures/Screenshot 2026-03-20 021120.png" class="exhibit-img" id="img-11" draggable="false">
+    </div>
+    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
+  </div>
 </div>
-
+</div>
 <div class="bi-row">
-  <div class="cell en"><div class="cell-inner"><p><span class="sent" data-sid="37261">Alternatively, there are—naturally—big companies out there who see this as an attractive space: Oracle, IBM, Concur, even Salesforce.com. There would be a lot of synergy —and thus value—in rolling out our product to their existing clients, along with adding our product to the list of modules their sales forces offer new customers.</span></p></div></div>
-  <div class="cell kr"><div class="cell-inner"><p><span class="sent" data-sid="26128">대안으로, 물론 이 분야를 매력적으로 보는 대기업들이 있습니다. Oracle, IBM, Concur, 심지어 Salesforce.com도 그렇습니다. 우리 제품을 그들의 기존 고객에게 출시하고, 새로운 고객에게 제공하는 모듈 목록에 추가하는 데서 오는 시너지와 가치가 상당할 것입니다.</span></p></div></div>
+  <div class="cell en"><h3>Exhibit 5 (continued): Comparable Companies -- Operating Data</h3></div>
+  <div class="cell kr"><h3>Exhibit 5 (계속): 유사 기업 -- 영업 지표</h3></div>
 </div>
-
+<div class="bi-row">
 <div class="cell full">
   <div class="exhibit-wrap" id="ew-12">
     <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit1 Coupa Capitalizatio</span>
+      <span class="ex-label">Exhibit 5 (continued): Comparable Companies -- Operating Data</span>
       <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="12"></label>
       <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="12"></label>
       <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="12"></label>
@@ -518,209 +625,25 @@ svg.sharpen-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
       <span class="ex-zoom-label" id="zoom-12">100%</span>
     </div>
     <div class="exhibit-stage" id="stage-12">
-      <img src="Captures/Screenshot 2026-03-20 020656.png" class="exhibit-img" id="img-12" draggable="false">
+      <img src="Captures/Screenshot 2026-03-20 021134.png" class="exhibit-img" id="img-12" draggable="false">
     </div>
     <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
   </div>
+</div>
+</div>
 </div>
 
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-13">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 2a Coupa 2012 I</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="13"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="13"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="13"></label>
-      <button class="ex-reset" data-id="13">초기화</button>
-      <span class="ex-zoom-label" id="zoom-13">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-13">
-      <img src="Captures/Screenshot 2026-03-20 020710.png" class="exhibit-img" id="img-13" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-14">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 2b Coupa 2012 Quarterly Bala</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="14"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="14"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="14"></label>
-      <button class="ex-reset" data-id="14">초기화</button>
-      <span class="ex-zoom-label" id="zoom-14">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-14">
-      <img src="Captures/Screenshot 2026-03-20 020721.png" class="exhibit-img" id="img-14" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-15">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 2c Coupa 2012 Quarterly Cash Flow Stateme</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="15"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="15"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="15"></label>
-      <button class="ex-reset" data-id="15">초기화</button>
-      <span class="ex-zoom-label" id="zoom-15">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-15">
-      <img src="Captures/Screenshot 2026-03-20 020807.png" class="exhibit-img" id="img-15" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-16">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 3 Sales Rep, Reve</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="16"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="16"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="16"></label>
-      <button class="ex-reset" data-id="16">초기화</button>
-      <span class="ex-zoom-label" id="zoom-16">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-16">
-      <img src="Captures/Screenshot 2026-03-20 020825.png" class="exhibit-img" id="img-16" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-17">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit (Page 17)</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="17"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="17"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="17"></label>
-      <button class="ex-reset" data-id="17">초기화</button>
-      <span class="ex-zoom-label" id="zoom-17">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-17">
-      <img src="Captures/Screenshot 2026-03-20 020945.png" class="exhibit-img" id="img-17" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-18">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4a Cowe</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="18"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="18"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="18"></label>
-      <button class="ex-reset" data-id="18">초기화</button>
-      <span class="ex-zoom-label" id="zoom-18">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-18">
-      <img src="Captures/Screenshot 2026-03-20 021008.png" class="exhibit-img" id="img-18" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-19">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4a (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="19"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="19"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="19"></label>
-      <button class="ex-reset" data-id="19">초기화</button>
-      <span class="ex-zoom-label" id="zoom-19">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-19">
-      <img src="Captures/Screenshot 2026-03-20 021021.png" class="exhibit-img" id="img-19" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-20">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit (Page 20)</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="20"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="20"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="20"></label>
-      <button class="ex-reset" data-id="20">초기화</button>
-      <span class="ex-zoom-label" id="zoom-20">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-20">
-      <img src="Captures/Screenshot 2026-03-20 021046.png" class="exhibit-img" id="img-20" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-21">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit 4b (co</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="21"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="21"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="21"></label>
-      <button class="ex-reset" data-id="21">초기화</button>
-      <span class="ex-zoom-label" id="zoom-21">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-21">
-      <img src="Captures/Screenshot 2026-03-20 021059.png" class="exhibit-img" id="img-21" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-22">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit (Page 22)</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="22"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="22"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="22"></label>
-      <button class="ex-reset" data-id="22">초기화</button>
-      <span class="ex-zoom-label" id="zoom-22">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-22">
-      <img src="Captures/Screenshot 2026-03-20 021120.png" class="exhibit-img" id="img-22" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-
-<div class="cell full">
-  <div class="exhibit-wrap" id="ew-23">
-    <div class="exhibit-toolbar">
-      <span class="ex-label">Exhibit (Page 23)</span>
-      <label>밝기 <input type="range" min="60" max="200" value="100" class="ex-bright" data-id="23"></label>
-      <label>대비 <input type="range" min="60" max="300" value="110" class="ex-contrast" data-id="23"></label>
-      <label>선명도 <input type="range" min="0" max="5" value="0" step="1" class="ex-sharp" data-id="23"></label>
-      <button class="ex-reset" data-id="23">초기화</button>
-      <span class="ex-zoom-label" id="zoom-23">100%</span>
-    </div>
-    <div class="exhibit-stage" id="stage-23">
-      <img src="Captures/Screenshot 2026-03-20 021134.png" class="exhibit-img" id="img-23" draggable="false">
-    </div>
-    <div class="exhibit-hint">스크롤: 확대/축소 &nbsp;|&nbsp; 드래그: 이동 &nbsp;|&nbsp; 더블클릭: 초기화</div>
-  </div>
-</div>
-</div>
 <div id="ai-panel">
   <div id="ai-panel-header">
     <span class="ai-label">AI 설명</span>
     <span id="ai-term">--</span>
     <span id="ai-model-tag">--</span>
-    <button id="ai-close" onclick="closeAI()">x</button>
+    <button id="ai-close" onclick="closeAI()">X</button>
   </div>
   <div id="ai-body"><span id="ai-spinner"></span><span id="ai-content"></span><span id="ai-cursor" style="display:none"></span><span id="ai-error"></span></div>
 </div>
 <button id="clear-btn" onclick="clearAll()">선택 해제 (Esc)</button>
+
 <script>
 document.querySelectorAll('.sent').forEach(el=>{
   const sid=el.dataset.sid;
@@ -744,7 +667,7 @@ function openAI(text,context){
   aiModelTag.textContent='연결 중';aiPanel.classList.add('open');
   ctrl=new AbortController();
   fetch('/api/explain',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({text,context,model:'qwen2.5:1.5b'}),signal:ctrl.signal})
+    body:JSON.stringify({text,context}),signal:ctrl.signal})
   .then(async r=>{
     if(!r.ok)throw new Error('HTTP '+r.status);
     aiSpinner.textContent='';
@@ -791,90 +714,33 @@ window.addEventListener('load',async()=>{
   try{
     const r=await fetch('http://localhost:11434/api/tags');
     const d=await r.json(),names=d.models?.map(m=>m.name)||[];
-    const has=n=>names.some(x=>x===n||x.startsWith(n.split(':')[0]));
-    const m=has('qwen2.5:1.5b')?'qwen2.5:1.5b':has('llama3.2:1b')?'llama3.2:1b':null;
-    document.getElementById('model-display').textContent=m?'AI: '+m:'AI: 모델 없음';
+    const prio=['qwen3.5:2b','qwen3.5:4b','qwen2.5:1.5b','llama3.2:1b'];
+    let found=null;
+    for(const p of prio){if(names.some(x=>x===p||x.startsWith(p.split(':')[0]))){found=p;break;}}
+    document.getElementById('model-display').textContent=found?'AI: '+found:'AI: 모델 없음';
   }catch{
     const b=document.getElementById('model-display');
     b.textContent='AI: server.py 필요';b.style.background='#4f1a1a';b.style.color='#ff9090';
   }
 });
-
-// ── Image Enhancer ─────────────────────────────────────────────────────
-(function() {
-  const state = {};
-
-  function getState(id) {
-    if (!state[id]) state[id] = { scale: 1, x: 0, y: 0, bright: 100, contrast: 110, sharp: 0 };
-    return state[id];
-  }
-
-  const SHARP_FILTERS = [
-    '',
-    'url(#sh1)',
-    'url(#sh2)',
-    'url(#sh3)',
-    'url(#sh4)',
-    'url(#sh5)',
-  ];
-
-  function applyState(id) {
-    const s = getState(id);
-    const img = document.getElementById('img-' + id);
-    const zl  = document.getElementById('zoom-' + id);
-    if (!img) return;
-    img.style.filter = `brightness(${s.bright}%) contrast(${s.contrast}%) ${SHARP_FILTERS[s.sharp] || ''}`;
-    img.style.transform = `translate(${s.x}px, ${s.y}px) scale(${s.scale})`;
-    if (zl) zl.textContent = Math.round(s.scale * 100) + '%';
-  }
-
-  function resetState(id) {
-    state[id] = { scale: 1, x: 0, y: 0, bright: 100, contrast: 110, sharp: 0 };
-    // reset sliders
-    document.querySelectorAll('.ex-bright[data-id="' + id + '"]').forEach(el => el.value = 100);
-    document.querySelectorAll('.ex-contrast[data-id="' + id + '"]').forEach(el => el.value = 110);
-    document.querySelectorAll('.ex-sharp[data-id="' + id + '"]').forEach(el => el.value = 0);
-    applyState(id);
-  }
-
-  document.querySelectorAll('.ex-bright').forEach(el => {
-    el.addEventListener('input', () => { getState(el.dataset.id).bright = +el.value; applyState(el.dataset.id); });
-  });
-  document.querySelectorAll('.ex-contrast').forEach(el => {
-    el.addEventListener('input', () => { getState(el.dataset.id).contrast = +el.value; applyState(el.dataset.id); });
-  });
-  document.querySelectorAll('.ex-sharp').forEach(el => {
-    el.addEventListener('input', () => { getState(el.dataset.id).sharp = +el.value; applyState(el.dataset.id); });
-  });
-  document.querySelectorAll('.ex-reset').forEach(el => {
-    el.addEventListener('click', () => resetState(el.dataset.id));
-  });
-
-  // Zoom + pan per stage
-  document.querySelectorAll('.exhibit-stage').forEach(stage => {
-    const id = stage.id.replace('stage-', '');
-    let dragging = false, lx = 0, ly = 0;
-
-    stage.addEventListener('wheel', e => {
-      e.preventDefault();
-      const s = getState(id);
-      s.scale = Math.min(8, Math.max(0.3, s.scale * (e.deltaY < 0 ? 1.12 : 0.89)));
-      applyState(id);
-    }, { passive: false });
-
-    stage.addEventListener('mousedown', e => {
-      dragging = true; lx = e.clientX; ly = e.clientY;
-      stage.classList.add('dragging');
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      const s = getState(id);
-      s.x += e.clientX - lx; s.y += e.clientY - ly;
-      lx = e.clientX; ly = e.clientY;
-      applyState(id);
-    });
-    window.addEventListener('mouseup', () => { dragging = false; stage.classList.remove('dragging'); });
-    stage.addEventListener('dblclick', () => resetState(id));
+// Image Enhancer
+(function(){
+  const state={};
+  function gs(id){if(!state[id])state[id]={scale:1,x:0,y:0,bright:100,contrast:110,sharp:0};return state[id];}
+  const SF=['','url(#sh1)','url(#sh2)','url(#sh3)','url(#sh4)','url(#sh5)'];
+  function ap(id){const s=gs(id),img=document.getElementById('img-'+id),zl=document.getElementById('zoom-'+id);if(!img)return;img.style.filter='brightness('+s.bright+'%) contrast('+s.contrast+'%) '+(SF[s.sharp]||'');img.style.transform='translate('+s.x+'px,'+s.y+'px) scale('+s.scale+')';if(zl)zl.textContent=Math.round(s.scale*100)+'%';}
+  function rs(id){state[id]={scale:1,x:0,y:0,bright:100,contrast:110,sharp:0};document.querySelectorAll('.ex-bright[data-id="'+id+'"]').forEach(el=>el.value=100);document.querySelectorAll('.ex-contrast[data-id="'+id+'"]').forEach(el=>el.value=110);document.querySelectorAll('.ex-sharp[data-id="'+id+'"]').forEach(el=>el.value=0);ap(id);}
+  document.querySelectorAll('.ex-bright').forEach(el=>{el.addEventListener('input',()=>{gs(el.dataset.id).bright=+el.value;ap(el.dataset.id);});});
+  document.querySelectorAll('.ex-contrast').forEach(el=>{el.addEventListener('input',()=>{gs(el.dataset.id).contrast=+el.value;ap(el.dataset.id);});});
+  document.querySelectorAll('.ex-sharp').forEach(el=>{el.addEventListener('input',()=>{gs(el.dataset.id).sharp=+el.value;ap(el.dataset.id);});});
+  document.querySelectorAll('.ex-reset').forEach(el=>{el.addEventListener('click',()=>rs(el.dataset.id));});
+  document.querySelectorAll('.exhibit-stage').forEach(stage=>{
+    const id=stage.id.replace('stage-','');let dragging=false,lx=0,ly=0;
+    stage.addEventListener('wheel',e=>{e.preventDefault();const s=gs(id);s.scale=Math.min(8,Math.max(.3,s.scale*(e.deltaY<0?1.12:.89)));ap(id);},{passive:false});
+    stage.addEventListener('mousedown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;stage.classList.add('dragging');});
+    window.addEventListener('mousemove',e=>{if(!dragging)return;const s=gs(id);s.x+=e.clientX-lx;s.y+=e.clientY-ly;lx=e.clientX;ly=e.clientY;ap(id);});
+    window.addEventListener('mouseup',()=>{dragging=false;stage.classList.remove('dragging');});
+    stage.addEventListener('dblclick',()=>rs(id));
   });
 })();
 

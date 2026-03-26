@@ -273,6 +273,20 @@ def parse_en_md(path):
     text = Path(path).read_text(encoding="utf-8")
     lines = text.splitlines()
 
+    # Strip header lines at the start of file (title / subtitle / date)
+    # e.g. "Machines of Loving Grace1", "How AI Could Transform...", "October 2024"
+    HEADER_PREFIXES = (
+        "Machines of Loving Grace",
+        "How AI Could Transform",
+        "October 20",
+    )
+    filtered = []
+    for line in lines:
+        if line.strip() and any(line.strip().startswith(p) for p in HEADER_PREFIXES):
+            continue  # skip header metadata
+        filtered.append(line)
+    lines = filtered
+
     SECTION_TITLES = [
         "Basic assumptions and framework",
         "1. Biology and health",
@@ -398,6 +412,12 @@ def parse_kr_md(path):
 
         if re.match(r'^\d+\.\s', stripped):
             current_lines.append(re.sub(r'^\d+\.\s+', '', stripped))
+            i += 1
+            continue
+
+        # Skip date lines (e.g. "2024년 10월")
+        if re.match(r'^\d{4}년\s+\d+월', stripped):
+            flush_para()
             i += 1
             continue
 
